@@ -15,17 +15,18 @@ export default function PostImage({
 }: Props) {
   const imageUrl = `/assets/images/posts/${filename}`;
 
-  const fancyboxRef = useFancybox();
+  const [fancyboxRef] = useFancybox();
 
   return (
-    <a href={imageUrl} className="fancybox" ref={fancyboxRef}>
-      <img
-        src={imageUrl}
-        className={`img-fluid post-image${className ? ` ${className}` : ""}`}
-        alt={alt}
-        title={title}
-        data-fancybox="post-image"
-      />
-    </a>
+    <div ref={fancyboxRef}>
+      <a href={imageUrl} className="fancybox" data-fancybox="post-image">
+        <img
+          src={imageUrl}
+          className={`img-fluid post-image${className ? ` ${className}` : ""}`}
+          alt={alt}
+          title={title}
+        />
+      </a>
+    </div>
   );
 }
