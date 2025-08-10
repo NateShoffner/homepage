@@ -1,0 +1,182 @@
+- slug: tabster
+  name: Tabster
+  version: 1.6
+  updated: October 30th, 2013
+  description: 'Tabster is a guitar tab manager that stores tabs in a library for easy viewing, editing, and printing. It includes a built-in online tab search that provides access to over 800,000 tabs from Ultimate Guitar and easily download them and add them to your library.'
+  logo: tabster.png
+  open_source: 'Yes'
+  license: MIT
+  homepage: https://tabster.org
+  images:
+    - caption: 'Tabster 1.6'
+      filename: tabster-1.6.png
+  downloads:
+    - name: 'Installer'
+      description: 'Tabster installation package for Windows'
+      url: 'http://software.nateshoffner.com/download/tabster'
+  platforms:
+    - Windows
+
+- slug: build-and-shoot
+  name: Build and Shoot
+  version: N/A
+  updated: N/A
+  description: 'Build and Shoot is a project operated by Buld Then Snip, LLC, a company co-founded and co-operated by myself that focuses on supporting and developing the classic version of the game "Ace of Spades". After being bought out by another studio and moving to a pay-to-play model, we decided to branch off and continue support for the free-to-play version.'
+  logo: build-and-shoot.png
+  open_source: 'No'
+  license: N/A
+  homepage: https://buildandshoot.com
+  images:
+    - caption: 'Early Beta'
+      filename: aos-1.jpg
+  downloads:
+    - name: 'Launcher'
+      description: 'Game launcher for Voxlap clients'
+      url: 'https://www.buildandshoot.com/download/' 
+  platforms:
+    - Windows
+    - OSX
+    - Linux
+
+- slug: spadille
+  name: Spadille
+  version: 1.6
+  updated: August 28th, 2013
+  description: 'Spadille is a multi-purpose program for Ace of Spades. It features a server browser that allows favoriting, blacklisting, filtering, sorting and more as well as a mod manager, screenshot manager, config editor, and more.'
+  logo: spadille.png
+  open_source: 'No'
+  license: N/A
+  homepage: https://spadille.net
+  images:
+    - caption: 'Spadille 1.6'
+      filename: spadille-1.6.png
+  downloads:
+    - name: 'Installer'
+      description: 'Spadille installation package for Windows'
+      url: 'http://software.nateshoffner.com/download/spadille' 
+  platforms:
+    - Windows
+
+- slug: seachem-doser
+  name: Seachem Doser
+  version: 1.2
+  updated: November 7th, 2016
+  description: 'Android dosage calculator for the Seachem product line. Simply enter in your aquarium parameters and recommended dosages are calculated for you.'
+  logo: seachem-doser.png
+  open_source: 'Yes'
+  license: MIT
+  homepage: https://play.google.com/store/apps/details?id=com.nateshoffner.seachemdoser
+  images:
+    - caption: 'Seachem Doser 1.1'
+      filename: seachem-doser-1.1.png
+    - caption: 'Seachem Doser 1.2'
+      filename: seachem-doser-1.2.png
+  downloads:
+    - name: 'Play Store'
+      description: 'Download Seachem Doser via the Google Play Store'
+      url: 'https://play.google.com/store/apps/details?id=com.nateshoffner.seachemdoser'
+    - name: 'APK'
+      description: 'Compiled Seachem Doser APK (Android Package)'
+      url: 'https://github.com/NateShoffner/Seachem-Doser/releases'
+  platforms:
+    - Android
+
+- slug: pysnip
+  name: PySnip
+  version: N/A
+  updated: April 13, 2015
+  description: 'PySnip is an robust, open-source and cross-platform server implementation for Ace of Spades. It is fully customizable with extensions and scripts.'
+  logo: pysnip.png
+  open_source: 'Yes'
+  license: MIT
+  homepage: https://github.com/NateShoffner/PySnip
+  downloads:
+    - name: 'Win32 Build'
+      description: 'Zipped Win32 build version of PySnip'
+      url: 'https://github.com/NateShoffner/PySnip/releases' 
+  platforms:
+    - Windows
+    - OSX
+    - Linux
+
+- slug: disable-nvidia-telemetry
+  name: Disable Nvidia Telemetry
+  version: 1.1
+  updated: August 26, 2017
+  description: 'Disable Nvidia Telemetry is a Windows utility to designed to disable Nvidia''s background telemetry included with GeFeforce Experience in order to remove any potential performance penalty while gaming as well as enhance user privacy.'
+  logo: disable-nvidia-telemetry.png
+  open_source: 'Yes'
+  license: MIT
+  homepage: https://github.com/NateShoffner/Disable-Nvidia-Telemetry
+  images:
+    - caption: 'Disable Nvidia Telemetry 1.1'
+      filename: disable-nvidia-telemetry-1.1.png
+  downloads:
+    - name: 'Installer'
+      description: 'Disable Nvidia Telemetry installation package for Windows'
+      url: 'https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases'
+    - name: 'Portable'
+      description: 'Portable, perfect for computers with restricted permissions and/or USB drives.'
+      url: 'https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases'
+  platforms:
+    - Windows
+
+- slug: phaucet
+  name: Phaucet
+  version: 2.0
+  updated: November 30, 2018
+  description: 'Phaucet is a web service that allows allows easy deployment and configuration for crypto "faucets" which are sites that dispense cryptocurrencies to visitors in an attempt to fuel interest in crypto.'
+  logo: phaucet.png
+  open_source: 'No'
+  license: N/A
+  homepage:
+  platforms:
+    - Web
+  examples:
+    - name: 'In Doge We Trust'
+      description: 'Dogecoin Faucet'
+      url: 'https://indogewetrust.com'
+    - name: 'Tip of the Fedora'
+      description: 'Fedoracoin Faucet'
+      url: 'https://tipofthefedora.com'
+
+- slug: lcwc
+  name: LCWC++ (Name Pending)
+  version: 0.1
+  updated: July 29, 2023
+  description: 'LCWC++ is a third-party, open-source project aimed at creating a REST API for the Lancaster County-Wide Communications (LCWC) webcad service '
+  logo: lcwc.png
+  open_source: 'Yes'
+  license: N/A
+  homepage: 
+  platforms:
+    - Web
+
+- slug: tenji
+  name: Tenji
+  version: 0.1
+  updated: July 29, 2023
+  description: 'Tenji (展示) is an open-source project aimed at providing a reliable REST API for MyFigureCollection.net.'
+  logo: tenji.png
+  open_source: 'Yes'
+  license: N/A
+  homepage: https://tenji.moe
+  platforms:
+    - Web
+  examples:
+    - name: 'Tenji'
+      description: 'Tenji Homepage'
+      url: 'https://tenji.moe'
+
+- slug: lancobot
+  name: Lancobot
+  version: 0.1
+  updated: July 5, 2025
+  description: 'General-purpose Discord bot with some tailored features for Lancaster County, PA.'
+  logo: lancobot.png
+  open_source: 'Yes'
+  license: N/A
+  homepage: https://lancobot.dev
+  platforms:
+    - Discord
+  

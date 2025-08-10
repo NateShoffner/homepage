@@ -1,0 +1,43 @@
+import { BlogPostCard } from "@components/BlogPostCard";
+import BlogSection from "@components/BlogSection";
+import {
+  BlogPostFilters,
+  useBlogPost,
+  useBlogPosts,
+  useCategory,
+} from "@hooks/useBlogPosts";
+import { Helmet } from "react-helmet";
+
+const Category = () => {
+  const category = useCategory();
+  const decoded = category ? decodeURIComponent(category) : "";
+  const filters: BlogPostFilters = { category: decoded };
+  const posts = useBlogPosts(filters);
+
+  return (
+    <>
+      <section className="page-section p-4 p-lg-5 d-flex flex-column">
+        <h2 className="mb-5">
+          Posts categorized under{" "}
+          <span className="text-primary">'{category}'</span>
+        </h2>
+
+        <div className="row">
+          {posts.map((post) => (
+            <div className="col-sm-12 col-md-6 col-lg-4 mb-5">
+              <BlogPostCard post={post} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        id="dsq-count-scr"
+        src="//nateshoffner.disqus.com/count.js"
+        async
+      ></script>
+    </>
+  );
+};
+
+export default Category;

@@ -1,32 +1,25 @@
----
-layout: default
----
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Nate Shoffner" />
+    <meta name="description" content="Personal homepage and blog for Nate Shoffner.">
+    <!-- Open Graph -->
+    <meta content="Nate Shoffner" property="og:site_name">
+    <meta content="Nate Shoffner" property="og:title">
+    <meta content="Personal homepage and blog for Nate Shoffner." property="og:description">
+    <meta content="/assets/images/logo.png" property="og:image">
 
-<div class="container-fluid p-0">
-    <section class="page-section about-cover p-4 p-lg-5 d-flex d-column" id="about">
-        <div class="my-auto">
-            {% include about_section.html %}
-        </div>
-        <div class="scroll-btn">
-            <a href="#blog" title="" class="centered"><span class="scroll-down"></span></a>
-        </div>
-    </section>
-    <section class="page-section p-4 p-lg-5 d-flex flex-column" id="blog">
-        <div class="my-auto">
-            {% include blog_section.html %}
-        </div>
-    </section>
-    <section class="page-section p-4 p-lg-5 d-flex flex-column" id="projects">
-        <div class="my-auto">
-            {% include projects_section.html limit=3 %}
-        </div>
-    </section>
-    <section class="page-section p-4 p-lg-5 d-flex flex-column" id="contact">
-        <div class="my-auto">
-            {% include contact_section.html %}
-        </div>
-    </section>
-    <div id="top-btn" class="scroll-btn">
-        <a href="#page-top" title=""><span class="scroll-up"></span></a>
-    </div>
-</div>
+    <link rel="icon" type="image/svg+xml" href="/assets/images//logo.png" />
+    <title>Nate Shoffner</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  </head>
+  <body id="page-top">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
