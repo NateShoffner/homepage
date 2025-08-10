@@ -44,7 +44,7 @@ Promotional graphics were obviously rendered, which wouldn't have been so much o
 
 Now, in retrospect, 1.0 can barely muster more than 1,500 players at any given time with the exception of when it is 50% off on Steam. Any game will sell well on Steam if it's 50% off. Look a graph charting the playercounts over the last few months and you can easily determine when the game was on sale. 2-3 days after a steam sale, players drop right down to where they were beforehand.
 
-{% include post_image.liquid filename="aos_10_stats_small.png" alt="Ace of Spades 1.0 Stats" title="Ace of Spades 1.0 Stats" %} 
+{% post_image filename="aos_10_stats_small.png" alt="Ace of Spades 1.0 Stats" title="Ace of Spades 1.0 Stats" %} 
 
 There is nothing that is captivating them. Sure, you got their money, but that's not sustainable in the long term. Let's do some math here. I've heard Valve takes roughly a 30% cut of sales, I'm not sure how accurate that is myself, if anybody knows for certain feel free to let me know, but it feels like a safe estimate. Based off that estimate, for every 1,000 copies you sell while it is 50% off, Jagex is only making $3,500. Keep in mind, they have been dumping money into this game since early-mid 2011. There have been massive advertising efforts, developer teams (both internal and external), third-party code payoffs (pyspades), servers, and more spanned over multiple years. This is in no way sustainable.
 

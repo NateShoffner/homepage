@@ -1,4 +1,3 @@
-// src/components/AmazonLink.tsx
 import React from "react";
 import { amazonProductUrl, AmazonLocale } from "@lib/amazon";
 

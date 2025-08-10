@@ -687,7 +687,7 @@ public class PortableSettingsProvider : SettingsProvider
 
 #### Assigning the ProviderBase
 
-{% include post_image.liquid filename="vs-portable-settings.png" alt="Visual Studio Properties" title="Visual Studio Properties" %} 
+{% post_image filename="vs-portable-settings.png" alt="Visual Studio Properties" title="Visual Studio Properties" %} 
 
 Next, open your Visual Studio solution and go to the Settings tab located in the project properties for the appropriate project. For each of the settings that you want to make portable, modify the "Provider" property to represent the namespace scheme for your portable settings class. You will have to modify the provider property for each subsequent setting if you want it to remain portable. It can be a bit of a hassle, but in the end, it's a small cost for better control.
 

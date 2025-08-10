@@ -27,8 +27,8 @@ If you happen to be somebody who will find it useful, feel free to download it t
 
 #### Tablet
 
-{% include post_image.liquid filename="SeachemDoser1.1-Tablet.png" %} 
+{% post_image filename="SeachemDoser1.1-Tablet.png" %} 
 
 #### Phone:
 
-{% include post_images_inline.liquid filenames="SeachemDoser1.1-Phone1.png,SeachemDoser1.1-Phone2.png" %} 
+{% post_images filenames="SeachemDoser1.1-Phone1.png,SeachemDoser1.1-Phone2.png" %} 

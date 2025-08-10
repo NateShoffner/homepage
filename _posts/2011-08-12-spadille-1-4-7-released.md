@@ -15,7 +15,7 @@ tags:
 
 Well Ace of Spades 0.58 is out now so it's time to release an update for Spadille.  It's been updated to support the shotgun and new sounds files. Admin tools have also been added allowing server admins to easy manage the new ban lists and admin lists. One particular feature is banlist syncing, where the global blacklist (seen [here](http://aos.nateshoffner.com/blacklist/)) is appended to the existing banlist. Any subsequent syncs will appropriately add any new bans, as well as remove any bans which have been removed from the global blacklist.
 
-{% include post_image.liquid filename="spadille1.4.7.png" %}
+{% post_image filename="spadille1.4.7.png" %}
 
 A follow-up release will be out in due time to take advantage of even more of the new features in 0.58, so stay tuned.
 

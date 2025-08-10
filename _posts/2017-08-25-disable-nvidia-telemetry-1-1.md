@@ -20,7 +20,7 @@ Pushed out a small update to for the Nvidia Telemetry tool with a few new featur
 * Added: Task Scheduler options
 * Added: File and event logging
 
-{% include post_image.liquid filename="DisableNvidiaTelemetry1.1.png" class="center-block" %}
+{% post_image filename="DisableNvidiaTelemetry1.1.png" class="center-block" %}
 
 As per usual, you can view the source code over at [GitHub](https://github.com/NateShoffner/Disable-Nvidia-Telemetry/).
 

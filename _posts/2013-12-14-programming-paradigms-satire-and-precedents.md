@@ -12,7 +12,7 @@ tags:
 
 I'm not normally one to get absorbed into drama or gossip on the internet, but this evening I found myself a bit agitated, but not for the reason you might initially assume.
 
-{% include post_image.liquid filename="cplusequality.png" %} 
+{% post_image filename="cplusequality.png" %} 
 
 #### Introducing C+=
     C+= (pronounced either C-plus-Equality, or See Equality) is a feminist programming language, created to smash the toxic Patriarchy that is inherent in and that permeates all current computer programming languages. Inspired by the <a href="http://www.hastac.org/blogs/ari-schlesinger/2013/11/26/feminism-and-programming-languages" target="_blank">ground-breaking feminist research of Arielle Schlesinger</a>.
@@ -91,11 +91,11 @@ Here is some example FizzBuzz code written in C+=:
 By now, I hope you would realize that this is in fact satirical. Personally, I found the whole thing quite humorous and well-constructed in regards to the amount of effort and detail put into it, code examples and all. Now I know what you're thinking. "Gee, how will satire mocking feminism be perceived on the internet?". This is where things get interesting... 
 
 
-{% include post_image.liquid filename="cplusequality-cloudflare.png" class="center-block" %} 
+{% post_image filename="cplusequality-cloudflare.png" class="center-block" %} 
 
 The project was initially hosted on [Github](https://github.com/FeministSoftwareFoundation/C-plus-Equality), that is until Github decided to pull it due to harassment complaints. Who was being harassed? Nobody. At least not by the project owners. It seems that there were various people, namely feminists, who were being impersonated and had commits to the project being sent under their fraudulent identities. Maybe I'm missing something, but it seems just a **tad** bit excessive to close the entire repository for an incident caused by a few select individuals who didn't even own the repository. The project eventually moved to [BitBucket](https://bitbucket.org/FeministSoftwareFoundation/c-plus-equality) and the [complaints](https://bitbucket.org/site/master/issue/8629/harassing-repository) soon followed, just as baseless and shallow as before. There were even individuals trying to get the domain dropped by CloudFlare. It became quite apparent that these people were acting on emotion and not any sort of actual logic. Naturally, as with any ethical "debate", there is a astounding amount of hypocrisy and generalizations that just point out the inconsistencies (or possible similarities) between the two parties.
 
-{% include post_image.liquid filename="cplusequality-generalizations.png" class="center-block" %} 
+{% post_image filename="cplusequality-generalizations.png" class="center-block" %} 
 
 Some people lack the ability to separate a difference of opinion and actual harassment. Pointing fingers at the wrong people (the repository owner) just makes it worse. Just because you don't agree with the project ethically is no excuse for blatant censorship, it doesn't matter how to try to spin it. If you do succeed with censoring the other party, you should be aware of the [Streisand effect](http://en.wikipedia.org/wiki/Streisand_effect). This becomes even more crucial when you consider that the project was spawned out of 4chan.
 

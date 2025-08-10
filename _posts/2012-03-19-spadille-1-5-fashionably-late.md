@@ -14,21 +14,21 @@ tags:
 
 Wanna know something that makes you feel like a dead-beat?
 
-{% include post_image.liquid filename="spadillegooglesad.png" alt="Sad Spadille Google Suggestions" %}
+{% post_image filename="spadillegooglesad.png" alt="Sad Spadille Google Suggestions" %}
 
 Feels bad, man. It's been far too long since the last Spadille update. Let's change that. This update is long overdue and hopefully the amount of changes/new features will help compensate for it.
 
-{% include post_image.liquid filename="spadille1.5.png" %}
+{% post_image filename="spadille1.5.png" %}
 
 #### Game Updater
 
-{% include post_image.liquid filename="Spadlile1.5GameUpdater1.png" alt="Game Updater" %}
+{% post_image filename="Spadlile1.5GameUpdater1.png" alt="Game Updater" %}
 
 One of the most requested additions has been a game updater. Recent versions of Spadille have shown that a new version was available, but only served as a link  to the Ace of Spades homepage. Now updates can be downloaded from within Spadille.
 
 #### Game Settings + Keybinding
 
-{% include post_image.liquid filename="Spadille1.5GameSettings.png" alt="Game Settings" %}
+{% post_image filename="Spadille1.5GameSettings.png" alt="Game Settings" %}
 
 Ace of Spades 0.60 Beta added configurable controls via (rather arcane) scancodes. This utility will make changing controls much easier. Simply find the game action you want to change, and select a key from the drop-down list. Some of the key names may seem a bit cryptic, but every possible key is on there.
 
@@ -36,7 +36,7 @@ A standalone version of the this utility can be found [here](http://www.natesho
 
 #### Screenshots
 
-{% include post_image.liquid filename="Spadille1.5ScreenshotManager.png" alt="Screenshot Manager" %}
+{% post_image filename="Spadille1.5ScreenshotManager.png" alt="Screenshot Manager" %}
 
 The screenshot functionality got a pretty big overhaul. The screenshot mechanism was re-written from scratch for better reliability. Users reported slow load times when dealing with large quantities (250+) of screenshots. Screenshots are now cached to reduce memory allocation as well as increase load times (not to mention better multi-threading). Last but not least is screenshot uploading. With a single click, you can upload screenshots to Imgur for easy sharing.
 

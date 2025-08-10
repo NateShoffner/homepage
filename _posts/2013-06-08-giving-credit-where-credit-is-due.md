@@ -61,7 +61,7 @@ As somebody who contributed with the development of the game, the community, as 
 
 And of course for reference, here are some screenshots of the credits:
 
-{% include post_images_inline.liquid filenames="aoscredit1.jpg,aoscredit2.jpg,aoscredit3.jpg" %} 
+{% post_images filenames="aoscredit1.jpg,aoscredit2.jpg,aoscredit3.jpg" %} 
 
 This post in no way reflects the collective opinion of Build and Shoot and/or Buld Then Snip, LLC.
 

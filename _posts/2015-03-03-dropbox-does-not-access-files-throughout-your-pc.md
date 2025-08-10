@@ -22,7 +22,7 @@ Just to run a simple test, I'll be using [Process Monitor](https://technet.micro
 
 After creating a new file outside of my designated Dropbox directory, you can see it fires filesystem events to query the file. In particular, [QueryDirectory](https://msdn.microsoft.com/en-us/library/ff567047%28VS.85%29.aspx) operations which involve [checking the file path](https://msdn.microsoft.com/en-us/library/windows/desktop/aa364980%28v=vs.85%29.aspx) to see if it belongs to a synced directory.
 
-{% include post_image.liquid filename="DropboxQueryOperations.png" alt="Dropbox Query Operation" title="Dropbox Query Operation" %} 
+{% post_image filename="DropboxQueryOperations.png" alt="Dropbox Query Operation" title="Dropbox Query Operation" %} 
 
 I'd expect another culprit to the the shell integration. Personally, I don't use the sync indicators myself, as I have other programs that use shell integration and it can cause conflicts. However, I'd imagine that the shell integration in Explorer requires the files/directories to be queried as well to check for sync status.
 

@@ -36,7 +36,7 @@ During the time that all of this was occuring, there was a lot of drama surround
 #### The Appeal
 Having never dealt with punkbuster/pbbans before, I wasn't sure where to appeal first.
 
-{% include post_image.liquid filename="ebticket1.png" alt="Even Balance Ticket 1" title="Even Balance Ticket 1" %} 
+{% post_image filename="ebticket1.png" alt="Even Balance Ticket 1" title="Even Balance Ticket 1" %} 
 
 After reading the appeal documentation, I decided to contact Even Balance (the company behind PunkBuster). After a few days of slow message exchanges, I was finally told "We do not find this violation to be triggered in error, and it will not be removed. It is at the discretion of the third-party ban list administrator to remove any ban given as a result of this violation.". Time to go back to PBBans.
 
@@ -44,7 +44,7 @@ I went back to my PBBans ban report and filled out the appeal form. After a few 
 
 #### Return to PBBans
 
-{% include post_image.liquid filename="ebticket2.png" alt="Even Balance Ticket 2" title="Even Balance Ticket 2" %} 
+{% post_image filename="ebticket2.png" alt="Even Balance Ticket 2" title="Even Balance Ticket 2" %} 
 
 Finally on March 21st, I decided it had been long enough since my last appeal attempt. I had learned that a webform based communication wouldn't suffice, so I decided to try the #pbbans IRC channel on Quakenet. I requested to speak in private to a PBBans admin and one (who goes by the handle "HSMagnet") accepted. I explained my situation and expresses some of my thoughts regarding how Even Balance handled the situation. Surprisingly, it seems PBBans admins don't know any more than I do when it comes to what triggered a particular violation. He told me to try opening up another ticket through Even Balance and if the violation was found to be triggered in error, they would lift it.  I did just that.
 
@@ -69,7 +69,7 @@ Another thing that still peaks my curioustiy, is why a third-party banlist (such
 
 DICE (the creators of Battlefield 3) seem to be looking for an anti-cheat developer. Who could blame them for all of the drama surrounding third-party anti-cheat tools like PunkBuster?  A native implementation should prove to be a lot more reliable rather than outsourcing it to outdated/easily exploited solutions. More information regarding the DICE job opening [here](http://www.eurogamer.net/articles/2012-01-30-battlefield-3-dev-dice-hiring-an-anti-cheat-administrator).
 
-{% include post_image.liquid filename="syntackpbbans.png" alt="PBBans Violation Report" title="PBBans Violation Report" %} 
+{% post_image filename="syntackpbbans.png" alt="PBBans Violation Report" title="PBBans Violation Report" %} 
 
 Just some advice to server administrators, banlist administrators, PunkBuster officials, and more:
 

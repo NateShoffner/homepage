@@ -20,7 +20,7 @@ It's very useful for residents to know what's going on with regards to various e
 
 #### Method #1 - Web Scraping
 
-{% include post_image.liquid filename="medical_incidents.png" class="center-block" %}
+{% post_image filename="medical_incidents.png" class="center-block" %}
 
 Initially, my goal was to simply scrape the web page itself, provided it was accessible considering the aforementioned frequent downtime. The downtime issue becomes even more apparent when you start polling it regularly, even at off-peak times. There was also another major issue with scraping - the lack of a static identifier for incidents. All incident details are subject to change except for the date/time (as far as I've been able to decern) but considering the lack of granularity with incident timestamps, there's nothing to prevent a conflict.
 
@@ -42,7 +42,7 @@ An example RSS feed item:
 
 #### Method #3 - ESRI ArcGIS	
 
-{% include post_image.liquid filename="lcwc_incident_map.png" class="center-block" %}
+{% post_image filename="lcwc_incident_map.png" class="center-block" %}
 
 Around this time I realized there was more data out there, just in another format: the live incident map. It featured much more in-depth data on incidents that I've been able to access so far including incident numbers (which resolves the static identifier issue), priority codes, longitude/latitude, and agency. This was especially helpful because I was having to do my own geocoding based off of intersection/municipality which didn't necessarily indicate the exact coordinates of the incident and was especially troublesome if some of that data was missing form the incident listing, effectively making that impossible. The live map is based on an ESRI ArcGIS service which luckily provides a REST API, although it's not as straightforward as I would've liked when it comes to real-time information. This was my first foray into ESRI so everything was a learning experience.
 
