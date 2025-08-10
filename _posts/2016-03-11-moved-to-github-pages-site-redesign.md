@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Moved to GitHub Pages &amp; Site Redesign
+title: Moved to GitHub Pages & Site Redesign
 date: 2016-03-11 14:41 -05:00
 type: post
 categories: []

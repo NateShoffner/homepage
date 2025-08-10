@@ -26,6 +26,7 @@
         "@data/*": ["src/_data/*"],
         "@assets/*": ["src/assets/*"],
         "@posts/*": ["src/_posts/*"],
+        "@lib/*": ["src/lib/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

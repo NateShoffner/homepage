@@ -29,12 +29,11 @@ Dating back to around Haswell, Intel's processors have been notorious for reachi
 This isn't going to act as in in-depth overclocking/delidding guide, there are more than enough of those already throughout the internet.
 
 #### Build Specs
-
-* CPU: {% include amazon_associate_url.liquid asin="B01MXSI216" text="Intel Core i7-7700K" %} 
-* Cooler: {% include amazon_associate_url.liquid asin="B019955RNQ" text="Corsair H115i Liquid Cooler" %}
-* Mobo: {% include amazon_associate_url.liquid asin="B01NBHXSP6" text="ASUS ROG MAXIMUS IX HERO" %}
-* RAM: {% include amazon_associate_url.liquid asin="B06XRG59PK" text="Corsair Vengeance 32GB RGB LED (4x8GB) DDR4 3000 MHZ" %}
-* PSU: {% include amazon_associate_url.liquid asin="B00EB7UITQ" text="Corsair RM750" %}
+* CPU: {% amazon asin="B01MXSI216" text="Intel Core i7-7700K" %} 
+* Cooler: {% amazon asin="B019955RNQ" text="Corsair H115i Liquid Cooler" %}
+* Mobo: {% amazon asin="B01NBHXSP6" text="ASUS ROG MAXIMUS IX HERO" %}
+* RAM: {% amazon asin="B06XRG59PK" text="Corsair Vengeance 32GB RGB LED (4x8GB) DDR4 3000 MHZ" %}
+* PSU: {% amazon asin="B00EB7UITQ" text="Corsair RM750" %}
 
 #### Benchmarks and Stress Tests:
 
@@ -49,17 +48,17 @@ Prior to delidding, I was able to overlock to 5.0GHz @1.36v using an AVX offset 
 
 #### Delidding Materials:
 
-* {% include amazon_associate_url.liquid asin="B01MXSI216" text="Intel Core i7-7700K" %} (or whatever LGA 1155/1150/1151 CPU you have)
+* {% amazon asin="B01MXSI216" text="Intel Core i7-7700K" %} (or whatever LGA 1155/1150/1151 CPU you have)
 * [Rockit 88](https://rockitcool.myshopify.com/products/rockit-88)
 * [Re-Lid Kit - 1150 / 1151](https://rockitcool.myshopify.com/products/re-lid-kit)
-* {% include amazon_associate_url.liquid asin="B01A9KIGSI" text="Thermal Grizzly Conductonaut" %} ({% include amazon_associate_url.liquid asin="B0039RY3MM" text="Coollaboratory Liquid Ultra" %} also works)
-* {% include amazon_associate_url.liquid asin="B003TP2TBQ" text="Loctite Super Glue - Gel Control" %}
+* {% amazon asin="B01A9KIGSI" text="Thermal Grizzly Conductonaut" %} ({% amazon asin="B0039RY3MM" text="Coollaboratory Liquid Ultra" %} also works)
+* {% amazon asin="B003TP2TBQ" text="Loctite Super Glue - Gel Control" %}
 * 91% Isopropyl alcohol
 * Coffee Filters
 * Cotton Swabs
 * Scotch Tape
 
-Alternatively, you could you use a {% include amazon_associate_url.liquid asin="B0002UEN1A" text="silicon-based gasket maker" %} instead of the super glue, either one is easy enough to de-lid and does the job. Just note that the gasket maker will take much longer to cure, hence why I chose the super glue.
+Alternatively, you could you use a {% amazon asin="B0002UEN1A" text="silicon-based gasket maker" %} instead of the super glue, either one is easy enough to de-lid and does the job. Just note that the gasket maker will take much longer to cure, hence why I chose the super glue.
 
 {% include post_images_inline.liquid filenames="7700KDelid1.jpg,7700KDelid2.jpg,7700KDelid3.jpg" group="delid" %}
 

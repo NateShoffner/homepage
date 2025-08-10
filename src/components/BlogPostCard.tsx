@@ -5,6 +5,7 @@ import {
   getBlogPostUrl,
 } from "@utils/blogUtils";
 import { Link } from "react-router-dom";
+import Markdown from "./Markdown";
 
 function BlogPostCard({ post }: { post: BlogPost }) {
   return (
@@ -20,10 +21,9 @@ function BlogPostCard({ post }: { post: BlogPost }) {
         <h5 className="card-title">
           <Link to={getBlogPostUrl(post)}>{post.title}</Link>
         </h5>
-        <p
-          className="card-text"
-          dangerouslySetInnerHTML={{ __html: getBlogPostExcerpt(post) }}
-        ></p>
+        <p className="card-text">
+          <Markdown>{getBlogPostExcerpt(post)}</Markdown>
+        </p>
         <p className="card-text">
           <Link to={getBlogPostUrl(post)} className="btn btn-primary">
             Read More &raquo;

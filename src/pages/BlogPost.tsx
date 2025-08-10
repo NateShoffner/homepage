@@ -1,4 +1,5 @@
 import CommentSection from "@components/CommentSectin";
+import PostBody from "@components/PostBody";
 import { ProjectPostEmbed } from "@components/ProjectPostEmbed";
 import ProjectsSection from "@components/ProjectsSection";
 import {
@@ -65,10 +66,7 @@ const BlogPost = () => {
               : "Uncategorized"}
           </li>
         </ul>
-        <article
-          className="post-content"
-          dangerouslySetInnerHTML={{ __html: post?.content || "" }}
-        ></article>
+        <PostBody body={post?.markdown} />
 
         {post?.categories.includes("Projects")
           ? post.tags
