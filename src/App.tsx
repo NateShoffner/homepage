@@ -10,6 +10,7 @@ import Category from "@pages/Category";
 import Tag from "@pages/Tag";
 import Privacy from "@pages/Privacy";
 import Disclosure from "@pages/Disclosure";
+import Contact from "@pages/Contact";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
           <Route path="blog/tag/:tag" element={<Tag />} />
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:slug" element={<Project />} />
+
+          <Route path="contact" element={<Contact />} />
 
           <Route path="*" element={<NoPage />} />
         </Route>
