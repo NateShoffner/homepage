@@ -1,10 +1,12 @@
 import CommentSection from "@components/CommentSectin";
+import { ProjectPostEmbed } from "@components/ProjectPostEmbed";
 import ProjectsSection from "@components/ProjectsSection";
 import {
   getNextBlogPost,
   getPreviousBlogPost,
   useBlogPost,
 } from "@hooks/useBlogPosts";
+import { useProject, useProjectByName } from "@hooks/useProjects";
 import { CommentCount, DiscussionEmbed } from "disqus-react";
 
 import { Helmet } from "react-helmet";
@@ -67,6 +69,16 @@ const BlogPost = () => {
           className="post-content"
           dangerouslySetInnerHTML={{ __html: post?.content || "" }}
         ></article>
+
+        {post?.categories.includes("Projects")
+          ? post.tags
+              ?.map((tag) => useProjectByName(tag))
+              .map((project, idx) =>
+                project ? (
+                  <ProjectPostEmbed key={idx} project={project} />
+                ) : null
+              )
+          : null}
 
         <div className="row mb-3">
           <div className="col-12 col-sm-6">

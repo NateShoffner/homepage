@@ -37,7 +37,6 @@ export function useBlogPost(): BlogPost | undefined {
     
         return post
     }, [slug])
-
 }
 
 export function getNextBlogPost(currentPost: BlogPost): BlogPost | undefined {
