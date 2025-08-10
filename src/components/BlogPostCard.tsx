@@ -6,6 +6,7 @@ import {
 } from "@utils/blogUtils";
 import { Link } from "react-router-dom";
 import Markdown from "./Markdown";
+import { CommentCount } from "disqus-react";
 
 function BlogPostCard({ post }: { post: BlogPost }) {
   return (
@@ -21,14 +22,13 @@ function BlogPostCard({ post }: { post: BlogPost }) {
         <h5 className="card-title">
           <Link to={getBlogPostUrl(post)}>{post.title}</Link>
         </h5>
-        <p className="card-text">
+        <div className="card-text">
           <Markdown>{getBlogPostExcerpt(post)}</Markdown>
-        </p>
-        <p className="card-text">
+
           <Link to={getBlogPostUrl(post)} className="btn btn-primary">
             Read More &raquo;
           </Link>
-        </p>
+        </div>
       </div>
       <div className="card-footer text-center text-muted">
         <ul className="post-meta">
@@ -42,13 +42,15 @@ function BlogPostCard({ post }: { post: BlogPost }) {
           </li>
           <li className="post-meta-item">
             <i className="fa fa-comments"></i>{" "}
-            <a href="{{ post.url }}#comments">
-              <span
-                className="disqus-comment-count"
-                data-disqus-url="{{ site.url }}{{ post.url }}"
+            <a href={post.fullUrl + "#comments"}>
+              <CommentCount
+                shortname="nateshoffner"
+                config={{
+                  url: post.fullUrl,
+                }}
               >
-                0 Comments
-              </span>
+                {0} Comments
+              </CommentCount>
             </a>
           </li>
         </ul>

@@ -15,8 +15,8 @@ export function BlogSection({ limit }: BlogSectionProps) {
         fallen into the ether.
       </p>
       <div className="row">
-        {posts.map((post) => (
-          <div className="col-sm-12 col-md-6 col-lg-4 mb-5">
+        {posts.map((post, index) => (
+          <div key={index} className="col-sm-12 col-md-6 col-lg-4 mb-5">
             <BlogPostCard post={post} />
           </div>
         ))}

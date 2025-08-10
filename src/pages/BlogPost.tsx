@@ -1,4 +1,4 @@
-import CommentSection from "@components/CommentSectin";
+import CommentSection from "@components/CommentSection";
 import PostBody from "@components/PostBody";
 import { ProjectPostEmbed } from "@components/ProjectPostEmbed";
 import {
@@ -43,13 +43,15 @@ const BlogPost = () => {
               </li>
               <li className="post-meta-item">
                 <i className="fa fa-comments"></i>{" "}
-                <a href={`#comments`}>
-                  <span
-                    className="disqus-comment-count"
-                    data-disqus-url={window.location.href}
+                <a href={post?.fullUrl}>
+                  <CommentCount
+                    shortname="nateshoffner"
+                    config={{
+                      url: post.fullUrl,
+                    }}
                   >
-                    0 Comments
-                  </span>
+                    {0} Comments
+                  </CommentCount>
                 </a>
               </li>
               <li className="post-meta-item">
@@ -123,7 +125,12 @@ const BlogPost = () => {
             </div>
 
             <div className="pb-3 pt-3">
-              <CommentSection />
+              <DiscussionEmbed
+                shortname="nateshoffner"
+                config={{
+                  url: post.fullUrl,
+                }}
+              />
             </div>
           </div>
         </div>

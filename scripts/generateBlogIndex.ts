@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import matter from 'gray-matter'
-import { marked } from 'marked'
 import { Feed } from "feed";
 
 const __filename = fileURLToPath(import.meta.url)
@@ -57,8 +56,8 @@ return {
     categories: data.categories ?? [],
     tags: data.tags ?? [],
     markdown: content,
-    content: marked.parse(content),
-    url: `/blog/${year}/${month}/${slug}/`
+    url: `/blog/${year}/${month}/${slug}/`,
+    fullUrl: `${siteUrl}/blog/${year}/${month}/${slug}/`
 }
 })
 
@@ -74,9 +73,9 @@ const typeDef = `export interface BlogPost {
   image: string
   categories: string[]
   tags: string[]
-  content: string
   markdown: string
   url: string
+  fullUrl: string
 }
 `
 
