@@ -17,6 +17,11 @@ const Tag = () => {
         </h2>
 
         <div className="row">
+          {posts.length === 0 && (
+            <div className="col-12">
+              <p>No posts found under this tag.</p>
+            </div>
+          )}
           {posts.map((post) => (
             <div className="col-sm-12 col-md-6 col-lg-4 mb-5">
               <BlogPostCard post={post} />

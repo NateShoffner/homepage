@@ -1,23 +1,25 @@
 import CommentSection from "@components/CommentSectin";
 import PostBody from "@components/PostBody";
 import { ProjectPostEmbed } from "@components/ProjectPostEmbed";
-import ProjectsSection from "@components/ProjectsSection";
 import {
   getNextBlogPost,
   getPreviousBlogPost,
   useBlogPost,
 } from "@hooks/useBlogPosts";
-import { useProject, useProjectByName } from "@hooks/useProjects";
+import { useProjectByName } from "@hooks/useProjects";
 import { CommentCount, DiscussionEmbed } from "disqus-react";
 
 import { Helmet } from "react-helmet";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 const BlogPost = () => {
   const post = useBlogPost();
+
+  if (!post) {
+    return <Navigate to="/404" replace />;
+  }
   const nextPost = getNextBlogPost(post!);
   const prevPost = getPreviousBlogPost(post!);
-
   return (
     <>
       <Helmet>
