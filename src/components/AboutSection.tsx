@@ -1,11 +1,14 @@
+import { ReactTyped } from "react-typed";
+
 export function AboutSection() {
   return (
     <>
       <h1 className="mb-5">
-        <span id="first-name">Nate</span>{" "}
-        <span className="text-highlight" id="last-name">
-          Shoffner
-        </span>
+        <ReactTyped
+          strings={['Nate <span class="text-highlight">Shoffner</span>']}
+          typeSpeed={100}
+          typeTag="span"
+        />
       </h1>
 
       <div className="row">

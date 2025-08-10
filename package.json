@@ -32,11 +32,11 @@
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "react-scroll": "^1.9.3",
+    "react-typed": "^2.0.12",
     "remark": "^15.0.1",
     "remark-directive": "^4.0.0",
     "remark-parse": "^11.0.0",
     "sass": "^1.89.2",
-    "typed.js": "^2.1.0",
     "unified": "^11.0.5",
     "vite-tsconfig-paths": "^5.1.4"
   },
