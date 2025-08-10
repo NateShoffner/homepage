@@ -13,8 +13,8 @@ export function useBlogPosts(filters?: BlogPostFilters): BlogPost[] {
 
         return blogIndex.filter((post) => {
             return (
-                (!filters.category || (post.categories?.includes(filters.category))) &&
-                (!filters.tag || (post.tags?.includes(filters.tag)))
+                (!filters.category || (post.categories?.some(c => c.toLowerCase() === filters.category!.toLowerCase()))) &&
+                (!filters.tag || (post.tags?.some(t => t.toLowerCase() === filters.tag!.toLowerCase())))
             )
         })
     }, [filters])
