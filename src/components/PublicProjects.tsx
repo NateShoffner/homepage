@@ -15,17 +15,23 @@ function PublicProjects({
 }: PublicProjectsProps) {
   const projects = useProjects();
 
-  // Sort and limit projects
   const sorted = [...projects].sort((a, b) => {
     const aValue = a[sortBy];
     const bValue = b[sortBy];
+
+    // If sorting by "updated", deprioritize undefined values
+    if (sortBy === "updated") {
+      if (aValue === undefined && bValue !== undefined) return 1;
+      if (aValue !== undefined && bValue === undefined) return -1;
+      if (aValue === undefined && bValue === undefined) return 0;
+    }
+
     if (typeof aValue === "string" && typeof bValue === "string") {
       return sortOrder === "asc"
         ? aValue.localeCompare(bValue)
         : bValue.localeCompare(aValue);
     }
     if (aValue instanceof Date && bValue instanceof Date) {
-      console.log(`Sorting by date: ${aValue} vs ${bValue}`);
       return sortOrder === "asc"
         ? aValue.getTime() - bValue.getTime()
         : bValue.getTime() - aValue.getTime();

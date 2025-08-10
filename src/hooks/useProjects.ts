@@ -9,12 +9,13 @@ export type Project = {
 };
 
 export function useProjects(): Project[] {
-  return (rawProjects as any[]).map((p) => ({
-    ...p,
-    updated: p.updated
-      ? new Date(p.updated.replace(/(\d+)(st|nd|rd|th)/, "$1"))
-      : undefined,
-  }));
+    return (rawProjects as any[]).map((p) => ({
+        ...p,
+        updated:
+            p.updated && p.updated !== "N/A"
+                ? new Date(p.updated.replace(/(\d+)(st|nd|rd|th)/, "$1"))
+                : undefined,
+    }));
 }
 
 export function useProject(slug: string): Project | undefined {
