@@ -96,9 +96,8 @@ export default function Markdown({ children }: { children: string }) {
           const group = (node?.properties?.group as string) || undefined;
           const images = filenames.map((f) => ({
             filename: f.trim(),
-            group,
           }));
-          return <PostImages images={images} />;
+          return <PostImages images={images} group={group} />;
         },
       }}
     >

@@ -1,3 +1,5 @@
+import useFancybox from "@hooks/useFancybox";
+
 type Image = {
   filename: string;
   alt?: string;
@@ -10,14 +12,16 @@ type Props = {
 };
 
 export default function PostImages({ images, group }: Props) {
+  const [fancyboxRef] = useFancybox();
+
   return (
-    <div className="project-images-container">
+    <div ref={fancyboxRef}>
       {images.map((image, idx) => (
         <a
           key={idx}
           href={`/assets/images/posts/${image.filename}`}
           className="fancybox"
-          rel={group ? `${group}` : undefined}
+          data-fancybox={group ? `${group}` : undefined}
         >
           <img
             src={`/assets/images/posts/${image.filename}`}

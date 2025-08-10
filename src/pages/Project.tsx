@@ -1,7 +1,8 @@
 import { useBlogPosts } from "@hooks/useBlogPosts";
+import useFancybox from "@hooks/useFancybox";
 import { useProjectFromParams } from "@hooks/useProjects";
 import { ProjectDownload } from "@types/Project";
-import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 function Project() {
   const project = useProjectFromParams();
@@ -10,9 +11,15 @@ function Project() {
     tag: project?.name,
   });
 
+  const [fancyboxRef] = useFancybox();
+
   const domain = project?.homepage
     ? new URL(project.homepage).hostname.replace("www.", "")
     : "N/A";
+
+  if (!project) {
+    return <Navigate to="/404" replace />;
+  }
 
   return (
     <>
@@ -33,13 +40,13 @@ function Project() {
             </div>
             <p>{project?.description}</p>
             {project?.images && project.images.length > 0 && (
-              <div className="project-images-container">
+              <div className="project-images-container" ref={fancyboxRef}>
                 {project.images.map((image, index) => (
                   <a
                     href={`/assets/images/projects/${project.slug}/${image.filename}`}
                     key={index}
-                    class="fancybox"
-                    rel="screenshots"
+                    className="fancybox"
+                    data-fancybox="screenshots"
                   >
                     <img
                       key={index}

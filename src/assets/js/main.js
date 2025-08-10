@@ -1,11 +1,3 @@
-function init_fancybox() {
-  $(".fancybox").fancybox({
-    openEffect: "elastic",
-    closeEffect: "elastic",
-    padding: 0,
-  });
-}
-
 function jumpToAnchor(anchor) {
   var offset = anchor.offset();
   if (offset == null) return false;
@@ -124,10 +116,6 @@ $("#contact-form").submit(function (e) {
       }
     },
   });
-});
-
-$(document).ready(function () {
-  init_fancybox();
 });
 
 preventAnchorScroll();
