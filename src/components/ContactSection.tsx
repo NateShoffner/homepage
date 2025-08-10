@@ -55,7 +55,7 @@ export function ContactSection() {
               name="name"
               id="name"
               placeholder="Enter Name"
-              value=""
+              defaultValue=""
               required
             />
           </div>
@@ -67,7 +67,7 @@ export function ContactSection() {
               id="email"
               name="email"
               placeholder="Enter Email"
-              value=""
+              defaultValue=""
               required
             />
           </div>
@@ -79,7 +79,7 @@ export function ContactSection() {
               id="subject"
               name="subject"
               placeholder="Enter Subject"
-              value=""
+              defaultValue=""
               required
             />
           </div>
@@ -103,7 +103,7 @@ export function ContactSection() {
             type="submit"
             name="submit"
             id="submit"
-            value="Submit"
+            defaultValue="Submit"
             className="btn btn-primary pull-right"
           />
         </div>

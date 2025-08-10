@@ -28,8 +28,8 @@ const Category = () => {
               <p>No posts found under this category.</p>
             </div>
           )}
-          {posts.map((post) => (
-            <div className="col-sm-12 col-md-6 col-lg-4 mb-5">
+          {posts.map((post, index) => (
+            <div className="col-sm-12 col-md-6 col-lg-4 mb-5" key={index}>
               <BlogPostCard post={post} />
             </div>
           ))}

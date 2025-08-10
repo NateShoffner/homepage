@@ -16,9 +16,8 @@ const NoPage = () => {
           </h3>
 
           <p>
-            Click <a href="{{ site.baseurl }}">here</a> to return to the
-            homepage. If you think something is broken,{" "}
-            <a href="{{ site.baseurl }}/#contact">report a problem</a>.
+            Click <a href="/">here</a> to return to the homepage. If you think
+            something is broken, <a href="/#contact">report a problem</a>.
           </p>
         </div>
       </section>
