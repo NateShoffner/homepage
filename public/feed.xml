@@ -4,7 +4,7 @@
         <title>Nate Shoffner</title>
         <link>https://nateshoffner.com</link>
         <description>Personal homepage and blog for Nate Shoffner.</description>
-        <lastBuildDate>Sun, 10 Aug 2025 04:57:32 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 10 Aug 2025 15:58:13 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
@@ -64,7 +64,7 @@
             <description><![CDATA[Seachem Doser 1.2 release blog]]></description>
         </item>
         <item>
-            <title><![CDATA[Moved to GitHub Pages &amp; Site Redesign]]></title>
+            <title><![CDATA[Moved to GitHub Pages & Site Redesign]]></title>
             <link>https://nateshoffner.com/blog/2016/03/moved-to-github-pages-site-redesign/</link>
             <guid isPermaLink="false">https://nateshoffner.com/blog/2016/03/moved-to-github-pages-site-redesign/</guid>
             <pubDate>Fri, 11 Mar 2016 19:41:00 GMT</pubDate>
