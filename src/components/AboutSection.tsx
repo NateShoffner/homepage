@@ -7,7 +7,7 @@ export function AboutSection() {
         <ReactTyped
           strings={['Nate <span class="text-highlight">Shoffner</span>']}
           typeSpeed={100}
-          typeTag="span"
+          showCursor={true}
         />
       </h1>
 

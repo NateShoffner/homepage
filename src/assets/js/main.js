@@ -1,64 +1,3 @@
-function jumpToAnchor(anchor) {
-  var offset = anchor.offset();
-  if (offset == null) return false;
-
-  $("html, body").stop().animate(
-    {
-      scrollTop: offset.top,
-    },
-    850,
-    "easeInOutExpo"
-  );
-
-  return true;
-}
-
-function preventAnchorScroll() {
-  var scrollToTop = function () {
-    $(window).scrollTop(0);
-  };
-  if (window.location.hash) {
-    // handler is executed at most once
-    $(window).one("scroll", scrollToTop);
-
-    var anchor = $(window.location.hash);
-    jumpToAnchor(anchor);
-  }
-
-  // make sure to release scroll 1 second after document readiness
-  // to avoid negative UX
-  $(function () {
-    setTimeout(function () {
-      $(window).off("scroll", scrollToTop);
-    }, 1000);
-  });
-}
-
-// anchor link easing
-$(function () {
-  $('a[href*="#"]:not([href="#"])').on("click", function (e) {
-    var easingDisabled =
-      $(this).attr("class") != null &&
-      $(this).attr("class").indexOf("no-easing") >= 0;
-
-    if (!easingDisabled) {
-      var anchor = $($(this).attr("href").replace("/", ""));
-
-      if (anchor != null) {
-        if (jumpToAnchor(anchor)) {
-          e.preventDefault();
-        }
-      }
-    }
-  });
-});
-
-$(".page-top").click(function (e) {
-  if (!jumpToAnchor($("#page-top"))) {
-    e.preventDefault();
-  }
-});
-
 // navbar item activation via scrolling
 $("body").scrollspy({
   target: "#navbar",
@@ -115,20 +54,5 @@ $("#contact-form").submit(function (e) {
         $("#contact-result-error").show();
       }
     },
-  });
-});
-
-preventAnchorScroll();
-
-$(document).ready(function () {
-  var offset = 350;
-  var duration = 500;
-
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > offset) {
-      $("#top-btn").fadeIn(duration);
-    } else {
-      $("#top-btn").fadeOut(duration);
-    }
   });
 });
