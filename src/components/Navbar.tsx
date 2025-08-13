@@ -1,9 +1,36 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+
+type NavItem = { id: string; label: string; route: string; hash: string };
+
+type SocialItem = { id: string; icon: string; url: string };
+
+const NavItems: NavItem[] = [
+  { id: "about", label: "About", route: "/about", hash: "/#about" },
+  { id: "blog", label: "Blog", route: "/blog", hash: "/#blog" },
+  { id: "projects", label: "Projects", route: "/projects", hash: "/#projects" },
+  { id: "contact", label: "Contact", route: "/contact", hash: "/#contact" },
+];
+
+const SocialItems: SocialItem[] = [
+  {
+    id: "twitter",
+    icon: "fa-twitter",
+    url: "https://twitter.com/NateShoffner",
+  },
+  { id: "github", icon: "fa-github", url: "https://github.com/NateShoffner" },
+  {
+    id: "linkedin",
+    icon: "fa-linkedin",
+    url: "https://www.linkedin.com/in/NateShoffner",
+  },
+];
 
 export default function Navbar() {
+  const location = useLocation();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
-      <a className="navbar-brand" href="#page-top">
+      <a className="navbar-brand" href="/">
         <span className="d-block d-lg-none">Nate Shoffner</span>
         <span className="d-none d-lg-block">
           <div className="circle-border">
@@ -30,57 +57,33 @@ export default function Navbar() {
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav">
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/#about">
-              About
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/#blog">
-              Blog
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                `nav-link${isActive ? " active" : ""}`
-              }
-              to="/#projects"
-            >
-              Projects
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/#contact">
-              Contact
-            </NavLink>
-          </li>
+          {NavItems.map((item) => (
+            <li className="nav-item" key={item.id}>
+              <NavLink
+                className={`nav-link ${
+                  location.pathname.startsWith(item.route) ? "active" : ""
+                }`}
+                to={item.hash}
+              >
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
+
           <li className="nav-item">
             <ul className="social-list">
-              <li>
-                <a href="https://twitter.com/NateShoffner">
-                  <span className="fa-stack fa-lg">
-                    <i className="fa fa-circle fa-stack-2x"></i>
-                    <i className="fa fa-twitter fa-stack-1x  fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/NateShoffner">
-                  <span className="fa-stack fa-lg">
-                    <i className="fa fa-circle fa-stack-2x"></i>
-                    <i className="fa fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="https://www.linkedin.com/in/NateShoffner">
-                  <span className="fa-stack fa-lg">
-                    <i className="fa fa-circle fa-stack-2x"></i>
-                    <i className="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
+              {SocialItems.map((social) => (
+                <li key={social.id}>
+                  <a href={social.url}>
+                    <span className="fa-stack fa-lg">
+                      <i className="fa fa-circle fa-stack-2x"></i>
+                      <i
+                        className={`fa ${social.icon} fa-stack-1x fa-inverse`}
+                      ></i>
+                    </span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </li>
         </ul>

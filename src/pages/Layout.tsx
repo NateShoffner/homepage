@@ -12,9 +12,9 @@ const Layout = () => {
       />
       <Navbar />
 
-      <main>
+      <div className="my-auto">
         <Outlet />
-      </main>
+      </div>
 
       <Footer />
     </>
