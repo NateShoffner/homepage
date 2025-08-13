@@ -120,3 +120,4 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+public/feed.xml

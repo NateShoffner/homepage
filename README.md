@@ -7,3 +7,5 @@
 [] Use Pygments for syntax highlighting
 [] Docker
 [] Contact form
+[] Helmet
+[] Mobile
