@@ -2,7 +2,9 @@ import { useBlogPosts } from "@hooks/useBlogPosts";
 import useFancybox from "@hooks/useFancybox";
 import { useProjectFromParams } from "@hooks/useProjects";
 import { ProjectDownload } from "@types/Project";
+import { Helmet } from "react-helmet";
 import { Navigate } from "react-router-dom";
+import ShareButtons from "@components/ShareButtons";
 
 function Project() {
   const project = useProjectFromParams();
@@ -23,6 +25,9 @@ function Project() {
 
   return (
     <>
+      <Helmet>
+        <title>{project?.name}</title>
+      </Helmet>
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <div className="my-auto">
           <div className="project">
@@ -203,6 +208,7 @@ function Project() {
                 </table>
               </div>
             </div>
+            <ShareButtons title={project.name} />
           </div>
         </div>
       </section>

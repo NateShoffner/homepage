@@ -5,7 +5,7 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>Blog &bull; Nate Shoffner</title>
+        <title>Blog</title>
       </Helmet>
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <div className="my-auto">

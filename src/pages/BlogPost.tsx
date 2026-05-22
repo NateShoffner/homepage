@@ -1,5 +1,6 @@
 import CommentSection from "@components/CommentSection";
 import PostBody from "@components/PostBody";
+import ShareButtons from "@components/ShareButtons";
 import { ProjectPostEmbed } from "@components/ProjectPostEmbed";
 import {
   getNextBlogPost,
@@ -99,13 +100,7 @@ const BlogPost = () => {
                       ))
                     : "None"}
                 </div>
-              </div>
-              <div className="col-12 col-sm-6">
-                <div className="ssk-group float-sm-right">
-                  <a href="#" className="ssk ssk-facebook"></a>
-                  <a href="#" className="ssk ssk-twitter"></a>
-                  <a href="#" className="ssk ssk-linkedin"></a>
-                </div>
+                <ShareButtons title={post.title} />
               </div>
             </div>
 
