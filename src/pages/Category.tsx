@@ -1,4 +1,4 @@
-import { BlogPostCard } from "@components/BlogPostCard";
+﻿import { BlogPostCard } from "@components/BlogPostCard";
 import BlogSection from "@components/BlogSection";
 import {
   BlogPostFilters,
@@ -6,7 +6,7 @@ import {
   useBlogPosts,
   useCategory,
 } from "@hooks/useBlogPosts";
-import { Helmet } from "react-helmet";
+import PageHelmet from "@components/PageHelmet";
 
 const Category = () => {
   const category = useCategory();
@@ -16,6 +16,7 @@ const Category = () => {
 
   return (
     <>
+      <PageHelmet title={decoded} />
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <h2 className="mb-5">
           Posts categorized under{" "}

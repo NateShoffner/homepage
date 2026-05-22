@@ -1,4 +1,4 @@
-import CommentSection from "@components/CommentSection";
+﻿import CommentSection from "@components/CommentSection";
 import PostBody from "@components/PostBody";
 import ShareButtons from "@components/ShareButtons";
 import { ProjectPostEmbed } from "@components/ProjectPostEmbed";
@@ -10,7 +10,7 @@ import {
 import { useProjectByName } from "@hooks/useProjects";
 import { CommentCount, DiscussionEmbed } from "disqus-react";
 
-import { Helmet } from "react-helmet";
+import PageHelmet from "@components/PageHelmet";
 import { Link, Navigate, useParams } from "react-router-dom";
 
 const BlogPost = () => {
@@ -23,9 +23,7 @@ const BlogPost = () => {
   const prevPost = getPreviousBlogPost(post!);
   return (
     <>
-      <Helmet>
-        <title>{post?.title}</title>
-      </Helmet>
+      <PageHelmet title={post.title} />
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <div className="blog-post">
           <div className="post-title">

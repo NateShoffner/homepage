@@ -1,7 +1,7 @@
-import { BlogPostCard } from "@components/BlogPostCard";
+﻿import { BlogPostCard } from "@components/BlogPostCard";
 
 import { BlogPostFilters, useBlogPosts, useTag } from "@hooks/useBlogPosts";
-import { Helmet } from "react-helmet";
+import PageHelmet from "@components/PageHelmet";
 
 const Tag = () => {
   const tag = useTag();
@@ -11,6 +11,7 @@ const Tag = () => {
 
   return (
     <>
+      <PageHelmet title={decoded} />
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <h2 className="mb-5">
           Posts tagged under <span className="text-primary">'{tag}'</span>

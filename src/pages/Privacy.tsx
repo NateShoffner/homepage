@@ -1,11 +1,9 @@
-import { Helmet } from "react-helmet";
+﻿import PageHelmet from "@components/PageHelmet";
 
 const Privacy = () => {
   return (
     <>
-      <Helmet>
-        <title>Privacy</title>
-      </Helmet>
+      <PageHelmet title="Privacy" />
       <section className="page-section p-4 p-lg-5 d-flex d-column">
         <div className="my-auto">
           <h1 className="mb-5">Privacy Policy</h1>
@@ -13,7 +11,7 @@ const Privacy = () => {
           <h3>Cookies</h3>
           <p>
             A cookie is a small file which asks permission to be placed on your
-            computer’s hard drive. Once you agree, the file is added and the
+            computerâ€™s hard drive. Once you agree, the file is added and the
             cookie helps analyze web traffic or lets you know when you visit a
             particular site. Cookies allow web applications to respond to you as
             an individual. The web application can tailor its operations to your
@@ -42,7 +40,7 @@ const Privacy = () => {
             personally identifiable information. Although Google Analytics
             plants a permanent cookie on your web browser to identify you as a
             unique user the next time you visit this site, the cookie cannot be
-            used by anyone but Google. Google’s ability to use and share
+            used by anyone but Google. Googleâ€™s ability to use and share
             information collected by Google Analytics about your visits to this
             site is restricted by the{" "}
             <a href="http://www.google.com/analytics/tos.html" target="_blank">

@@ -1,12 +1,10 @@
-import BlogSection from "@components/BlogSection";
-import { Helmet } from "react-helmet";
+﻿import BlogSection from "@components/BlogSection";
+import PageHelmet from "@components/PageHelmet";
 
 const Blog = () => {
   return (
     <>
-      <Helmet>
-        <title>Blog</title>
-      </Helmet>
+      <PageHelmet title="Blog" />
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <div className="my-auto">
           <h2 className="mb-5">

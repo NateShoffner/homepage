@@ -6,10 +6,13 @@ import ScrollButton from "@components/ScrollButton";
 import ScrollSpy from "react-ui-scrollspy";
 import TopButton from "@components/TopButton";
 import { Link, Element } from "react-scroll";
+import PageHelmet from "@components/PageHelmet";
 
 const Home = () => {
   return (
-    <ScrollSpy>
+    <>
+      <PageHelmet />
+      <ScrollSpy>
       <div className="container-fluid p-0">
         <Element name="about">
           <section
@@ -84,7 +87,8 @@ const Home = () => {
         </section>
         <TopButton target="about" />
       </div>
-    </ScrollSpy>
+      </ScrollSpy>
+    </>
   );
 };
 

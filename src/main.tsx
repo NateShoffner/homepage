@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 // Import Bootstrap JS and CSS
 import "bootstrap";
@@ -12,6 +13,8 @@ import "./assets/css/main.scss";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
   </StrictMode>
 );

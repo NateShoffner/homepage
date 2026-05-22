@@ -1,11 +1,9 @@
-import { Helmet } from "react-helmet";
+﻿import PageHelmet from "@components/PageHelmet";
 
 const Disclosure = () => {
   return (
     <>
-      <Helmet>
-        <title>Disclosure</title>
-      </Helmet>
+      <PageHelmet title="Disclosure" />
       <section className="page-section p-4 p-lg-5 d-flex d-column">
         <div className="my-auto">
           <h1 className="mb-5">

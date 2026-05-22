@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+﻿import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "@pages/Layout";
 import Home from "@pages/Home";
 import NoPage from "@pages/NoPage";
@@ -11,12 +11,10 @@ import Tag from "@pages/Tag";
 import Privacy from "@pages/Privacy";
 import Disclosure from "@pages/Disclosure";
 import Contact from "@pages/Contact";
-import { Helmet } from "react-helmet";
 
 function App() {
   return (
     <BrowserRouter>
-      <Helmet defaultTitle="Nate Shoffner" titleTemplate="%s • Nate Shoffner" />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

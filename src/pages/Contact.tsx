@@ -1,12 +1,10 @@
-import ContactSection from "@components/ContactSection";
-import { Helmet } from "react-helmet";
+﻿import ContactSection from "@components/ContactSection";
+import PageHelmet from "@components/PageHelmet";
 
 const Contact = () => {
   return (
     <>
-      <Helmet>
-        <title>Contact &bull; Nate Shoffner</title>
-      </Helmet>
+      <PageHelmet title="Contact" />
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <div className="my-auto">
           <ContactSection />

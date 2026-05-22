@@ -1,8 +1,8 @@
-import { useBlogPosts } from "@hooks/useBlogPosts";
+﻿import { useBlogPosts } from "@hooks/useBlogPosts";
 import useFancybox from "@hooks/useFancybox";
 import { useProjectFromParams } from "@hooks/useProjects";
 import { ProjectDownload } from "@types/Project";
-import { Helmet } from "react-helmet";
+import PageHelmet from "@components/PageHelmet";
 import { Navigate } from "react-router-dom";
 import ShareButtons from "@components/ShareButtons";
 
@@ -25,9 +25,7 @@ function Project() {
 
   return (
     <>
-      <Helmet>
-        <title>{project?.name}</title>
-      </Helmet>
+      <PageHelmet title={project.name} />
       <section className="page-section p-4 p-lg-5 d-flex flex-column">
         <div className="my-auto">
           <div className="project">
