@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import Navbar from "@components/Navbar";
 
 const NoPage = () => {
   return (
@@ -6,6 +7,7 @@ const NoPage = () => {
       <Helmet>
         <title>Page Not Found &bull; Nate Shoffner</title>
       </Helmet>
+      <Navbar />
       <section className="page-section error-404 p-4 p-lg-5 d-flex d-column">
         <div className="my-auto">
           <h1>

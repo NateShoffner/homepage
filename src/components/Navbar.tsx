@@ -129,19 +129,14 @@ export default function Navbar() {
                     {item.label}
                   </Link>
                 ) : (
-                  // Real routes elsewhere: use NavLink
-                  <NavLink
-                    to={item.route}
-                    end
-                    className={(
-                      {
-                        /* rr */
-                      }
-                    ) => classes}
+                  // Not on home: navigate back to homepage anchor
+                  <Link
+                    to={item.hash}
                     aria-current={active ? "page" : undefined}
+                    className={classes}
                   >
                     {item.label}
-                  </NavLink>
+                  </Link>
                 )}
               </li>
             );
