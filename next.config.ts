@@ -11,6 +11,14 @@ const gitRevision = (() => {
 })()
 
 const nextConfig: NextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/assets/files/:file*',
+        headers: [{ key: 'Content-Disposition', value: 'attachment' }],
+      },
+    ]
+  },
   env: {
     NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
     NEXT_PUBLIC_GIT_REVISION: gitRevision,

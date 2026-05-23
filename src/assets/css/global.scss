@@ -24,7 +24,6 @@ a {
 
 .text-primary { color: $primary !important; }
 .bg-primary { background-color: $primary !important; }
-.border-primary { border-color: $primary !important; }
 
 body {
     @include body-font;

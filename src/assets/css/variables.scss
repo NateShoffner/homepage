@@ -22,13 +22,6 @@ $green:   #28A745 !default;
 $cyan:    #17A2b8 !default;
 
 $primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
 
 // Layout colors
 
@@ -36,8 +29,5 @@ $link-color:                 #337ab7; //red
 $link-hover-color:           #337ab7; //green
 
 $menu-bg: #2A2A2A;
-
-$bg-primary:    #868E96;
-$bg-secondary: $white;
 
 $highlight: $blue;

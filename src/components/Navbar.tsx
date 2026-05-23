@@ -2,7 +2,7 @@
 
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useLayoutEffect, useEffect, MouseEvent } from 'react'
+import { useLayoutEffect, useState, MouseEvent } from 'react'
 import { useScrollSpy } from '@hooks/useScrollSpy'
 
 type NavItem = { id: string; label: string; route: string; hash: string }
@@ -33,10 +33,7 @@ function scrollToId(id: string, offset = 80, smooth = true) {
 export default function Navbar() {
   const pathname = usePathname()
   const onHome = pathname === '/'
-
-  useEffect(() => {
-    import('bootstrap/dist/js/bootstrap.bundle.min.js').catch(() => {})
-  }, [])
+  const [navOpen, setNavOpen] = useState(false)
 
   useLayoutEffect(() => {
     if (!onHome || !window.location.hash) return
@@ -65,10 +62,7 @@ export default function Navbar() {
         history.replaceState(null, '', `/#${id}`)
       }
       scrollToId(id, 80, true)
-      const el = document.getElementById('navbarSupportedContent')
-      if (el?.classList.contains('show')) {
-        ;(document.querySelector('.navbar-toggler') as HTMLButtonElement)?.click()
-      }
+      setNavOpen(false)
     }
 
   return (
@@ -91,16 +85,15 @@ export default function Navbar() {
       <button
         className="navbar-toggler"
         type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent"
-        aria-expanded="false"
+        aria-expanded={navOpen}
         aria-label="Toggle navigation"
+        onClick={() => setNavOpen(o => !o)}
       >
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <div className={`collapse navbar-collapse${navOpen ? ' show' : ''}`} id="navbarSupportedContent">
         <ul className="navbar-nav">
           {NavItems.map((item) => {
             const active = isActive(item)
