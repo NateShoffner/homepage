@@ -6,12 +6,12 @@
 }
 
 @mixin body-font {
-    font-family: 'Open Sans', serif;
+    font-family: var(--font-open-sans), 'Open Sans', serif;
     font-weight: 300;
 }
 
 @mixin heading-font {
-    font-family: 'Raleway', sans-serif !important;
+    font-family: var(--font-raleway), 'Raleway', sans-serif !important;
     font-weight: 300;
 }
 

@@ -1,3 +1,6 @@
+const gitRevision = process.env.NEXT_PUBLIC_GIT_REVISION ?? 'unknown'
+const buildTime = process.env.NEXT_PUBLIC_BUILD_TIME ?? ''
+
 export default function Footer() {
   return (
     <footer>
@@ -8,17 +11,19 @@ export default function Footer() {
         and do not necessarily reflect those of my employer or any affiliated
         organizations.
         <br />
-        <a href="/about/privacy">Privacy</a> &bull;{" "}
-        <a href="/about/disclosure">Disclosure</a> &bull;{" "}
-        <a href="/#contact">Report Issue</a> &bull; Build:{" "}
+        <a href="/about/privacy">Privacy</a> &bull;{' '}
+        <a href="/about/disclosure">Disclosure</a> &bull;{' '}
+        <a href="/#contact">Report Issue</a> &bull; Build:{' '}
         <a
-          href={`https://github.com/NateShoffner/nateshoffner.github.io/commit/${__GIT_REVISION__}`}
+          href={`https://github.com/NateShoffner/nateshoffner.github.io/commit/${gitRevision}`}
           target="_blank"
+          rel="noopener noreferrer"
         >
-          {__GIT_REVISION__}
-        </a>{" "}
-        &bull; {new Date(__BUILD_TIME__).toUTCString().replace("GMT", "+0000")}
+          {gitRevision}
+        </a>{' '}
+        &bull;{' '}
+        {buildTime ? new Date(buildTime).toUTCString().replace('GMT', '+0000') : ''}
       </div>
     </footer>
-  );
+  )
 }

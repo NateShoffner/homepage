@@ -1,17 +1,15 @@
-import { BlogPost } from "@data/blogIndex";
-import {
-  getBlogPostImage,
-  getBlogPostExcerpt,
-  getBlogPostUrl,
-} from "@utils/blogUtils";
-import { Link } from "react-router-dom";
-import Markdown from "./Markdown";
-import { CommentCount } from "disqus-react";
+'use client'
 
-function BlogPostCard({ post }: { post: BlogPost }) {
+import Link from 'next/link'
+import { PostMeta } from '@/lib/blog'
+import { getBlogPostImage, getBlogPostExcerpt, getBlogPostUrl } from '@utils/blogUtils'
+import Markdown from './Markdown'
+import { CommentCount } from 'disqus-react'
+
+function BlogPostCard({ post }: { post: PostMeta }) {
   return (
     <div className="card blog-card h-100 pt-2">
-      <Link to={getBlogPostUrl(post)}>
+      <Link href={getBlogPostUrl(post)}>
         <img
           src={getBlogPostImage(post)}
           className="card-img-top img-fluid"
@@ -20,12 +18,11 @@ function BlogPostCard({ post }: { post: BlogPost }) {
       </Link>
       <div className="card-body">
         <h5 className="card-title">
-          <Link to={getBlogPostUrl(post)}>{post.title}</Link>
+          <Link href={getBlogPostUrl(post)}>{post.title}</Link>
         </h5>
         <div className="card-text">
           <Markdown>{getBlogPostExcerpt(post)}</Markdown>
-
-          <Link to={getBlogPostUrl(post)} className="btn btn-primary">
+          <Link href={getBlogPostUrl(post)} className="btn btn-primary">
             Read More &raquo;
           </Link>
         </div>
@@ -33,22 +30,17 @@ function BlogPostCard({ post }: { post: BlogPost }) {
       <div className="card-footer text-center text-muted">
         <ul className="post-meta">
           <li className="post-meta-item">
-            <i className="fa fa-calendar"></i>{" "}
+            <i className="fa fa-calendar"></i>{' '}
             {new Date(post.date).toLocaleDateString(undefined, {
-              year: "numeric",
-              month: "long",
-              day: "2-digit",
+              year: 'numeric',
+              month: 'long',
+              day: '2-digit',
             })}
           </li>
           <li className="post-meta-item">
-            <i className="fa fa-comments"></i>{" "}
-            <a href={post.fullUrl + "#comments"}>
-              <CommentCount
-                shortname="nateshoffner"
-                config={{
-                  url: post.fullUrl,
-                }}
-              >
+            <i className="fa fa-comments"></i>{' '}
+            <a href={post.fullUrl + '#comments'}>
+              <CommentCount shortname="nateshoffner" config={{ url: post.fullUrl }}>
                 {0} Comments
               </CommentCount>
             </a>
@@ -56,7 +48,7 @@ function BlogPostCard({ post }: { post: BlogPost }) {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
-export { BlogPostCard };
+export { BlogPostCard }

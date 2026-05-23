@@ -2,7 +2,7 @@ export type AmazonLocale = "com" | "co.uk" | "de" | "fr" | "ca" | "co.jp" | "com
 
 export function amazonProductUrl({
   asin,
-  tag = import.meta.env.VITE_AMAZON_TAG,
+  tag = process.env.NEXT_PUBLIC_AMAZON_TAG,
   locale = "com",
 }: {
   asin: string;

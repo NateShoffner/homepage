@@ -1,45 +1,36 @@
-import { ProjectCard } from "@components/ProjectCard";
-import { useProjects } from "@hooks/useProjects";
-import { Project } from "@types/Project";
+import { ProjectCard } from '@components/ProjectCard'
+import { Project } from '@/src/types/Project'
 
 interface PublicProjectsProps {
-  limit?: number;
-  sortBy?: keyof Project;
-  sortOrder?: "asc" | "desc";
+  projects: Project[]
+  limit?: number
+  sortBy?: keyof Project
+  sortOrder?: 'asc' | 'desc'
 }
 
-function PublicProjects({
-  limit,
-  sortBy = "updated",
-  sortOrder = "desc",
-}: PublicProjectsProps) {
-  const projects = useProjects();
-
+function PublicProjects({ projects, limit, sortBy = 'updated', sortOrder = 'desc' }: PublicProjectsProps) {
   const sorted = [...projects].sort((a, b) => {
-    const aValue = a[sortBy];
-    const bValue = b[sortBy];
+    const aValue = a[sortBy]
+    const bValue = b[sortBy]
 
-    // If sorting by "updated", deprioritize undefined values
-    if (sortBy === "updated") {
-      if (aValue === undefined && bValue !== undefined) return 1;
-      if (aValue !== undefined && bValue === undefined) return -1;
-      if (aValue === undefined && bValue === undefined) return 0;
+    if (sortBy === 'updated') {
+      if (aValue === undefined && bValue !== undefined) return 1
+      if (aValue !== undefined && bValue === undefined) return -1
+      if (aValue === undefined && bValue === undefined) return 0
     }
 
-    if (typeof aValue === "string" && typeof bValue === "string") {
-      return sortOrder === "asc"
-        ? aValue.localeCompare(bValue)
-        : bValue.localeCompare(aValue);
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
     }
     if (aValue instanceof Date && bValue instanceof Date) {
-      return sortOrder === "asc"
+      return sortOrder === 'asc'
         ? aValue.getTime() - bValue.getTime()
-        : bValue.getTime() - aValue.getTime();
+        : bValue.getTime() - aValue.getTime()
     }
-    return 0;
-  });
+    return 0
+  })
 
-  const visible = limit ? sorted.slice(0, limit) : sorted;
+  const visible = limit ? sorted.slice(0, limit) : sorted
 
   return (
     <div className="row">
@@ -49,7 +40,7 @@ function PublicProjects({
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export { ProjectCard, PublicProjects };
+export { ProjectCard, PublicProjects }

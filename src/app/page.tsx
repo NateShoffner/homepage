@@ -1,0 +1,77 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { AboutSection } from '@components/AboutSection'
+import BlogSection from '@components/BlogSection'
+import { ProjectsSection } from '@components/ProjectsSection'
+import ContactSection from '@components/ContactSection'
+import ScrollButton from '@components/ScrollButton'
+import TopButton from '@components/TopButton'
+import { Element } from 'react-scroll'
+import type { PostMeta } from '@/lib/blog'
+import type { Project } from '@/src/types/Project'
+
+export default function HomePage() {
+  const [posts, setPosts] = useState<PostMeta[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
+
+  useEffect(() => {
+    fetch('/api/blog/posts')
+      .then((r) => r.json())
+      .then((data: PostMeta[]) => setPosts(data))
+      .catch(() => {})
+
+    fetch('/api/projects')
+      .then((r) => r.json())
+      .then((data: Project[]) => setProjects(data))
+      .catch(() => {})
+  }, [])
+
+  return (
+    <div className="container-fluid p-0">
+      <Element name="about">
+        <section className="page-section about-cover p-4 p-lg-5 d-flex d-column" id="about">
+          <div className="my-auto">
+            <AboutSection />
+          </div>
+          <ScrollButton target="blog" />
+        </section>
+      </Element>
+
+      <Element name="blog">
+        <section className="page-section p-4 p-lg-5 d-flex flex-column" id="blog">
+          <div className="my-auto">
+            <h2 className="mb-5">
+              Latest <span className="text-highlight">Blog Posts</span>
+              <a href="/feed.xml">
+                <i className="fa fa-rss pl-4"></i>
+              </a>
+            </h2>
+            <BlogSection posts={posts.slice(0, 3)} />
+            <a href="/blog" role="button" className="btn btn-primary btn-lg btn-block">
+              View More Blog Posts
+            </a>
+          </div>
+        </section>
+      </Element>
+
+      <Element name="projects">
+        <section className="page-section p-4 p-lg-5 d-flex flex-column" id="projects">
+          <div className="my-auto">
+            <ProjectsSection projects={projects} limit={3} showMore={true} />
+          </div>
+        </section>
+      </Element>
+
+      <Element name="contact">
+        <section className="page-section p-4 p-lg-5 d-flex flex-column" id="contact">
+          <div className="my-auto">
+            <ContactSection />
+          </div>
+        </section>
+      </Element>
+
+      <TopButton target="about" />
+    </div>
+  )
+}

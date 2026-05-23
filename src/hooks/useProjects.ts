@@ -1,36 +1,18 @@
-import rawProjects from "@data/projects.yml";
-import { useParams } from "react-router-dom";
+// Client-side hook for accessing project data fetched from the API.
+// Server-side code should use lib/projects.ts directly.
 
-export type Project = {
-  name: string;
-  slug: string;
-  updated?: Date;
-  [key: string]: any;
-};
+import { useState, useEffect } from 'react'
+import type { Project } from '@/src/types/Project'
 
 export function useProjects(): Project[] {
-    return (rawProjects as any[]).map((p) => ({
-        ...p,
-        updated:
-            p.updated && p.updated !== "N/A"
-                ? new Date(p.updated.replace(/(\d+)(st|nd|rd|th)/, "$1"))
-                : undefined,
-    }));
-}
+  const [projects, setProjects] = useState<Project[]>([])
 
-export function useProject(slug: string): Project | undefined {
-  const projects = useProjects();
-  return projects.find((project) => project.slug === slug);
-}
+  useEffect(() => {
+    fetch('/api/projects')
+      .then((r) => r.json())
+      .then((data: Project[]) => setProjects(data))
+      .catch(() => {})
+  }, [])
 
-export function useProjectByName(name: string): Project | undefined {
-  const projects = useProjects();
-    return projects.find(
-        (project) => project.name.toLowerCase() === name.toLowerCase()
-    );
-}
-
-export function useProjectFromParams(): Project | undefined {
-  const { slug } = useParams<{ slug: string }>();
-  return useProject(slug);
+  return projects
 }

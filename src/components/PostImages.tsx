@@ -1,18 +1,12 @@
-import useFancybox from "@hooks/useFancybox";
+'use client'
 
-type Image = {
-  filename: string;
-  alt?: string;
-  title?: string;
-};
+import useFancybox from '@hooks/useFancybox'
 
-type Props = {
-  images: Image[];
-  group?: string;
-};
+type Image = { filename: string; alt?: string; title?: string }
+type Props = { images: Image[]; group?: string }
 
 export default function PostImages({ images, group }: Props) {
-  const [fancyboxRef] = useFancybox();
+  const [fancyboxRef] = useFancybox()
 
   return (
     <div ref={fancyboxRef}>
@@ -21,16 +15,16 @@ export default function PostImages({ images, group }: Props) {
           key={idx}
           href={`/assets/images/posts/${image.filename}`}
           className="fancybox"
-          data-fancybox={group ? `${group}` : undefined}
+          data-fancybox={group ?? undefined}
         >
           <img
             src={`/assets/images/posts/${image.filename}`}
-            className={`img-fluid post-image`}
-            alt={image.alt || ""}
-            title={image.title || ""}
+            className="img-fluid post-image"
+            alt={image.alt || ''}
+            title={image.title || ''}
           />
         </a>
       ))}
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { Project } from "@types/Project";
+import { Project } from '@/src/types/Project'
 
 export function getProjectImage(project: Project): string {
   if (project.logo) {

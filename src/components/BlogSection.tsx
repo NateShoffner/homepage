@@ -1,18 +1,16 @@
-import { useBlogPosts } from "@hooks/useBlogPosts";
-import { BlogPostCard } from "./BlogPostCard";
+import Script from 'next/script'
+import { PostMeta } from '@/lib/blog'
+import { BlogPostCard } from './BlogPostCard'
 
 interface BlogSectionProps {
-  limit?: number;
+  posts: PostMeta[]
 }
 
-export function BlogSection({ limit }: BlogSectionProps) {
-  const posts = useBlogPosts().slice(0, limit);
-
+export function BlogSection({ posts }: BlogSectionProps) {
   return (
     <>
       <p className="pb-5">
-        Incoherent ramblings, project updates, reviews, and other writings
-        fallen into the ether.
+        Incoherent ramblings, project updates, reviews, and other writings fallen into the ether.
       </p>
       <div className="row">
         {posts.map((post, index) => (
@@ -22,13 +20,9 @@ export function BlogSection({ limit }: BlogSectionProps) {
         ))}
       </div>
 
-      <script
-        id="dsq-count-scr"
-        src="//nateshoffner.disqus.com/count.js"
-        async
-      ></script>
+      <Script id="dsq-count-scr" src="//nateshoffner.disqus.com/count.js" strategy="afterInteractive" />
     </>
-  );
+  )
 }
 
-export default BlogSection;
+export default BlogSection

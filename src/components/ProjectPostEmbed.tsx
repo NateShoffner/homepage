@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { Project } from "@types/Project";
-import { getProjectImage } from "@utils/projectUtils";
+import Link from 'next/link'
+import { Project } from '@/src/types/Project'
+import { getProjectImage } from '@utils/projectUtils'
 
 function ProjectPostEmbed({ project }: { project: Project }) {
   return (
@@ -14,13 +14,13 @@ function ProjectPostEmbed({ project }: { project: Project }) {
         <h5 className="mt-0">{project.name}</h5>
         <p>{project.description}</p>
         <p className="mb-0">
-          <Link to={`/projects/${project.slug}`}>
+          <Link href={`/projects/${project.slug}`}>
             More Info <i className="fa fa-arrow-right"></i>
           </Link>
         </p>
       </div>
     </div>
-  );
+  )
 }
 
-export { ProjectPostEmbed };
+export { ProjectPostEmbed }
