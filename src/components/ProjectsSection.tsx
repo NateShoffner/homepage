@@ -31,9 +31,16 @@ export function ProjectsSection({ projects, limit, showMore }: ProjectsSectionPr
       )}
 
       <h3 className="mt-5">Open Source Projects</h3>
-      <strong>GitHub: </strong>
-      <a href="https://github.com/NateShoffner" target="_blank" rel="noopener noreferrer">
-        https://github.com/NateShoffner
+      <p>
+        A selection of open source projects across my personal and organization accounts. Most of these are hobby experiments, tools, or community contributions.
+      </p>
+      <a
+        href="https://github.com/NateShoffner"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="gw-github-link"
+      >
+        <i className="fa fa-github" /> github.com/NateShoffner
       </a>
       <GitHubRepoViewer
         usernames={['NateShoffner', 'Tabster', 'BuildandShoot', 'NubileGames', 'Tenji-hin']}

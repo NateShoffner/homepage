@@ -1,61 +1,139 @@
-.gw-repo-outer {
-  float: left;
-  width: 50%;
+.gw-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  margin-top: 0.25rem;
+
+  .fa {
+    font-size: 1.2rem;
+  }
 }
-.gw-repo-outer:nth-child(2n + 1) {
-  clear: left;
+
+.gw-filter-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
-.gw-repo {
-  padding: 0.5em 0;
-  margin: 0 1.5em 1em 0;
-  border-top: 1px solid #ccc;
+
+.gw-filter-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $gray-500;
+  padding-top: 0.45rem;
+  white-space: nowrap;
 }
-.gw-repo:nth-child(2n) {
-  margin: 0 0 1em 1.5em;
+
+.gw-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
 }
-.gw-title{
-  margin-bottom: 0.3em;
+
+.gw-select {
+  width: auto;
+  min-width: 160px;
+  max-width: 220px;
 }
+
+.gw-clear {
+  align-self: center;
+}
+
+.gw-load-more {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.gw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.gw-card {
+  padding: 1.25rem 1.25rem;
+  border: 1px solid $gray-300;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.gw-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .gw-name {
-  font-weight: bold;
-  word-wrap: break-word;
+  font-weight: 600;
+  word-break: break-word;
 }
+
 .gw-stats {
-  display: inline-block;
-  margin: 0;
-  float: right;
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: $gray-500;
+  padding-top: 2px;
 }
-.gw-watchers, .gw-forks {
-  display: inline-block;
-  height: 21px;
-  padding: 0 5px 0 23px;
-  line-height: 21px;
-  background: transparent url('/assets/images/repostat.png') no-repeat 0 0;
+
+.gw-stat {
+  white-space: nowrap;
 }
-.gw-watchers {
-  background-position: 5px -2px;
+
+.gw-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  color: $gray-500;
 }
-.gw-forks {
-  background-position: 5px -52px;
-}
+
 .gw-lang {
-  font-size: 0.8em;
-  color: #777;
-}
-.gw-clearer {
-  clear: left;
-}
-.gw-homepage {
-  margin-top: 5px;
-}
-.gw-homepage a {
-  text-decoration: none;
+  font-weight: 500;
 }
 
-.gw-repo {
-    border-color: $gray-300 !important;
+.gw-meta-sep {
+  color: $gray-400;
 }
 
-.gw-name {
-	font-weight: normal !important;
+.gw-owner {
+  font-style: italic;
+}
+
+.gw-placeholder {
+  color: $gray-500;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.gw-desc {
+  font-size: 0.85rem;
+  color: $gray-600;
+  line-height: 1.4;
+}
+
+.gw-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.gw-topic {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  background: rgba($primary, 0.12);
+  color: $primary;
 }

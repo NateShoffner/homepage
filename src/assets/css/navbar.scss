@@ -100,6 +100,47 @@
     height: 160px;
     border-radius: 100%;
     background-color: black;
+    position: relative;
+    transition: box-shadow 0.4s ease;
+
+    &:hover {
+        box-shadow: 0 0 0 3px rgba($highlight, 0.15), 0 0 20px rgba($highlight, 0.4);
+    }
+
+    &::before,
+    &::after {
+        box-sizing: border-box;
+        content: '';
+        position: absolute;
+        width: calc(100% + 8px);
+        height: calc(100% + 8px);
+        border-radius: 100%;
+        top: -4px;
+        left: -4px;
+    }
+
+    &::before {
+        border: 2px solid transparent;
+    }
+
+    &:hover::before {
+        border-top-color: $highlight;
+        border-right-color: $highlight;
+        border-bottom-color: $highlight;
+        transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.10s, border-bottom-color 0.15s linear 0.20s;
+    }
+
+    &::after {
+        border: 0 solid transparent;
+    }
+
+    &:hover::after {
+        border-top: 2px solid $highlight;
+        border-left-width: 2px;
+        border-right-width: 2px;
+        transform: rotate(270deg);
+        transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+    }
 }
 
 .circle {
@@ -119,46 +160,11 @@
     position: relative;
     vertical-align: middle;
 
-    &::before,
-    &::after {
-        box-sizing: inherit;
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 100%;
+    img {
+        transition: transform 0.35s ease;
     }
 
-    &:hover {
-        color: $highlight;
-    }
-
-    &::before,
-    &::after {
-        top: 0;
-        left: 0;
-    }
-
-    &::before {
-        border: 1px solid transparent;
-    }
-
-    &:hover::before {
-        border-top-color: $highlight;
-        border-right-color: $highlight;
-        border-bottom-color: $highlight;
-        transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.10s, border-bottom-color 0.15s linear 0.20s;
-    }
-
-    &::after {
-        border: 0 solid transparent;
-    }
-
-    &:hover::after {
-        border-top: 1px solid $highlight;
-        border-left-width: 1px;
-        border-right-width: 1px;
-        transform: rotate(270deg);
-        transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+    &:hover img {
+        transform: scale(1.04);
     }
 }

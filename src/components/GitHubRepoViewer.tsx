@@ -1,38 +1,58 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
 
 interface Repo {
   id: number
   name: string
   html_url: string
-  description: string
-  language: string
+  description: string | null
+  language: string | null
   fork: boolean
   homepage: string
   pushed_at: string
   stargazers_count: number
-  watchers_count: number
   forks_count: number
+  topics: string[]
+  owner: { login: string }
 }
 
 interface Props {
   usernames: string[]
   includeForks?: boolean
   includePages?: boolean
-  showHomepage?: boolean
-  sortBy?: 'created' | 'updated' | 'pushed' | 'full_name'
+}
+
+type SortOption = 'pushed' | 'stars' | 'name'
+
+function relativeTime(dateStr: string): string {
+  const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000)
+  if (days < 1) return 'today'
+  if (days < 7) return `${days}d ago`
+  if (days < 30) return `${Math.floor(days / 7)}w ago`
+  if (days < 365) return `${Math.floor(days / 30)}mo ago`
+  return `${Math.floor(days / 365)}y ago`
+}
+
+function sortRepos(repos: Repo[], sort: SortOption): Repo[] {
+  return [...repos].sort((a, b) => {
+    if (sort === 'stars') return b.stargazers_count - a.stargazers_count
+    if (sort === 'name') return a.name.localeCompare(b.name)
+    return new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
+  })
 }
 
 const GitHubRepoViewer: React.FC<Props> = ({
   usernames,
   includeForks = true,
   includePages = true,
-  showHomepage = true,
-  sortBy = 'pushed',
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
+  const [selectedLang, setSelectedLang] = useState('')
+  const [selectedOrg, setSelectedOrg] = useState('')
+  const [sortBy, setSortBy] = useState<SortOption>('pushed')
+  const [visibleCount, setVisibleCount] = useState(12)
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -41,7 +61,8 @@ const GitHubRepoViewer: React.FC<Props> = ({
         usernames.map(async (username) => {
           try {
             const response = await axios.get<Repo[]>(
-              `https://api.github.com/users/${username}/repos?per_page=100&sort=${sortBy}`
+              `https://api.github.com/users/${username}/repos?per_page=100&sort=pushed`,
+              { headers: { Accept: 'application/vnd.github+json' } }
             )
             allRepos.push(...response.data)
           } catch (err) {
@@ -50,49 +71,165 @@ const GitHubRepoViewer: React.FC<Props> = ({
         })
       )
 
-      const filtered = allRepos.filter((repo) => {
-        if (!includeForks && repo.fork) return false
-        if (!includePages && repo.name.endsWith('.github.io')) return false
-        return true
-      })
-
       setRepos(
-        filtered.sort(
-          (a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
-        )
+        allRepos.filter((repo) => {
+          if (!includeForks && repo.fork) return false
+          if (!includePages && repo.name.endsWith('.github.io')) return false
+          return true
+        })
       )
     }
 
     fetchRepos()
-  }, [usernames, includeForks, includePages, sortBy])
+  }, [usernames, includeForks, includePages])
+
+  const languages = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const repo of repos) {
+      const lang = repo.language ?? 'Other'
+      counts.set(lang, (counts.get(lang) ?? 0) + 1)
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([lang, count]) => ({ lang, count }))
+  }, [repos])
+
+  const orgs = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const repo of repos) {
+      const login = repo.owner.login
+      counts.set(login, (counts.get(login) ?? 0) + 1)
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([org, count]) => ({ org, count }))
+  }, [repos])
+
+  const resetCount = () => setVisibleCount(12)
+  const hasActiveFilters = selectedLang !== '' || selectedOrg !== ''
+
+  const clearFilters = () => {
+    setSelectedLang('')
+    setSelectedOrg('')
+    resetCount()
+  }
+
+  const filtered = useMemo(() => {
+    let result = repos
+    if (selectedLang) result = result.filter((r) => (r.language ?? 'Other') === selectedLang)
+    if (selectedOrg) result = result.filter((r) => r.owner.login === selectedOrg)
+    return sortRepos(result, sortBy)
+  }, [repos, selectedLang, selectedOrg, sortBy])
+
+  const visible = filtered.slice(0, visibleCount)
 
   return (
     <div>
-      {repos.map((repo) => (
-        <div key={repo.id} className="gw-repo-outer">
-          <div className="gw-repo">
-            <div className="gw-title">
+      <div className="gw-filter-bar">
+        <span className="gw-filter-label">
+          <i className="fa fa-filter" /> Filters
+        </span>
+        <div className="gw-filters">
+          <select
+            className="form-control gw-select"
+            value={selectedLang}
+            onChange={(e) => { setSelectedLang(e.target.value); resetCount() }}
+          >
+            <option value="">All Languages</option>
+            {languages.map(({ lang, count }) => (
+              <option key={lang} value={lang}>{lang} ({count})</option>
+            ))}
+          </select>
+
+          <select
+            className="form-control gw-select"
+            value={selectedOrg}
+            onChange={(e) => { setSelectedOrg(e.target.value); resetCount() }}
+          >
+            <option value="">All Accounts</option>
+            {orgs.map(({ org, count }) => (
+              <option key={org} value={org}>{org} ({count})</option>
+            ))}
+          </select>
+
+          <select
+            className="form-control gw-select"
+            value={sortBy}
+            onChange={(e) => { setSortBy(e.target.value as SortOption); resetCount() }}
+          >
+            <option value="pushed">Recently Updated</option>
+            <option value="stars">Most Stars</option>
+            <option value="name">Alphabetical</option>
+          </select>
+
+          {hasActiveFilters && (
+            <button className="btn btn-sm btn-outline-secondary gw-clear" onClick={clearFilters}>
+              <i className="fa fa-times" /> Clear
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="gw-grid">
+        {visible.map((repo) => (
+          <div key={repo.id} className="gw-card">
+            <div className="gw-card-header">
               <a href={repo.html_url} className="gw-name" target="_blank" rel="noopener noreferrer">
                 {repo.name}
               </a>
-              <span className="gw-stats">
-                <span className="gw-watchers">{repo.watchers_count}</span>
-                <span className="gw-forks">{repo.forks_count}</span>
-              </span>
+              <div className="gw-stats">
+                {repo.stargazers_count > 0 && (
+                  <span className="gw-stat">
+                    <i className="fa fa-star" /> {repo.stargazers_count}
+                  </span>
+                )}
+                {repo.forks_count > 0 && (
+                  <span className="gw-stat">
+                    <i className="fa fa-code-fork" /> {repo.forks_count}
+                  </span>
+                )}
+              </div>
             </div>
-            <div className="gw-lang">{repo.language || 'Unknown Language'}</div>
-            <div>{repo.description || 'No description available'}</div>
-            {showHomepage && repo.homepage && (
-              <div className="gw-homepage">
-                <a href={repo.homepage} target="_blank" rel="noopener noreferrer">
-                  {repo.homepage}
-                </a>
+
+            <div className="gw-meta">
+              {repo.language
+                ? <span className="gw-lang">{repo.language}</span>
+                : <span className="gw-lang gw-placeholder">Unknown</span>
+              }
+              <span className="gw-meta-sep">·</span>
+              <span className="gw-updated">{relativeTime(repo.pushed_at)}</span>
+              <span className="gw-meta-sep">·</span>
+              <span className="gw-owner">{repo.owner.login}</span>
+            </div>
+
+            <div className="gw-desc">
+              {repo.description
+                ? repo.description
+                : <span className="gw-placeholder">No description provided.</span>
+              }
+            </div>
+
+            {repo.topics?.length > 0 && (
+              <div className="gw-topics">
+                {repo.topics.map((t) => (
+                  <span key={t} className="gw-topic">{t}</span>
+                ))}
               </div>
             )}
           </div>
+        ))}
+      </div>
+
+      {visibleCount < filtered.length && (
+        <div className="gw-load-more">
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() => setVisibleCount((n) => n + 12)}
+          >
+            Load more ({filtered.length - visibleCount} remaining)
+          </button>
         </div>
-      ))}
-      <div className="gw-clearer"></div>
+      )}
     </div>
   )
 }
