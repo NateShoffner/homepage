@@ -3,8 +3,8 @@
     width: 100%;
 
     .post-nav {
-        border-top: 1px solid $gray-300;
-        border-bottom: 1px solid $gray-300;
+        border-top: 1px solid var(--border-color-md);
+        border-bottom: 1px solid var(--border-color-md);
     }
 
     .post-tags {
@@ -40,7 +40,7 @@ ul.post-meta {
 }
 
 .blog-project-embed {
-    border: 1px solid $gray-300;
+    border: 1px solid var(--border-color-md);
 
     img {
         max-height: 64px;

@@ -1,11 +1,13 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { ReactTyped } from 'react-typed'
+import { useState, useEffect } from "react";
+import { ReactTyped } from "react-typed";
 
 export function AboutSection() {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => { setMounted(true) }, [])
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <>
@@ -25,20 +27,19 @@ export function AboutSection() {
           <p>
             Software engineer based in Lancaster, Pennsylvania. Passionate about
             all things tech, solving interesting problems, learning how things
-            work, and [simultaneously] breaking and building things in order to
-            create something to be proud of.
+            work, and [simultaneously] breaking and building things.
           </p>
           <p>
-            Currently working as a Senior Software /{' '}
+            Currently working as a Senior Software /{" "}
             <a href="https://certified.elastic.co/d2170b39-7c27-4811-952f-3085d6a0dda5">
               Elastic Certified Engineer
             </a>
             .
           </p>
           <p className="mb-5">
-            I enjoy working on lots of little passion projects which you can find on
-            my <a href="https://github.com/nateshoffner">GitHub</a> and getting
-            involved within my{' '}
+            I enjoy working on lots of little passion projects which you can
+            find on my <a href="https://github.com/nateshoffner">GitHub</a> and
+            getting involved within my{" "}
             <a href="https://techlancaster.com/">local tech scene</a>.
           </p>
         </div>
@@ -57,7 +58,7 @@ export function AboutSection() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default AboutSection
+export default AboutSection;

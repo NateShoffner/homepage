@@ -49,6 +49,9 @@ const GitHubRepoViewer: React.FC<Props> = ({
   includePages = true,
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const [selectedLang, setSelectedLang] = useState('')
   const [selectedOrg, setSelectedOrg] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('pushed')
@@ -56,7 +59,10 @@ const GitHubRepoViewer: React.FC<Props> = ({
 
   useEffect(() => {
     const fetchRepos = async () => {
+      setLoading(true)
+      setLoadError(false)
       const allRepos: Repo[] = []
+      let anyFailed = false
       await Promise.all(
         usernames.map(async (username) => {
           try {
@@ -67,17 +73,20 @@ const GitHubRepoViewer: React.FC<Props> = ({
             allRepos.push(...response.data)
           } catch (err) {
             console.error(`Failed to fetch repos for ${username}`, err)
+            anyFailed = true
           }
         })
       )
 
-      setRepos(
-        allRepos.filter((repo) => {
-          if (!includeForks && repo.fork) return false
-          if (!includePages && repo.name.endsWith('.github.io')) return false
-          return true
-        })
-      )
+      const filtered = allRepos.filter((repo) => {
+        if (!includeForks && repo.fork) return false
+        if (!includePages && repo.name.endsWith('.github.io')) return false
+        return true
+      })
+
+      setRepos(filtered)
+      setLoadError(anyFailed && filtered.length === 0)
+      setLoading(false)
     }
 
     fetchRepos()
@@ -106,9 +115,10 @@ const GitHubRepoViewer: React.FC<Props> = ({
   }, [repos])
 
   const resetCount = () => setVisibleCount(12)
-  const hasActiveFilters = selectedLang !== '' || selectedOrg !== ''
+  const hasActiveFilters = searchQuery !== '' || selectedLang !== '' || selectedOrg !== ''
 
   const clearFilters = () => {
+    setSearchQuery('')
     setSelectedLang('')
     setSelectedOrg('')
     resetCount()
@@ -116,12 +126,36 @@ const GitHubRepoViewer: React.FC<Props> = ({
 
   const filtered = useMemo(() => {
     let result = repos
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase()
+      result = result.filter(
+        (r) => r.name.toLowerCase().includes(q) || (r.description ?? '').toLowerCase().includes(q)
+      )
+    }
     if (selectedLang) result = result.filter((r) => (r.language ?? 'Other') === selectedLang)
     if (selectedOrg) result = result.filter((r) => r.owner.login === selectedOrg)
     return sortRepos(result, sortBy)
-  }, [repos, selectedLang, selectedOrg, sortBy])
+  }, [repos, searchQuery, selectedLang, selectedOrg, sortBy])
 
   const visible = filtered.slice(0, visibleCount)
+
+  if (loading) {
+    return (
+      <div className="py-5 text-center text-muted">
+        <i className="fa fa-spinner fa-spin fa-2x mb-3 d-block" />
+        Loading repositories…
+      </div>
+    )
+  }
+
+  if (loadError) {
+    return (
+      <div className="py-5 text-center text-muted">
+        <i className="fa fa-exclamation-circle fa-2x mb-3 d-block" />
+        Couldn&apos;t load repositories. Please try again later.
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -130,6 +164,14 @@ const GitHubRepoViewer: React.FC<Props> = ({
           <i className="fa fa-filter" /> Filters
         </span>
         <div className="gw-filters">
+          <input
+            type="search"
+            className="form-control gw-search"
+            placeholder="Search repos…"
+            value={searchQuery}
+            onChange={(e) => { setSearchQuery(e.target.value); resetCount() }}
+          />
+
           <select
             className="form-control gw-select"
             value={selectedLang}
@@ -169,6 +211,13 @@ const GitHubRepoViewer: React.FC<Props> = ({
           )}
         </div>
       </div>
+
+      {filtered.length === 0 && (
+        <div className="py-5 text-center text-muted">
+          <i className="fa fa-search fa-2x mb-3 d-block" />
+          No repositories match your filters.
+        </div>
+      )}
 
       <div className="gw-grid">
         {visible.map((repo) => (

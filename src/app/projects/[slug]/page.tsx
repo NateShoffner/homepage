@@ -31,106 +31,102 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
   const domain = project.homepage
     ? new URL(project.homepage).hostname.replace('www.', '')
-    : 'N/A'
+    : null
+
+  const formattedDate = project.updated
+    ? new Date(project.updated).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric',
+      })
+    : null
 
   return (
     <section className="page-section p-4 p-lg-5 d-flex flex-column">
-      <div className="my-auto">
-        <div className="project">
-          <div className="row">
-            <div className="col-12 col-sm-2 col-md-1 my-auto">
-              <img
-                src={`/assets/images/projects/${project.slug}/${project.logo}`}
-                className="img-fluid mx-auto d-block project-logo"
-                alt={project.name}
-              />
-            </div>
-            <div className="col-12 col-sm-10 col-md-11 mt-3">
-              <h1>{project.name}</h1>
-            </div>
-          </div>
-          <p>{project.description}</p>
+      <div className="project">
 
-          <ProjectInteractive project={project} />
-
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <table className="table table-sm table-striped project-table">
-                <thead><tr><th colSpan={2}>Details</th></tr></thead>
-                <tbody>
-                  <tr><td><i className="fa fa-history"></i> Version:</td><td>{project.version}</td></tr>
-                  <tr>
-                    <td><i className="fa fa-calendar"></i> Updated:</td>
-                    <td>
-                      {project.updated
-                        ? new Date(project.updated).toLocaleDateString('en-US', {
-                            year: 'numeric', month: 'long', day: 'numeric',
-                          })
-                        : ''}
-                    </td>
-                  </tr>
-                  <tr><td><i className="fa fa-desktop"></i> Platform(s):</td><td>{project.platforms?.join(', ')}</td></tr>
-                  <tr>
-                    <td><i className="fa fa-home"></i> Homepage:</td>
-                    <td><a href={project.homepage} target="_blank" rel="noopener noreferrer">{domain}</a></td>
-                  </tr>
-                  <tr><td><i className="fa fa-code"></i> Open Source:</td><td>{project.open_source}</td></tr>
-                  <tr><td><i className="fa fa-file"></i> License:</td><td>{project.license}</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            {project.downloads && (
-              <div className="col-12 col-md-6">
-                <table className="table table-sm table-striped project-table">
-                  <thead><tr><th colSpan={2}>Downloads</th></tr></thead>
-                  <tbody>
-                    {project.downloads.map((download: ProjectDownload, index: number) => (
-                      <tr key={index}>
-                        <td>
-                          <i className="fa fa-download"></i> {download.name}<br />
-                          <span className="project-description">{download.description}</span>
-                        </td>
-                        <td className="download">
-                          <a href={download.url} role="button" className="btn btn-primary btn-block btn-download">
-                            Download
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <table className="table table-sm table-striped project-table">
-                <thead><tr><th colSpan={2}>Latest Blog Posts About {project.name}</th></tr></thead>
-                <tbody>
-                  {blogPosts.length > 0 ? (
-                    blogPosts.slice(0, 4).map((post, index) => (
-                      <tr key={index}>
-                        <td><a href={post.url}>{post.title}</a></td>
-                        <td>
-                          <i className="fa fa-calendar"></i>{' '}
-                          {post.date
-                            ? new Date(post.date).toLocaleDateString('en-US', {
-                                year: 'numeric', month: 'long', day: 'numeric',
-                              })
-                            : ''}
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr><td colSpan={2}>No blog posts available. :(</td></tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div className="d-flex align-items-center mb-3">
+          <img
+            src={`/assets/images/projects/${project.slug}/${project.logo}`}
+            className="project-logo mr-3"
+            alt={project.name}
+          />
+          <h1 className="mb-0">{project.name}</h1>
         </div>
+
+        <ul className="post-meta mb-3">
+          {project.version && (
+            <li className="post-meta-item">
+              <i className="fa fa-tag" /> v{project.version}
+            </li>
+          )}
+          {formattedDate && (
+            <li className="post-meta-item">
+              <i className="fa fa-calendar" /> {formattedDate}
+            </li>
+          )}
+          {project.platforms && project.platforms.length > 0 && (
+            <li className="post-meta-item">
+              <i className="fa fa-desktop" /> {project.platforms.join(', ')}
+            </li>
+          )}
+          {project.license && (
+            <li className="post-meta-item">
+              <i className="fa fa-file" /> {project.license}
+            </li>
+          )}
+          {domain && (
+            <li className="post-meta-item">
+              <a href={project.homepage} target="_blank" rel="noopener noreferrer">
+                <i className="fa fa-home" /> {domain}
+              </a>
+            </li>
+          )}
+        </ul>
+
+        <p className="mb-4">{project.description}</p>
+
+        <ProjectInteractive project={project} />
+
+        {project.downloads && project.downloads.length > 0 && (
+          <div className="mb-4">
+            <h4 className="mb-3">Downloads</h4>
+            <div className="project-download-list">
+              {project.downloads.map((download: ProjectDownload, index: number) => (
+                <div key={index} className="project-download-item">
+                  <div>
+                    <div className="project-download-name">{download.name}</div>
+                    {download.description && (
+                      <div className="project-download-desc">{download.description}</div>
+                    )}
+                  </div>
+                  <a href={download.url} className="btn btn-primary btn-sm">
+                    <i className="fa fa-download" /> Download
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {blogPosts.length > 0 && (
+          <div>
+            <h4 className="mb-3">Related Blog Posts</h4>
+            <ul className="list-unstyled project-post-list">
+              {blogPosts.slice(0, 4).map((post, index) => (
+                <li key={index} className="project-post-item">
+                  <a href={post.url}>{post.title}</a>
+                  {post.date && (
+                    <span className="project-post-date">
+                      {new Date(post.date).toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'short', day: 'numeric',
+                      })}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
       </div>
     </section>
   )

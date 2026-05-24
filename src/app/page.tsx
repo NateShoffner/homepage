@@ -65,7 +65,7 @@ export default function HomePage() {
 
       <Element name="contact">
         <section className="page-section p-4 p-lg-5 d-flex flex-column" id="contact">
-          <div className="my-auto">
+          <div>
             <ContactSection />
           </div>
         </section>

@@ -23,11 +23,14 @@ const SocialItems: SocialItem[] = [
   { id: 'linkedin', icon: 'fa-linkedin', url: 'https://www.linkedin.com/in/NateShoffner' },
 ]
 
-function scrollToId(id: string, offset = 80, smooth = true) {
+function scrollToId(id: string, smooth = true) {
   const el =
     document.getElementById(id) ||
     document.querySelector<HTMLElement>(`[name="${id}"]`)
   if (!el) return
+  // Desktop has a fixed left sidebar (no top bar), so only a small offset is needed.
+  // Mobile has a fixed top navbar (~56px), so clear it with a bit of breathing room.
+  const offset = window.innerWidth >= 992 ? 0 : 60
   const y = el.getBoundingClientRect().top + window.pageYOffset - offset
   window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' })
 }
@@ -37,15 +40,21 @@ export default function Navbar() {
   const onHome = pathname === '/'
   const [navOpen, setNavOpen] = useState(false)
 
+  const toggleTheme = () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('theme', next)
+    document.documentElement.setAttribute('data-theme', next)
+  }
+
   useLayoutEffect(() => {
     if (!onHome || !window.location.hash) return
     const id = decodeURIComponent(window.location.hash.slice(1))
-    scrollToId(id, 80, true)
+    scrollToId(id)
   }, [onHome])
 
   const activeSectionId = useScrollSpy(
     NavItems.map((n) => n.id),
-    80
+    100
   )
 
   const isActive = (item: NavItem) => {
@@ -62,7 +71,7 @@ export default function Navbar() {
       if (window.location.hash !== `#${id}`) {
         history.replaceState(null, '', `/#${id}`)
       }
-      scrollToId(id, 80, true)
+      scrollToId(id)
       setNavOpen(false)
     }
 
@@ -142,6 +151,24 @@ export default function Navbar() {
             </ul>
           </li>
         </ul>
+
+        <div className="theme-toggle-mobile d-lg-none">
+          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
+            <i className="fa fa-moon-o theme-icon-for-light" />
+            <i className="fa fa-sun-o theme-icon-for-dark" />
+            <span className="theme-toggle-label">
+              <span className="theme-icon-for-light">Dark mode</span>
+              <span className="theme-icon-for-dark">Light mode</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div className="theme-toggle-wrapper d-none d-lg-flex justify-content-center">
+        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
+          <i className="fa fa-lg fa-moon-o theme-icon-for-light" />
+          <i className="fa fa-lg fa-sun-o theme-icon-for-dark" />
+        </button>
       </div>
     </nav>
   )

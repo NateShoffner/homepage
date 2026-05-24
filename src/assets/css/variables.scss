@@ -31,3 +31,53 @@ $link-hover-color:           #337ab7; //green
 $menu-bg: #2A2A2A;
 
 $highlight: $blue;
+
+// Theme CSS custom properties
+
+:root {
+    --body-bg: #ffffff;
+    --body-color: #{$gray-900};
+    --link-color: #{$link-color};
+    --border-color: #{$gray-200};
+    --border-color-md: #{$gray-300};
+    --blockquote-color: #6a737d;
+    --blockquote-border: #dfe2e5;
+    --card-bg: #ffffff;
+    --card-hover-bg: #{$gray-100};
+    --form-control-bg: #ffffff;
+    --form-control-color: #{$gray-900};
+    --form-control-border: #{$gray-400};
+    --form-control-placeholder: #{$gray-500};
+    --text-muted-color: #6c757d;
+    --badge-bg: rgba(51, 122, 183, 0.12);
+    --badge-color: #{$highlight};
+    --list-card-title-color: #{$gray-900};
+    --list-card-meta-color: #{$gray-500};
+    --list-card-excerpt-color: #{$gray-600};
+    --project-download-desc-color: #{$gray-600};
+    --project-post-date-color: #{$gray-500};
+}
+
+[data-theme="dark"] {
+    --body-bg: #181a1b;
+    --body-color: #d4d4d4;
+    --link-color: #5ba3d9;
+    --border-color: #2d3039;
+    --border-color-md: #272c36;
+    --blockquote-color: #9da5ae;
+    --blockquote-border: #404040;
+    --card-bg: #1e2028;
+    --card-hover-bg: #22252c;
+    --form-control-bg: #22252a;
+    --form-control-color: #d4d4d4;
+    --form-control-border: #3a3f4a;
+    --form-control-placeholder: #6a7a8a;
+    --text-muted-color: #8a9ab0;
+    --badge-bg: rgba(51, 122, 183, 0.25);
+    --badge-color: #6aaddf;
+    --list-card-title-color: #e0e0e0;
+    --list-card-meta-color: #7a8a9a;
+    --list-card-excerpt-color: #8e979f;
+    --project-download-desc-color: #8e979f;
+    --project-post-date-color: #7a8a9a;
+}

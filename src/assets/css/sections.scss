@@ -126,6 +126,10 @@ section.about-cover {
     }
 }
 
+section.page-section#contact {
+    min-height: auto;
+}
+
 section.error-404 {
     background: linear-gradient( rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/assets/images/404.jpg");
     background-size: cover;

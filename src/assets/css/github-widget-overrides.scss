@@ -36,6 +36,12 @@
   align-items: center;
 }
 
+.gw-search {
+  width: auto;
+  min-width: 180px;
+  max-width: 260px;
+}
+
 .gw-select {
   width: auto;
   min-width: 160px;
@@ -59,7 +65,7 @@
 
 .gw-card {
   padding: 1.25rem 1.25rem;
-  border: 1px solid $gray-300;
+  border: 1px solid var(--border-color-md);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
