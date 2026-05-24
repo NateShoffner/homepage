@@ -4,9 +4,11 @@ import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLayoutEffect, useState, MouseEvent } from 'react'
 import { useScrollSpy } from '@hooks/useScrollSpy'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons'
 
 type NavItem = { id: string; label: string; route: string; hash: string }
-type SocialItem = { id: string; icon: string; url: string }
+type SocialItem = { id: string; icon?: string; url: string }
 
 const NavItems: NavItem[] = [
   { id: 'about', label: 'About', route: '/about', hash: '/#about' },
@@ -16,7 +18,7 @@ const NavItems: NavItem[] = [
 ]
 
 const SocialItems: SocialItem[] = [
-  { id: 'twitter', icon: 'fa-twitter', url: 'https://twitter.com/NateShoffner' },
+  { id: 'x', url: 'https://x.com/NateShoffner' },
   { id: 'github', icon: 'fa-github', url: 'https://github.com/NateShoffner' },
   { id: 'linkedin', icon: 'fa-linkedin', url: 'https://www.linkedin.com/in/NateShoffner' },
 ]
@@ -128,7 +130,11 @@ export default function Navbar() {
                   <a href={social.url} target="_blank" rel="noopener noreferrer">
                     <span className="fa-stack fa-lg">
                       <i className="fa fa-circle fa-stack-2x"></i>
-                      <i className={`fa ${social.icon} fa-stack-1x fa-inverse`}></i>
+                      {social.icon ? (
+                        <i className={`fa ${social.icon} fa-stack-1x fa-inverse`}></i>
+                      ) : (
+                        <FontAwesomeIcon icon={faXTwitter} className="fa-stack-1x fa-inverse" />
+                      )}
                     </span>
                   </a>
                 </li>

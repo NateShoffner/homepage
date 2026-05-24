@@ -29,9 +29,7 @@ export function AboutSection() {
             create something to be proud of.
           </p>
           <p>
-            Currently working at{' '}
-            <a href="https://theindustrialresolution.com/">Industrial Resolution</a>{' '}
-            as a Senior Software /{' '}
+            Currently working as a Senior Software /{' '}
             <a href="https://certified.elastic.co/d2170b39-7c27-4811-952f-3085d6a0dda5">
               Elastic Certified Engineer
             </a>
@@ -48,12 +46,12 @@ export function AboutSection() {
           <h3 className="subheading mb-5">Interests</h3>
           <div className="d-lg-inline-flex flex-row">
             <ul className="highlighted inlined-list">
-              <li>Full-Stack Development</li>
+              <li>Full-Stack &amp; API Development</li>
+              <li>Observability &amp; Data Engineering</li>
               <li>Reverse Engineering</li>
-              <li>Homelabbing</li>
-              <li>API Development</li>
-              <li>Elasticsearch</li>
-              <li>Home Automation</li>
+              <li>Homelab &amp; Home Automation</li>
+              <li>Open Source</li>
+              <li>Gaming</li>
             </ul>
           </div>
         </div>

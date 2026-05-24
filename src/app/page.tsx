@@ -47,7 +47,7 @@ export default function HomePage() {
                 <i className="fa fa-rss pl-4"></i>
               </a>
             </h2>
-            <BlogSection posts={posts.slice(0, 3)} />
+            <BlogSection posts={posts.slice(0, 6)} />
             <a href="/blog" role="button" className="btn btn-primary btn-lg btn-block">
               View More Blog Posts
             </a>
@@ -58,7 +58,7 @@ export default function HomePage() {
       <Element name="projects">
         <section className="page-section p-4 p-lg-5 d-flex flex-column" id="projects">
           <div className="my-auto">
-            <ProjectsSection projects={projects} limit={3} showMore={true} />
+            <ProjectsSection projects={projects} limit={6} showMore={true} />
           </div>
         </section>
       </Element>

@@ -15,16 +15,10 @@ export function ProjectsSection({ projects, limit, showMore }: ProjectsSectionPr
   return (
     <>
       <h2 className="mb-5">
-        Public <span className="text-highlight">Projects</span>
+        Personal <span className="text-highlight">Projects</span>
       </h2>
       <p>
-        Here are a few public projects I&apos;ve worked on. I still have a lot yet to add here
-        and some of these might not be 100% up to date, but I&apos;ll get to it
-        eventually&trade;.
-      </p>
-      <p>
-        If you would like to see my portfolio and resume for professional work,{' '}
-        <a href="#contact">message me</a>.
+        A collection of personal and hobby projects I&apos;ve built in my spare time.
       </p>
 
       <PublicProjects projects={projects} limit={limit} sortBy="updated" sortOrder="desc" />
