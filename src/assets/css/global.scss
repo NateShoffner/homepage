@@ -217,6 +217,9 @@ ul.inlined-list {
             font-size: 0.8rem;
             background-color: var(--badge-bg) !important;
             color: var(--badge-color);
+            border: none;
+            padding: 0.25em 0.4em;
+            cursor: pointer;
         }
     }
 

@@ -48,9 +48,11 @@ export default function HomePage() {
               </a>
             </h2>
             <BlogSection posts={posts.slice(0, 6)} />
-            <a href="/blog" role="button" className="btn btn-primary btn-lg btn-block">
-              View More Blog Posts
-            </a>
+            <div className="mt-4">
+              <a href="/blog" className="btn btn-primary px-4">
+                All posts →
+              </a>
+            </div>
           </div>
         </section>
       </Element>

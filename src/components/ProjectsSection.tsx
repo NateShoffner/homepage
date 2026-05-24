@@ -23,11 +23,11 @@ export function ProjectsSection({ projects, limit, showMore }: ProjectsSectionPr
 
       <PublicProjects projects={projects} limit={limit} sortBy="updated" sortOrder="desc" />
       {showMore && (
-        <p className="mt-4">
-          <Link href="/projects" role="button" className="btn btn-primary btn-lg btn-block">
-            View More Projects
+        <div className="mt-4">
+          <Link href="/projects" className="btn btn-primary px-4">
+            All projects →
           </Link>
-        </p>
+        </div>
       )}
 
       <h3 className="mt-5">Open Source Projects</h3>
@@ -48,6 +48,7 @@ export function ProjectsSection({ projects, limit, showMore }: ProjectsSectionPr
         includePages={true}
         sortBy="pushed"
         showHomepage={false}
+        defaultVisibleCount={showMore ? 12 : Infinity}
       />
     </>
   )

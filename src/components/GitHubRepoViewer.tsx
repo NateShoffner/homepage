@@ -22,6 +22,7 @@ interface Props {
   usernames: string[]
   includeForks?: boolean
   includePages?: boolean
+  defaultVisibleCount?: number
 }
 
 type SortOption = 'pushed' | 'stars' | 'name'
@@ -47,6 +48,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
   usernames,
   includeForks = true,
   includePages = true,
+  defaultVisibleCount = 12,
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
   const [loading, setLoading] = useState(true)
@@ -55,7 +57,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
   const [selectedLang, setSelectedLang] = useState('')
   const [selectedOrg, setSelectedOrg] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('pushed')
-  const [visibleCount, setVisibleCount] = useState(12)
+  const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -114,7 +116,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
       .map(([org, count]) => ({ org, count }))
   }, [repos])
 
-  const resetCount = () => setVisibleCount(12)
+  const resetCount = () => setVisibleCount(defaultVisibleCount)
   const hasActiveFilters = searchQuery !== '' || selectedLang !== '' || selectedOrg !== ''
 
   const clearFilters = () => {

@@ -1,7 +1,13 @@
 import Link from 'next/link'
 import { PostMeta } from '@/lib/blog'
 
-function BlogPostCard({ post }: { post: PostMeta }) {
+interface Props {
+  post: PostMeta
+  onCategoryClick?: (cat: string) => void
+  showImage?: boolean
+}
+
+function BlogPostCard({ post, onCategoryClick, showImage = true }: Props) {
   const imageSrc = post.image
     ? `/assets/images/posts/${post.image}`
     : `/assets/images/posts/default.png`
@@ -14,9 +20,11 @@ function BlogPostCard({ post }: { post: PostMeta }) {
 
   return (
     <Link href={post.url} className="list-card">
-      <div className="list-card-thumbnail">
-        <img src={imageSrc} alt={post.title} />
-      </div>
+      {showImage && (
+        <div className="list-card-thumbnail">
+          <img src={imageSrc} alt={post.title} />
+        </div>
+      )}
       <div className="list-card-body">
         <div className="list-card-header">
           <span className="list-card-title">{post.title}</span>
@@ -25,9 +33,26 @@ function BlogPostCard({ post }: { post: PostMeta }) {
         <p className="list-card-excerpt">{post.description}</p>
         {post.categories.length > 0 && (
           <div className="list-card-tags">
-            {post.categories.map((cat) => (
-              <span key={cat} className="badge">{cat}</span>
-            ))}
+            {post.categories.map((cat) =>
+              onCategoryClick ? (
+                <button
+                  key={cat}
+                  className="badge"
+                  onClick={(e) => { e.preventDefault(); onCategoryClick(cat) }}
+                >
+                  {cat}
+                </button>
+              ) : (
+                <a
+                  key={cat}
+                  href={`/blog/category/${encodeURIComponent(cat)}/`}
+                  className="badge"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {cat}
+                </a>
+              )
+            )}
           </div>
         )}
       </div>
