@@ -1,16 +1,7 @@
-.project-card {
-
-    .project-card-image  {
-        width: 100%!important;
-        height: 200px!important;
-        object-fit: contain;
-    }
-}
-
 .project {
 
     .project-logo {
-        max-height: 128px;
+        max-height: 64px;
     }
 
     .project-image {
@@ -19,31 +10,65 @@
     }
 
     @media (min-width: 992px) {
-
         .project-image {
             max-height: 256px;
         }
-
     }
 
-    table {
-        border: 01px solid $gray-400;
-
-        th {
-            @include heading-font;
-            font-weight: 600;
-        }
-
-    }
-
-    @media (max-width: 767.98px) { 
-
+    @media (max-width: 767.98px) {
         .project-images-container {
             text-align: center;
         }
     }
 
-    td.download {
-        vertical-align: middle;
+    .project-download-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        max-width: 480px;
+    }
+
+    .project-download-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid $gray-300;
+        border-radius: 6px;
+    }
+
+    .project-download-name {
+        font-weight: 500;
+    }
+
+    .project-download-desc {
+        font-size: 0.85rem;
+        color: $gray-600;
+        margin-top: 0.1rem;
+    }
+
+    .project-post-list {
+        max-width: 600px;
+    }
+
+    .project-post-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid $gray-200;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .project-post-date {
+        font-size: 0.85rem;
+        color: $gray-500;
+        white-space: nowrap;
+        margin-left: 1rem;
+        flex-shrink: 0;
     }
 }

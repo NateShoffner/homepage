@@ -12,11 +12,9 @@ export function BlogSection({ posts }: BlogSectionProps) {
       <p className="pb-5">
         Incoherent ramblings, project updates, reviews, and other writings fallen into the ether.
       </p>
-      <div className="row">
+      <div className="list-cards">
         {posts.map((post, index) => (
-          <div key={index} className="col-sm-12 col-md-6 col-lg-4 mb-5">
-            <BlogPostCard post={post} />
-          </div>
+          <BlogPostCard key={index} post={post} />
         ))}
       </div>
 

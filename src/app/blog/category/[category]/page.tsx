@@ -27,16 +27,14 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
         <h2 className="mb-5">
           Posts categorized under <span className="text-primary">&apos;{decoded}&apos;</span>
         </h2>
-        <div className="row">
-          {posts.length === 0 && (
-            <div className="col-12"><p>No posts found under this category.</p></div>
-          )}
-          {posts.map((post, index) => (
-            <div className="col-sm-12 col-md-6 col-lg-4 mb-5" key={index}>
-              <BlogPostCard post={post} />
+        {posts.length === 0
+          ? <p>No posts found under this category.</p>
+          : <div className="list-cards">
+              {posts.map((post, index) => (
+                <BlogPostCard key={index} post={post} />
+              ))}
             </div>
-          ))}
-        </div>
+        }
       </section>
       <Script id="dsq-count-scr" src="//nateshoffner.disqus.com/count.js" strategy="afterInteractive" />
     </>

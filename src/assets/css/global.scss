@@ -123,3 +123,114 @@ ul.inlined-list {
         width: 50%;
     }
 }
+
+.list-cards {
+    border-top: 1px solid $gray-200;
+}
+
+.list-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid $gray-200;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: $gray-100;
+        color: inherit;
+        text-decoration: none;
+
+        .list-card-title {
+            color: $primary;
+        }
+    }
+
+    .list-card-thumbnail {
+        flex-shrink: 0;
+        width: 120px;
+        height: 90px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        &.contain img {
+            object-fit: contain;
+            padding: 6px;
+        }
+    }
+
+    .list-card-body {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .list-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .list-card-title {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: $gray-900;
+        transition: color 0.15s ease;
+        min-width: 0;
+    }
+
+    .list-card-meta {
+        flex-shrink: 0;
+        font-size: 0.8rem;
+        color: $gray-500;
+        white-space: nowrap;
+    }
+
+    .list-card-excerpt {
+        margin: 0 0 0.5rem;
+        font-size: 0.875rem;
+        color: $gray-600;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .list-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+
+        .badge {
+            font-weight: 400;
+            font-size: 0.72rem;
+            background-color: rgba($highlight, 0.12) !important;
+            color: $highlight;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        gap: 0.75rem;
+        padding: 0.75rem 0.25rem;
+
+        .list-card-thumbnail {
+            width: 72px;
+            height: 54px;
+        }
+
+        .list-card-meta {
+            display: none;
+        }
+    }
+}

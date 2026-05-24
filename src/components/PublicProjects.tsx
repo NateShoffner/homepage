@@ -33,11 +33,9 @@ function PublicProjects({ projects, limit, sortBy = 'updated', sortOrder = 'desc
   const visible = limit ? sorted.slice(0, limit) : sorted
 
   return (
-    <div className="row">
+    <div className="list-cards">
       {visible.map((project) => (
-        <div className="col-sm-12 col-md-6 col-lg-4 mb-5" key={project.slug}>
-          <ProjectCard project={project} />
-        </div>
+        <ProjectCard key={project.slug} project={project} />
       ))}
     </div>
   )

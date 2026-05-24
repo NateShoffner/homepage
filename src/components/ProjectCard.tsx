@@ -1,31 +1,42 @@
 import Link from 'next/link'
 import { Project } from '@/src/types/Project'
+
 function ProjectCard({ project }: { project: Project }) {
   const image = project.logo
     ? `/assets/images/projects/${project.slug}/${project.logo}`
     : project.images?.[0]?.filename
     ? `/assets/images/projects/${project.slug}/${project.images[0].filename}`
-    : ''
+    : null
+
+  const dateLabel = project.updated
+    ? new Date(project.updated).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+      })
+    : null
 
   return (
-    <div className="card project-card h-100 pt-2">
-      <Link href={`/projects/${project.slug}`}>
-        <img
-          src={image}
-          className="card-img-top img-fluid project-card-image"
-          alt={project.name}
-        />
-      </Link>
-      <div className="card-body">
-        <h5 className="card-title">
-          <Link href={`/projects/${project.slug}`}>{project.name}</Link>
-        </h5>
-        <p className="card-text">{project.description}</p>
-        <p className="card-text">
-          <Link href={`/projects/${project.slug}`}>View Project &raquo;</Link>
-        </p>
+    <Link href={`/projects/${project.slug}`} className="list-card">
+      {image && (
+        <div className="list-card-thumbnail contain">
+          <img src={image} alt={project.name} />
+        </div>
+      )}
+      <div className="list-card-body">
+        <div className="list-card-header">
+          <span className="list-card-title">{project.name}</span>
+          {dateLabel && <span className="list-card-meta">{dateLabel}</span>}
+        </div>
+        <p className="list-card-excerpt">{project.description}</p>
+        {project.platforms && project.platforms.length > 0 && (
+          <div className="list-card-tags">
+            {project.platforms.map((p) => (
+              <span key={p} className="badge">{p}</span>
+            ))}
+          </div>
+        )}
       </div>
-    </div>
+    </Link>
   )
 }
 
