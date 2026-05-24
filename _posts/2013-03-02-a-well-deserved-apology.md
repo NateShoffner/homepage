@@ -1,5 +1,4 @@
 ---
-layout: post
 title: A Well-Deserved Apology
 date: 2013-03-02 12:53 -05:00
 type: post

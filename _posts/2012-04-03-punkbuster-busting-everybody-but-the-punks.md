@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Punkbuster - Busting everybody BUT the Punks
 date: 2012-04-03 03:34 -04:00
 type: post

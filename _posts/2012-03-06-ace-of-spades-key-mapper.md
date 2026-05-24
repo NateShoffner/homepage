@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Ace of Spades Key Mapper
 date: 2012-03-06 16:03 -05:00
 description: Ace of Spades Key Mapper release blog

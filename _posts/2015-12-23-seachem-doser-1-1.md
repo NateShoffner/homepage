@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Seachem Doser 1.1
 date: 2015-12-23 16:35 -05:00
 description: Seachem Doser 1.1 release blog

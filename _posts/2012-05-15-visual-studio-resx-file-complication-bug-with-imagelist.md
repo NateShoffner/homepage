@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Visual Studio - .resx file complication bug with ImageList
 date: 2012-05-15 12:31 -04:00
 type: post

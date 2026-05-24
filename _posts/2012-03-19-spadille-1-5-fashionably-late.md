@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Spadille 1.5 - Fashionably Late
 date: 2012-03-19 16:51 -04:00
 description: Spadille 1.5 release blog

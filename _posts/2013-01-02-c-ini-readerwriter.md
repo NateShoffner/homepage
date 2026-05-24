@@ -1,5 +1,4 @@
 ---
-layout: post
 title: C# INI Reader/Writer
 date: 2013-01-02 21:42 -05:00
 type: post

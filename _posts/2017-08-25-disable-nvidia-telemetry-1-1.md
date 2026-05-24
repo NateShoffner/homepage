@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Disable Nvidia Telemetry 1.1
 date: 2017-08-26 03:13 -05:00
 description: Disable Nvidia Telemetry is a utility that allows you to disable the telemetry services Nvidia bundles with their drivers.

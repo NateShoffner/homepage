@@ -1,5 +1,4 @@
 ---
-layout: post
 title: An Update On Some Stuff and Stuff
 date: 2011-12-23 14:41:26.000000000 -05:00
 type: post

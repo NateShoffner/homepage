@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Tabster 1.6 Released
 date: 2013-08-29 07:02 -04:00
 description: Tabster 1.6 release blog

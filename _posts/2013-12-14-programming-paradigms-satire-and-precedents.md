@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Programming - Paradigms, Satire, and Precedents
 date: 2013-12-14 07:28 -05:00
 type: post

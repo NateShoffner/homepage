@@ -1,5 +1,4 @@
 ---
-layout: post
 title: PySnip Linux Setup
 date: 2012-12-22 20:31 -05:00
 description: Instructions for setting up PySnip on Ubuntu

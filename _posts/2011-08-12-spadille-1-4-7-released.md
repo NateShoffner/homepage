@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Spadille 1.4.7 Released
 date: 2011-08-12 00:29 -04:00
 description: Spadille 1.4.7 release blog

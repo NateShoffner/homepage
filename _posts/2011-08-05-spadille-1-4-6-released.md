@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Spadille 1.4.6 Released
 date: 2011-08-05 19:22 -04:00
 description: Spadille 1.4.6 release blog

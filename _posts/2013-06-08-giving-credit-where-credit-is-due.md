@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Giving Credit Where Credit Is Due
 date: 2013-06-08 21:51 -04:00
 type: post

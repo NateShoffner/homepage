@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Aaron Swartz - Making Progress Without Being Demanded
 date: 2013-01-12 23:37 -05:00
 type: post

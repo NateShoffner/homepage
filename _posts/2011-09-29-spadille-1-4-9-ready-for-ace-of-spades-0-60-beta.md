@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Spadille 1.4.9 - Ready for Ace of Spades 0.60 Beta
 date: 2011-09-29 03:14 -04:00
 description: Spadille 1.4.9 release blog

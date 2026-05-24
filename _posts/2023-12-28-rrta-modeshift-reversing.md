@@ -1,5 +1,4 @@
 ---
-layout: post
 title: RRTA ModeShift Reverse-Engineering
 date: 2023-12-28 13:00 -05:00
 description: A short journey into reverse-engineering the ModeShift RRTA app.

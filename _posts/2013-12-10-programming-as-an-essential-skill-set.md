@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Programming as an Essential Skill Set
 date: 2013-12-10 08:23 -05:00
 description: Programming as an essential skillset for the average person.

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: C# - Reusable Portable Application Settings
 date: 2013-01-24 00:19 -05:00
 type: post

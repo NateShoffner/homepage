@@ -1,5 +1,4 @@
 ---
-layout: post
 title: LCWC and Dispatch Rabbit Holes
 date: 2023-11-07 14:06 -05:00
 description: My foray into learning about emergency dispatch systems.

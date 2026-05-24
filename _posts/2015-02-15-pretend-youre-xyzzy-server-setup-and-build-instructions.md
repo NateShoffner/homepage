@@ -1,5 +1,4 @@
 ---
-layout: post
 title: '"Pretend You''re Xyzzy" Server Setup and Build Instructions'
 date: 2015-02-15 13:12 -05:00
 description: '"Pretend You''re Xyzzy" Server Setup and Build Instructions'
@@ -77,7 +76,7 @@ Save and restart Tomcat.
     service tomcat7 restart
     Finally, you can access the app via http://your_host:8080/cah.
 
-You can download a pre-built/zipped version of cah.war [here]({{ site.baseurl }}/assets/files/cah.zip). The PostgreSQL parameters are as follows:
+You can download a pre-built/zipped version of cah.war [here](cah.zip). The PostgreSQL parameters are as follows:
 
     Username: cah
     Password: password

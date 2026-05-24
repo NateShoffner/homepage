@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Build and Shoot, PySnip, and More
 date: 2012-12-14 14:52 -05:00
 type: post

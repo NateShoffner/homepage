@@ -1,5 +1,4 @@
 ---
-layout: post
 title: C# - Global Hotkeys via GetAsyncKeyState
 date: 2013-10-13 16:44 -04:00
 description: Global hotkeys in C# via GetAsyncGetState

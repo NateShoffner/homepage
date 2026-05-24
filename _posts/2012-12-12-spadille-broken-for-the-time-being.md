@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Spadille Broken (for the time being)
 date: 2012-12-12 22:25 -05:00
 type: post

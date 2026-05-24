@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Dropbox Does Not Access Files Throughout Your PC
 date: 2015-03-03 12:05 -05:00
 description: Dropbox data collecting debunked

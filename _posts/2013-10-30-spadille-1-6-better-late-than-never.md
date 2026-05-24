@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Spadille 1.6 - Better Late Than Never?
 date: 2013-10-30 10:31 -04:00
 description: Spadille 1.6 release blog

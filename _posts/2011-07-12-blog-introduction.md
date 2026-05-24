@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Blog Introduction
 date: 2011-07-12 20:13 -04:00
 type: post
