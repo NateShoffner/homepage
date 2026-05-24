@@ -29,11 +29,11 @@ Dating back to around Haswell, Intel's processors have been notorious for reachi
 This isn't going to act as in in-depth overclocking/delidding guide, there are more than enough of those already throughout the internet.
 
 #### Build Specs
-* CPU: {% amazon asin="B01MXSI216" text="Intel Core i7-7700K" %} 
-* Cooler: {% amazon asin="B019955RNQ" text="Corsair H115i Liquid Cooler" %}
-* Mobo: {% amazon asin="B01NBHXSP6" text="ASUS ROG MAXIMUS IX HERO" %}
-* RAM: {% amazon asin="B06XRG59PK" text="Corsair Vengeance 32GB RGB LED (4x8GB) DDR4 3000 MHZ" %}
-* PSU: {% amazon asin="B00EB7UITQ" text="Corsair RM750" %}
+* CPU: [Intel Core i7-7700K](https://www.amazon.com/dp/B01MXSI216) 
+* Cooler: [Corsair H115i Liquid Cooler](https://www.amazon.com/dp/B019955RNQ)
+* Mobo: [ASUS ROG MAXIMUS IX HERO](https://www.amazon.com/dp/B01NBHXSP6)
+* RAM: [Corsair Vengeance 32GB RGB LED (4x8GB) DDR4 3000 MHZ](https://www.amazon.com/dp/B06XRG59PK)
+* PSU: [Corsair RM750](https://www.amazon.com/dp/B00EB7UITQ)
 
 #### Benchmarks and Stress Tests:
 
@@ -48,19 +48,21 @@ Prior to delidding, I was able to overlock to 5.0GHz @1.36v using an AVX offset 
 
 #### Delidding Materials:
 
-* {% amazon asin="B01MXSI216" text="Intel Core i7-7700K" %} (or whatever LGA 1155/1150/1151 CPU you have)
+* [Intel Core i7-7700K](https://www.amazon.com/dp/B01MXSI216) (or whatever LGA 1155/1150/1151 CPU you have)
 * [Rockit 88](https://rockitcool.myshopify.com/products/rockit-88)
 * [Re-Lid Kit - 1150 / 1151](https://rockitcool.myshopify.com/products/re-lid-kit)
-* {% amazon asin="B01A9KIGSI" text="Thermal Grizzly Conductonaut" %} ({% amazon asin="B0039RY3MM" text="Coollaboratory Liquid Ultra" %} also works)
-* {% amazon asin="B003TP2TBQ" text="Loctite Super Glue - Gel Control" %}
+* [Thermal Grizzly Conductonaut](https://www.amazon.com/dp/B01A9KIGSI) ([Coollaboratory Liquid Ultra](https://www.amazon.com/dp/B0039RY3MM) also works)
+* [Loctite Super Glue - Gel Control](https://www.amazon.com/dp/B003TP2TBQ)
 * 91% Isopropyl alcohol
 * Coffee Filters
 * Cotton Swabs
 * Scotch Tape
 
-Alternatively, you could you use a {% amazon asin="B0002UEN1A" text="silicon-based gasket maker" %} instead of the super glue, either one is easy enough to de-lid and does the job. Just note that the gasket maker will take much longer to cure, hence why I chose the super glue.
+Alternatively, you could you use a [silicon-based gasket maker](https://www.amazon.com/dp/B0002UEN1A) instead of the super glue, either one is easy enough to de-lid and does the job. Just note that the gasket maker will take much longer to cure, hence why I chose the super glue.
 
-{% post_images filenames="7700KDelid1.jpg,7700KDelid2.jpg,7700KDelid3.jpg" group="delid" %}
+![](7700KDelid1.jpg)
+![](7700KDelid2.jpg)
+![](7700KDelid3.jpg)
 
 Using the Rockit88, I popped the IHS off the wafer and removed the old TIM and sealant. Just to be safe, I masked the CPU with tape prior to applying the new TIM, as the liquid metal is *extremely* runny, almost like liquid mercury.
 
@@ -68,7 +70,7 @@ Using the relid kit, I aligned the IHS back above the CPU and applied a drop of 
 
 As of posting this, everything has been running stable for a few weeks now and thermals haven't changed nor have there been any signs of instabilities.
 
-{% post_image filename="cpuz.png" %} 
+![](cpuz.png) 
 
 #### Conclusion and Disclaimer
 

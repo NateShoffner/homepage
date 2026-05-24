@@ -15,7 +15,7 @@ tags:
 
 Well, it's been well over a month since the last update so I figured one was due.  There are a lot of changes trying to polish a few existing features, as well as some new ones. A new update should be out in due time (a lot sooner next time hopefully) with some more features I've been wanting to add for quite some time.
 
-{% post_image filename="Spadille1.4.8.png" %}
+![](Spadille1.4.8.png)
 
 Download: [http://nateshoffner.com/projects/spadille/](http://nateshoffner.com/projects/spadille/)
 

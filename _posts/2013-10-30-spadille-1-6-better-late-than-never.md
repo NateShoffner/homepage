@@ -14,7 +14,7 @@ tags:
 
 Well, over a year and a half later, I suppose I should release Spadille 1.6 eh?
 
-{% post_image filename="spadille-1.6.png" %} 
+![](spadille-1.6.png) 
 
 Spadille dropped off the grid a bit after being put on the back burner a while ago. I stopped working on it during the middle of refactoring...which is a bad idea. It's been ready for release for a long time now, but I just never released it. Why do today what you can put off until tomorrow? This version does not support [OpenSpades](https://sites.google.com/a/yvt.jp/openspades/) yet, but I will release a quick patch shortly for it.
 

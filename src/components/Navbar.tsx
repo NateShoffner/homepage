@@ -48,8 +48,7 @@ export default function Navbar() {
 
   const isActive = (item: NavItem) => {
     if (onHome) {
-      const hash = typeof window !== 'undefined' ? window.location.hash.replace('#', '') : ''
-      return (activeSectionId ?? (hash || NavItems[0].id)) === item.id
+      return (activeSectionId ?? NavItems[0].id) === item.id
     }
     return pathname === item.route || pathname.startsWith(`${item.route}/`)
   }

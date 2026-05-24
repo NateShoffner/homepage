@@ -1,100 +1,63 @@
 'use client'
 
 import ReactMarkdown from 'react-markdown'
-import remarkDirective from 'remark-directive'
-import { visit, SKIP } from 'unist-util-visit'
-import AmazonLink from '@components/AmazonLink'
-import PostImage from './PostImage'
-import PostImages from './PostImages'
+import useFancybox from '@hooks/useFancybox'
 
-function remarkShortcode({
-  regex,
-  nodeType,
-  propNames,
-}: {
-  regex: RegExp
-  nodeType: string
-  propNames: string[]
-}) {
-  return () => (tree: any) => {
-    visit(tree, 'text', (node: any, index: number | undefined, parent: any) => {
-      if (index === undefined) return
-      const value: string = node.value
-      if (!regex.test(value)) return
-
-      const parts: any[] = []
-      let lastIndex = 0
-      regex.lastIndex = 0
-      value.replace(regex, (match, ...args) => {
-        const offset = args[args.length - 2]
-        if (offset > lastIndex)
-          parts.push({ type: 'text', value: value.slice(lastIndex, offset) })
-        const props: Record<string, string> = {}
-        propNames.forEach((name, i) => {
-          props[name] = args[i]
-        })
-        parts.push({
-          type: nodeType,
-          data: { hName: nodeType, hProperties: props },
-        })
-        lastIndex = offset + match.length
-        return match
-      })
-      if (lastIndex < value.length)
-        parts.push({ type: 'text', value: value.slice(lastIndex) })
-
-      parent.children.splice(index, 1, ...parts)
-      return [SKIP, index + parts.length]
-    })
-  }
+type Props = {
+  children: string
+  imageBasePath?: string
 }
 
-const remarkAmazonShortcode = remarkShortcode({
-  regex: /\{\%\s*amazon\s+asin="([^"]+)"(?:\s+text="([^"]*)")?\s*\%\}/g,
-  nodeType: 'amazon_link',
-  propNames: ['asin', 'text'],
-})
+function BlogImage({
+  src,
+  alt,
+  title,
+  imageBasePath,
+}: {
+  src?: string
+  alt?: string
+  title?: string
+  imageBasePath?: string
+}) {
+  const [fancyboxRef] = useFancybox()
+  const resolvedSrc =
+    src && imageBasePath && !src.startsWith('/') && !src.startsWith('http')
+      ? `${imageBasePath}${src}`
+      : src
 
-const remarkPostImage = remarkShortcode({
-  regex: /\{\%\s*post_image\s+filename="([^"]+)"(?:\s+class="([^"]*)")?\s*\%\}/g,
-  nodeType: 'post_image',
-  propNames: ['filename', 'className'],
-})
+  return (
+    <div ref={fancyboxRef}>
+      <a href={resolvedSrc} data-fancybox="gallery">
+        <img
+          src={resolvedSrc}
+          className="img-fluid post-image"
+          alt={alt || ''}
+          title={title || ''}
+        />
+      </a>
+    </div>
+  )
+}
 
-const remarkPostImages = remarkShortcode({
-  regex: /\{\%\s*post_images\s+filenames="([^"]+)"(?:\s+group="([^"]*)")?\s*\%\}/g,
-  nodeType: 'post_images',
-  propNames: ['filename', 'group'],
-})
-
-export default function Markdown({ children }: { children: string }) {
+export default function Markdown({ children, imageBasePath }: Props) {
   return (
     <ReactMarkdown
-      remarkPlugins={[
-        remarkDirective,
-        remarkAmazonShortcode,
-        remarkPostImage,
-        remarkPostImages,
-      ]}
       components={{
-        // @ts-ignore
-        amazon_link: ({ node, ...props }) => {
-          const asin = node?.properties?.asin as string
-          const text = (node?.properties?.text as string) || undefined
-          return <AmazonLink asin={asin} text={text} />
-        },
-        // @ts-ignore
-        post_image: ({ node, ...props }) => {
-          const filename = node?.properties?.filename as string
-          const className = (node?.properties?.className as string) || undefined
-          return <PostImage filename={filename} className={className} />
-        },
-        // @ts-ignore
-        post_images: ({ node, ...props }) => {
-          const filenames = (node?.properties?.filename as string).split(',')
-          const group = (node?.properties?.group as string) || undefined
-          const images = filenames.map((f) => ({ filename: f.trim() }))
-          return <PostImages images={images} group={group} />
+        img: ({ src, alt, title }) => (
+          <BlogImage
+            src={src as string | undefined}
+            alt={alt}
+            title={title}
+            imageBasePath={imageBasePath}
+          />
+        ),
+        p: ({ children, node }) => {
+          const onlyImage =
+            node?.children?.length === 1 &&
+            node.children[0].type === 'element' &&
+            (node.children[0] as any).tagName === 'img'
+          if (onlyImage) return <>{children}</>
+          return <p>{children}</p>
         },
       }}
     >

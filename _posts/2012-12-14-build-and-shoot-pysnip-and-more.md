@@ -29,7 +29,7 @@ Along with everything that has been going on, pyspades has been made closed-sour
 
 Jagex's master server has been down for quite some time now and I'm not sure if it's going to come back. If they do put it back online, I might add the ability to connect to multiple master servers by declaring them in the configuration file like so:
 
-{% highlight json %}
+```json
 {
     "master_servers" : {
         "enabled" : true,
@@ -39,7 +39,7 @@ Jagex's master server has been down for quite some time now and I'm not sure if 
         }
     }
 }
-{% endhighlight %}
+```
 
 More information here: [https://code.google.com/p/pysnip/](https://code.google.com/p/pysnip/)
 

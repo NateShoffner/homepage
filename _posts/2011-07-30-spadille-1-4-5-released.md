@@ -14,7 +14,7 @@ tags:
 
 Spadille 1.4.5 has now been released. This released includes quite a few bug fixes along with a bit more polishing of the program itself, both under the hood and with aesthetics.
 
-{% post_image filename="Spadille-1.4.5.png" %}
+![](Spadille-1.4.5.png)
 
 A few new features are Slab6 is now included with the installer, more filtering options (foreign countries, favorites only, "vanilla servers"), screenshot save formats, improved/faster server listing, clan prefix option in config editor, and more.  Additionally, error logging has been added to help solve some problems, should they arise.  The complete change log can be found below:
 

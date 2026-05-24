@@ -44,8 +44,9 @@ Full changelog:
 
 #### Tablet:
 
-{% post_image filename="SeachemDoser1.2-Tablet.png" %} 
+![](SeachemDoser1.2-Tablet.png) 
 
 #### Phone:
 
-{% post_images filenames="SeachemDoser1.2-Phone1.png,SeachemDoser1.2-Phone2.png" %} 
+![](SeachemDoser1.2-Phone1.png)
+![](SeachemDoser1.2-Phone2.png) 

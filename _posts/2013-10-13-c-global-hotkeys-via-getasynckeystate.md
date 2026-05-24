@@ -30,7 +30,7 @@ To keep things simple, the actually hooking process will use the [Keys Enumerati
 #### Modifier Keys
 We don't want to limit the hooking to just basic keys, instead will allow optional modifier keys using the ModifierKeys enum.
 
-{% highlight csharp %}
+```csharp
 [Flags]
 public enum ModifierKeys : uint
 {
@@ -39,14 +39,14 @@ public enum ModifierKeys : uint
     Control = 2,
     Shift = 4,
 }
-{% endhighlight %}
+```
 
 #### Hooking & Unhooking
 To hook a key, call the Hook() method, supplying the Keys value as well as any optional modifier keys. Additionally, you can provide a delegate to use for a callback for when the key is pressed.
 
 To unhook a key, simple call the Unhook() method with the appropriate parameters and it will no longer be polled.
 
-{% highlight csharp %}
+```csharp
 [Flags]
 var keyboard = new KeyboardHook();
 keyboard.Hook(Keys.PrintScreen);
@@ -54,11 +54,11 @@ keyboard.Hook(Keys.PrintScreen);
 // do something
  
 keyboard.Unhook(Keys.PrintScreen);
-{% endhighlight %}
+```
 
 Internally, the hooked keys will be stored as KeyHook objects, which provide Keys and Modifiers properties.
 
-{% highlight csharp %}
+```csharp
 private class KeyHook
 {
     public KeyHook(Keys key, ModifierKeys modifiers, KeyHookDelegate pressed = null)
@@ -72,13 +72,13 @@ private class KeyHook
     public ModifierKeys Modifiers { get; private set; }
     public KeyHookDelegate Pressed { get; private set; }
 }
-{% endhighlight %}
+```
 
 #### Prioritization
 
 For simple hotkeys, there won't be any collisions. However, when you start mixing and matching modifier keys, things can get a little messy. To alleviate this issue, the hooked keys are sorted internally using a custom [IComparer&lt;T&gt;](http://msdn.microsoft.com/en-us/library/8ehhxeaf.aspx):
 
-{% highlight csharp %}
+```csharp
 private class HookComparer : IComparer<KeyHook>
 {
     private static int GetModifierCount(ModifierKeys modifiers)
@@ -112,7 +112,7 @@ private class HookComparer : IComparer<KeyHook>
  
     #endregion
 }
-{% endhighlight %}
+```
 
 Basically, it just compares hooked keys based on the following:
 
@@ -122,9 +122,9 @@ Basically, it just compares hooked keys based on the following:
 
 To sort the list, we use a simple lambda expression with our comparer:
 
-{% highlight csharp %}
+```csharp
 _keys.Sort((k1, k2) => new HookComparer().Compare(k1, k2));
-{% endhighlight %}
+```
 
 #### Polling
 The underlying polling is based on a [SystemTimer.Timer](http://msdn.microsoft.com/en-us/library/system.timers.timer.aspx). According to [official Microsoft sources](http://msdn.microsoft.com/en-us/windows/hardware/gg463266.aspx), this has a resolution of 15.6ms:
@@ -134,7 +134,7 @@ The underlying polling is based on a [SystemTimer.Timer](http://msdn.microsoft.c
 I'm not about to perform a case steady on how fast a human can realistically type versus the timer interval, configure the interval as necessary. The polling itself can be enabled/disabled via the Enabled property. Additionally, polling is suppressed when hooking/unhooking keys.
 During each tick, the key states are polled via PollKeyStates():
 
-{% highlight csharp %}
+```csharp
 private void PollKeyStates()
 {
     var altPressed = Convert.ToBoolean(GetAsyncKeyState(Keys.Menu));
@@ -173,7 +173,7 @@ private void PollKeyStates()
             key.Pressed(this, EventArgs.Empty);
     }
 }
-{% endhighlight %}
+```
 
 When using GetAsyncKeyState() you need to pay attention to the most and least significant bits:
 
@@ -187,7 +187,7 @@ This isn't necessarily a perfect solution but it works and is simple and flexibl
 
 Finally, here's the complete class:
 
-{% highlight csharp %}
+```csharp
 /*
 * KeyboardHook.cs by Nate Shoffner
 * http://nateshoffner.com
@@ -410,4 +410,4 @@ namespace GlobalHotkeys
         #endregion
     }
 }
-{% endhighlight %}
+```

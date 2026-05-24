@@ -12,7 +12,7 @@ tags:
 
 "Pretend You're Xyzzy" is a Cards Against Humanity clone that allows you to play online with others. It consists of a Tomcat/JSP server and web page clients.
 
-{% post_image filename="xyzzy.png" %} 
+![](xyzzy.png) 
 
 At the time of writing this, the main server located at [pretendyoure.xyz](http://pretendyoure.xyz/) appears to be down, so I decided to set up my own server for a group of friends and myself to play. Initially, there didn't seem to be much info on setting up the server. The [GitHub](https://github.com/ajanata/PretendYoureXyzzy) had a very brief explanation:
 

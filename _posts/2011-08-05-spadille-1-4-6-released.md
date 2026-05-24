@@ -15,7 +15,7 @@ tags:
 
 Spadille 1.4.6 is now available for download.  This update consists more of a interface makeover compared to 1.4.5 along with a few bug fixes.  The player count bug where it was displaying several thousand players online has since been fixed (hopefully that will be real someday).
 
-{% post_image filename="Spadille_1.4.6.png" %}
+![](Spadille_1.4.6.png)
 
 There is now a tabbed interface which currently divideds the server list into 3 sections, Public (general server listing), favorites, and recent (history).  I think the names are pretty obvious.  Search, filters, and stats have been moved to the right side of the server list for easier access.
 

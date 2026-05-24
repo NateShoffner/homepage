@@ -10,7 +10,7 @@ tags:
 ---
 Nothing major, just figured somebody might be able to use it. A basic INI reader/writer utility.
 
-{% highlight csharp %}
+```csharp
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -125,4 +125,4 @@ namespace INI
         }
     }
 }
-{% endhighlight %}
+```

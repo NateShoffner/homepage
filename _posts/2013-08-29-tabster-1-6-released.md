@@ -14,7 +14,7 @@ tags:
 
 Random update time! I have a bad habit of not updating my applications for long periods of time...
 
-{% post_image filename="tabster-1.6.png" %} 
+![](tabster-1.6.png) 
 
 A few weeks ago, I received a pingback from AddictiveTips where they wrote an [article](http://www.addictivetips.com/windows-tips/tabster-music-tablature-manager-with-search-store-view-options/)on Tabster. I'm still not sure why I just now received the PingBack when the article was published on March 29th of this year. This isn't the first time Tabster has been reviewed by any means (and has also been used in schools), but it brought the neglected project to my attention.
 

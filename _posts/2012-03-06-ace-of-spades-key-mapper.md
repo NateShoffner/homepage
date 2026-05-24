@@ -13,7 +13,7 @@ tags:
 
 Recently there have been a lot of people asking how to map controls in Ace of Spades. For those who don't know, Ace of Spades allows controls to be configured via [scan codes](http://en.wikipedia.org/wiki/Scancode) by editing the controls.ini file located in the installation directory. Within the file, there is a URL that links to a [scan code chart](http://www.ee.bgu.ac.il/~microlab/MicroLab/Labs/ScanCodes.htm). For the most part, this chart will suffice, until you realize that Ace of Spades uses DirectInput scan codes, which can differ from those on the chart.
 
-{% post_image filename="keymapper1.png" alt="Ace of Spades Keymapper" %}
+![Ace of Spades Keymapper](keymapper1.png)
 
 An example of the controls.ini scancode format:
 
