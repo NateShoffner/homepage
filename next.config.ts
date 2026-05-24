@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
     NEXT_PUBLIC_GIT_REVISION: gitRevision,
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
   sassOptions: {
     includePaths: [
       'src/assets/css',

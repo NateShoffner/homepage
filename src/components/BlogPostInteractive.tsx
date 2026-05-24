@@ -35,6 +35,17 @@ export default function BlogPostInteractive({
               })
             : ''}
         </li>
+        {post.lastUpdated && (
+          <li className="post-meta-item">
+            <i className="fa fa-pencil"></i>{' '}
+            Updated{' '}
+            {new Date(post.lastUpdated).toLocaleDateString(undefined, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </li>
+        )}
         <li className="post-meta-item">
           <i className="fa fa-comments"></i>{' '}
           <a href={post.fullUrl}>
@@ -64,16 +75,16 @@ export default function BlogPostInteractive({
 
       <div className="row mb-3">
         <div className="col-12 col-sm-6">
-          <div className="post-tags">
-            <i className="fa fa-tag"></i> Tags:{' '}
+          <div className="post-tags d-flex flex-wrap align-items-center gap-1">
+            <span><i className="fa fa-tag"></i> Tags:</span>
             {post.tags && post.tags.length > 0
               ? post.tags.map((tag, i) => (
                   <span key={tag}>
                     <a href={`/blog/tag/${encodeURIComponent(tag)}`}>{tag}</a>
-                    {i < post.tags.length - 1 && ', '}
+                    {i < post.tags.length - 1 && ','}
                   </span>
                 ))
-              : 'None'}
+              : <span>None</span>}
           </div>
           <ShareButtons title={post.title} />
         </div>

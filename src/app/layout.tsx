@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Raleway, Open_Sans } from 'next/font/google'
-import Navbar from '@components/Navbar'
-import Footer from '@components/Footer'
+import SiteChrome from '@components/SiteChrome'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 import '@assets/css/main.scss'
@@ -39,9 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `(function(){var t=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p)})()` }} />
       </head>
       <body>
-        <Navbar />
-        <div className="my-auto">{children}</div>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )

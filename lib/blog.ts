@@ -9,6 +9,7 @@ export interface PostMeta {
   slug: string
   title: string
   date: string
+  lastUpdated: string
   description: string
   type: string
   image: string
@@ -53,6 +54,7 @@ function parsePostFile(filePath: string): BlogPost {
     slug,
     title: data.title ?? slug,
     date: data.date ? String(data.date) : '',
+    lastUpdated: data.lastUpdated ? String(data.lastUpdated) : '',
     description: data.description ?? '',
     type: data.type ?? '',
     image: data.image ?? '',

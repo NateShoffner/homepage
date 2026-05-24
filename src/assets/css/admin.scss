@@ -1,0 +1,293 @@
+.admin-layout {
+  min-height: 100vh;
+  font-family: var(--font-open-sans, sans-serif);
+  background-color: var(--body-bg);
+  color: var(--body-color);
+}
+
+.admin-toolbar {
+  background-color: var(--body-bg);
+  border-bottom-color: var(--border-color) !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-preview-panel {
+  border-left: 1px solid var(--border-color);
+  background-color: var(--body-bg);
+}
+
+.admin-tag-badge {
+  background-color: #e2e8f0;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.admin-tag-remove {
+  background: none;
+  border: none;
+  padding: 0 0 0 2px;
+  line-height: 1;
+  font-size: 1rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+[data-theme="dark"] .admin-tag-badge {
+  background-color: #374151;
+  color: #e5e7eb;
+}
+
+.admin-tag-input {
+  min-height: 38px;
+  background-color: var(--form-control-bg);
+  color: var(--form-control-color);
+  border-color: var(--form-control-border) !important;
+
+  input {
+    color: var(--form-control-color);
+
+    &::placeholder {
+      color: var(--form-control-placeholder);
+    }
+  }
+}
+
+// MDEditor toolbar and sizing overrides
+.w-md-editor {
+  // Toolbar buttons: bigger, easier to click
+  .w-md-editor-toolbar {
+    padding: 4px 6px;
+
+    ul li button {
+      width: 28px;
+      height: 28px;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  // Editor text area font size
+  .w-md-editor-text-pre > code,
+  .w-md-editor-text-input,
+  .w-md-editor-text {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+}
+
+// Light mode: make editor blend with page background
+[data-color-mode="light"] .w-md-editor {
+  background-color: var(--body-bg);
+  border-color: var(--form-control-border, #ced4da);
+
+  .w-md-editor-toolbar {
+    background-color: var(--card-hover-bg, #f8f9fa);
+    border-bottom-color: var(--border-color, #e9ecef);
+  }
+
+  .w-md-editor-content {
+    background-color: var(--body-bg);
+  }
+
+  .w-md-editor-text-pre > code,
+  .w-md-editor-text-input,
+  .w-md-editor-text {
+    background-color: var(--body-bg) !important;
+    color: var(--body-color) !important;
+  }
+}
+
+// Dark mode: blend with site dark theme instead of near-black defaults
+[data-color-mode="dark"] .w-md-editor {
+  background-color: var(--form-control-bg);
+  border-color: var(--form-control-border);
+
+  .w-md-editor-toolbar {
+    background-color: var(--card-bg);
+    border-bottom-color: var(--border-color);
+
+    // Toolbar icon buttons
+    ul li button {
+      color: var(--body-color);
+
+      &:hover {
+        background-color: var(--card-hover-bg);
+      }
+    }
+
+    svg {
+      color: var(--body-color);
+    }
+  }
+
+  .w-md-editor-content {
+    background-color: var(--form-control-bg);
+  }
+
+  .w-md-editor-text-pre > code,
+  .w-md-editor-text-input,
+  .w-md-editor-text {
+    background-color: var(--form-control-bg) !important;
+    color: var(--form-control-color) !important;
+  }
+}
+
+// Dark mode overrides for Bootstrap components used in admin
+[data-theme="dark"] {
+  .admin-layout {
+    // Form controls
+    .form-control,
+    .form-select {
+      background-color: var(--form-control-bg);
+      color: var(--form-control-color);
+      border-color: var(--form-control-border);
+
+      &::placeholder {
+        color: var(--form-control-placeholder);
+        opacity: 1;
+      }
+
+      &:focus {
+        background-color: var(--form-control-bg);
+        color: var(--form-control-color);
+        border-color: #337ab7;
+        box-shadow: 0 0 0 0.2rem rgba(51, 122, 183, 0.25);
+      }
+    }
+
+    // Date inputs: tell the browser to render the native picker in dark mode
+    input[type="date"].form-control {
+      color-scheme: dark;
+
+      &::-webkit-calendar-picker-indicator {
+        filter: invert(0.8);
+        cursor: pointer;
+      }
+    }
+
+    // Buttons
+    .btn-outline-secondary {
+      color: var(--body-color);
+      border-color: var(--form-control-border);
+
+      &:hover {
+        background-color: var(--card-hover-bg);
+        color: var(--body-color);
+        border-color: var(--form-control-border);
+      }
+    }
+
+    .btn-outline-primary {
+      color: #5ba3d9;
+      border-color: #5ba3d9;
+
+      &:hover {
+        background-color: rgba(91, 163, 217, 0.15);
+        color: #5ba3d9;
+      }
+    }
+
+    .btn-outline-danger {
+      &:hover {
+        background-color: rgba(220, 53, 69, 0.15);
+      }
+    }
+
+    // List group
+    .list-group-item {
+      background-color: var(--card-bg);
+      border-color: var(--border-color);
+      color: var(--body-color);
+    }
+
+    // Collapse / borders
+    .border,
+    .border-bottom {
+      border-color: var(--border-color) !important;
+    }
+
+    .border-rounded,
+    .rounded {
+      border-color: var(--border-color) !important;
+    }
+
+    // Modal
+    .modal-content {
+      background-color: var(--card-bg);
+      color: var(--body-color);
+      border-color: var(--border-color);
+    }
+
+    .modal-header {
+      border-bottom-color: var(--border-color);
+
+      .btn-close {
+        filter: invert(1) grayscale(1);
+      }
+    }
+
+    .modal-footer {
+      border-top-color: var(--border-color);
+    }
+
+    // Nav tabs
+    .nav-tabs {
+      border-bottom-color: var(--border-color);
+
+      .nav-link {
+        color: var(--body-color);
+
+        &:hover {
+          border-color: var(--border-color) var(--border-color) transparent;
+          color: var(--body-color);
+        }
+
+        &.active {
+          background-color: var(--body-bg);
+          border-color: var(--border-color) var(--border-color) var(--body-bg);
+          color: var(--body-color);
+        }
+      }
+    }
+
+    // Progress bar container
+    .progress {
+      background-color: var(--border-color);
+    }
+
+    // Dashed upload zone
+    .border[style*="dashed"],
+    [style*="border-style: dashed"] {
+      border-color: var(--form-control-border) !important;
+      color: var(--text-muted-color);
+    }
+
+    // Image browse grid selected border
+    .border-primary {
+      border-color: #5ba3d9 !important;
+    }
+
+    // Text helpers
+    .text-muted {
+      color: var(--text-muted-color) !important;
+    }
+
+    .text-secondary {
+      color: var(--text-muted-color) !important;
+    }
+
+    // Badge
+    .badge.bg-secondary {
+      background-color: rgba(134, 142, 150, 0.3) !important;
+    }
+  }
+}
