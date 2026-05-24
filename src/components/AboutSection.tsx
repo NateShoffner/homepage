@@ -48,11 +48,12 @@ export function AboutSection() {
           <div className="d-lg-inline-flex flex-row">
             <ul className="highlighted inlined-list">
               <li>Full-Stack &amp; API Development</li>
-              <li>Observability &amp; Data Engineering</li>
+              <li>Observability &amp; Data Engineering (ELK)</li>
+              <li>Mobile Development</li>
+              <li>Embedded &amp; IoT (ESP32)</li>
               <li>Reverse Engineering</li>
               <li>Homelab &amp; Home Automation</li>
-              <li>Open Source</li>
-              <li>Gaming</li>
+
             </ul>
           </div>
         </div>

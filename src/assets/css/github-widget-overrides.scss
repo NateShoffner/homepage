@@ -59,7 +59,10 @@
 
 .gw-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: 991px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 575px) { grid-template-columns: 1fr; }
   gap: 1.25rem;
 }
 
@@ -113,8 +116,17 @@
   color: $gray-400;
 }
 
-.gw-owner {
-  font-style: italic;
+.gw-org-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--badge-color);
+  background-color: var(--badge-bg);
+  border-radius: 3px;
+  padding: 0.15em 0.5em;
+  margin-bottom: 0.5rem;
 }
 
 .gw-placeholder {

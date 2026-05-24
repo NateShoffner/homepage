@@ -18,14 +18,16 @@ interface Repo {
   owner: { login: string }
 }
 
+type SortOption = 'pushed' | 'stars' | 'name'
+
 interface Props {
   usernames: string[]
   includeForks?: boolean
   includePages?: boolean
   defaultVisibleCount?: number
+  defaultSortBy?: SortOption
+  showFilters?: boolean
 }
-
-type SortOption = 'pushed' | 'stars' | 'name'
 
 function relativeTime(dateStr: string): string {
   const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000)
@@ -49,6 +51,8 @@ const GitHubRepoViewer: React.FC<Props> = ({
   includeForks = true,
   includePages = true,
   defaultVisibleCount = 12,
+  defaultSortBy = 'pushed',
+  showFilters = true,
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
   const [loading, setLoading] = useState(true)
@@ -56,8 +60,12 @@ const GitHubRepoViewer: React.FC<Props> = ({
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedLang, setSelectedLang] = useState('')
   const [selectedOrg, setSelectedOrg] = useState('')
-  const [sortBy, setSortBy] = useState<SortOption>('pushed')
+  const [sortBy, setSortBy] = useState<SortOption>(defaultSortBy)
   const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
+
+  useEffect(() => {
+    setVisibleCount(defaultVisibleCount)
+  }, [defaultVisibleCount])
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -161,7 +169,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
 
   return (
     <div>
-      <div className="gw-filter-bar">
+      {showFilters && <div className="gw-filter-bar">
         <span className="gw-filter-label">
           <i className="fa fa-filter" /> Filters
         </span>
@@ -212,7 +220,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
             </button>
           )}
         </div>
-      </div>
+      </div>}
 
       {filtered.length === 0 && (
         <div className="py-5 text-center text-muted">
@@ -242,6 +250,12 @@ const GitHubRepoViewer: React.FC<Props> = ({
               </div>
             </div>
 
+            {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
+              <div className="gw-org-badge">
+                <i className="fa fa-users" /> {repo.owner.login}
+              </div>
+            )}
+
             <div className="gw-meta">
               {repo.language
                 ? <span className="gw-lang">{repo.language}</span>
@@ -249,8 +263,6 @@ const GitHubRepoViewer: React.FC<Props> = ({
               }
               <span className="gw-meta-sep">·</span>
               <span className="gw-updated">{relativeTime(repo.pushed_at)}</span>
-              <span className="gw-meta-sep">·</span>
-              <span className="gw-owner">{repo.owner.login}</span>
             </div>
 
             <div className="gw-desc">

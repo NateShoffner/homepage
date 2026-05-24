@@ -43,14 +43,9 @@ function BlogPostCard({ post, onCategoryClick, showImage = true }: Props) {
                   {cat}
                 </button>
               ) : (
-                <a
-                  key={cat}
-                  href={`/blog/category/${encodeURIComponent(cat)}/`}
-                  className="badge"
-                  onClick={(e) => e.stopPropagation()}
-                >
+                <span key={cat} className="badge">
                   {cat}
-                </a>
+                </span>
               )
             )}
           </div>
