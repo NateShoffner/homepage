@@ -29,7 +29,7 @@ Dating back to around Haswell, Intel's processors have been notorious for reachi
 This isn't going to act as in in-depth overclocking/delidding guide, there are more than enough of those already throughout the internet.
 
 #### Build Specs
-* CPU: [Intel Core i7-7700K](https://www.amazon.com/dp/B01MXSI216) 
+* CPU: [Intel Core i7-7700K](https://www.amazon.com/dp/B01MXSI216)
 * Cooler: [Corsair H115i Liquid Cooler](https://www.amazon.com/dp/B019955RNQ)
 * Mobo: [ASUS ROG MAXIMUS IX HERO](https://www.amazon.com/dp/B01NBHXSP6)
 * RAM: [Corsair Vengeance 32GB RGB LED (4x8GB) DDR4 3000 MHZ](https://www.amazon.com/dp/B06XRG59PK)

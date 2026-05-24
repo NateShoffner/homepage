@@ -1,13 +1,17 @@
 import Link from 'next/link'
 import { Project } from '@/src/types/Project'
-import { getProjectImage } from '@utils/projectUtils'
-
 function ProjectCard({ project }: { project: Project }) {
+  const image = project.logo
+    ? `/assets/images/projects/${project.slug}/${project.logo}`
+    : project.images?.[0]?.filename
+    ? `/assets/images/projects/${project.slug}/${project.images[0].filename}`
+    : ''
+
   return (
     <div className="card project-card h-100 pt-2">
       <Link href={`/projects/${project.slug}`}>
         <img
-          src={getProjectImage(project)}
+          src={image}
           className="card-img-top img-fluid project-card-image"
           alt={project.name}
         />

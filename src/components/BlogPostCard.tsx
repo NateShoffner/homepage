@@ -2,27 +2,26 @@
 
 import Link from 'next/link'
 import { PostMeta } from '@/lib/blog'
-import { getBlogPostImage, getBlogPostExcerpt, getBlogPostUrl } from '@utils/blogUtils'
 import Markdown from './Markdown'
 import { CommentCount } from 'disqus-react'
 
 function BlogPostCard({ post }: { post: PostMeta }) {
   return (
     <div className="card blog-card h-100 pt-2">
-      <Link href={getBlogPostUrl(post)}>
+      <Link href={post.url}>
         <img
-          src={getBlogPostImage(post)}
+          src={post.image ? `/assets/images/posts/${post.image}` : `/assets/images/posts/default.png`}
           className="card-img-top img-fluid"
           alt={post.title}
         />
       </Link>
       <div className="card-body">
         <h5 className="card-title">
-          <Link href={getBlogPostUrl(post)}>{post.title}</Link>
+          <Link href={post.url}>{post.title}</Link>
         </h5>
         <div className="card-text">
-          <Markdown>{getBlogPostExcerpt(post)}</Markdown>
-          <Link href={getBlogPostUrl(post)} className="btn btn-primary">
+          <Markdown>{post.description}</Markdown>
+          <Link href={post.url} className="btn btn-primary">
             Read More &raquo;
           </Link>
         </div>

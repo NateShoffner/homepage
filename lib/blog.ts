@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { siteUrl } from '@/src/config'
 
 const postsDir = path.resolve(process.cwd(), '_posts')
-const siteUrl = 'https://nateshoffner.com'
 
 export interface PostMeta {
   slug: string

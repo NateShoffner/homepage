@@ -12,7 +12,6 @@ export default function Footer() {
         organizations.
         <br />
         <a href="/about/privacy">Privacy</a> &bull;{' '}
-        <a href="/about/disclosure">Disclosure</a> &bull;{' '}
         <a href="/#contact">Report Issue</a> &bull; Build:{' '}
         <a
           href={`https://github.com/NateShoffner/nateshoffner.github.io/commit/${gitRevision}`}

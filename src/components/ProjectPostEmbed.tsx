@@ -1,13 +1,17 @@
 import Link from 'next/link'
 import { Project } from '@/src/types/Project'
-import { getProjectImage } from '@utils/projectUtils'
-
 function ProjectPostEmbed({ project }: { project: Project }) {
+  const image = project.logo
+    ? `/assets/images/projects/${project.slug}/${project.logo}`
+    : project.images?.[0]?.filename
+    ? `/assets/images/projects/${project.slug}/${project.images[0].filename}`
+    : ''
+
   return (
     <div className="media blog-project-embed mt-3 mb-3 p-3">
       <img
         className="align-self-center mr-3 ml-3 img-fluid"
-        src={getProjectImage(project)}
+        src={image}
         alt={project.name}
       />
       <div className="media-body">
