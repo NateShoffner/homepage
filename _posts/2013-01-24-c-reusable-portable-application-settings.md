@@ -118,7 +118,7 @@ public class PortableSettingsProvider : SettingsProvider
             // Enable whichever applies to your application type.
              
             // Uncomment the following line to enable a MessageBox for forms-based apps
-            //System.Windows.Forms.MessageBox.Show(ex.Message, "Error writting configuration file to disk", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            //System.Windows.Forms.MessageBox.Show(ex.Message, "Error writing configuration file to disk", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
  
             // Uncomment the following line to enable a console message for console-based apps
             //Console.WriteLine("Error writing configuration file to disk: " + ex.Message);
@@ -407,7 +407,7 @@ public class PortableSettingsProvider : SettingsProvider
     private static string ConfigDirectory;
     private string APPNODE;
  
-    // Store instace of calling assembly
+    // Store instance of calling assembly
     private Assembly entryAssembly;
  
     private XmlDocument xmlDoc;
@@ -555,7 +555,7 @@ public class PortableSettingsProvider : SettingsProvider
             // Enable whichever applies to your application type.
  
             // Uncomment the following line to enable a MessageBox for forms-based apps
-            //MessageBox.Show(ex.Message, "Error writting configuration file to disk", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //MessageBox.Show(ex.Message, "Error writing configuration file to disk", MessageBoxButtons.OK, MessageBoxIcon.Error);
  
             // Uncomment the following line to enable a console message for console-based apps
             //Console.WriteLine("Error writing configuration file to disk: " + ex.Message);

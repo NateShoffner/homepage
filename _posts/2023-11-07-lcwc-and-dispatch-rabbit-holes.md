@@ -15,7 +15,7 @@ tags:
 
 Earlier this year, I became interested in the LCWC (Lancaster County-Wide Communications) incident page - a county-wide dispatch system that provides incident updates for all of Lancaster County, PA. 
 
-It's very useful for residents to know what's going on with regards to various emergency services incidents. It's not without its flaws, however. For starters, downtime seems to be a big issue especially during peak incident periods which is less than ideal considering that's when most people are going to be slamming the site. Additionally, there doesn't seem to be any sort of historical data. I wanted to atttempt to resolve those issues and also add some of my own, such as real-time notification systems and integrations with various social media platforms. This is where the rabbit hole begins.
+It's very useful for residents to know what's going on with regards to various emergency services incidents. It's not without its flaws, however. For starters, downtime seems to be a big issue especially during peak incident periods which is less than ideal considering that's when most people are going to be slamming the site. Additionally, there doesn't seem to be any sort of historical data. I wanted to attempt to resolve those issues and also add some of my own, such as real-time notification systems and integrations with various social media platforms. This is where the rabbit hole begins.
 
 #### Method #1 - Web Scraping
 

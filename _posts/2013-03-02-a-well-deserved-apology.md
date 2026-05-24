@@ -84,7 +84,7 @@ Protip: The average 12 year old who downloads an aimbot isn't going to care abou
 
 I speak for myself when saying I don't take a company seriously if they try to threaten a lawsuit against anybody who cheats in a game. If anything, it's likely to stir up interest in people to make cheats as a sort of challenge.
 
-Also, mfw everybody is pretty much reiterating what I wrote in a post, only to have it deleted for being "libelous". The only problem is my statement was based of of personal expereience from RuneScape, as well as public documentation regarding legalites between Jagex and cheaters. Basically, it's proven and factual (although my personal experence with RS would be considered opinionated). That's not anywhere near being "libelous".
+Also, mfw everybody is pretty much reiterating what I wrote in a post, only to have it deleted for being "libelous". The only problem is my statement was based of of personal experience from RuneScape, as well as public documentation regarding legalites between Jagex and cheaters. Basically, it's proven and factual (although my personal experience with RS would be considered opinionated). That's not anywhere near being "libelous".
 
 This is just one of many examples where your lack of real-world experience/knowledge has come back to haunt you. By making bold statements and implications such as those, you ignited the interest in many individuals to create cheats, some of which were out on launch day. Why? I'll give you a hint, people will always cheat. People will do it for whatever reason they want. But for those who make cheats, it's generally for the challenge to do so and when you antagonize people with statements such as those, you're only adding fuel to the fire. So congratulations. You not only proved how ignorant you are, but you also helped ruin the in-game experience for players.
 
@@ -116,7 +116,7 @@ tl;dr Sorry.
 *Nate Shoffner,*
 *Senior apology specialist.*
 
-This post in no way reflects the collective opinion of Build and Shoot and/or Buld Then Snip, LLC.
+This post in no way reflects the collective opinion of Build and Shoot and/or Build Then Snip, LLC.
 
 #### Update (3/5/2013):
 

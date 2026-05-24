@@ -27,4 +27,4 @@ I'd expect another culprit to the the shell integration. Personally, I don't use
 
 As for the network activity...the author has not even bothered to check the length of the data and compared it to the suspected files nor has he compared the timestamps between the two. Keep in mind that network activity from a program such as Dropbox is perfectly normal, how else would it be able to sync things in realtime?
 
-So no, based off the limited (see: hardly any) "evidence" provided by the original author, it does not appear that Dropbox is transferring data outside of the designated dirctories.
+So no, based off the limited (see: hardly any) "evidence" provided by the original author, it does not appear that Dropbox is transferring data outside of the designated directories.

@@ -30,7 +30,7 @@ I figured the logical thing to do would be to [post on the forums](http://battle
 
 The only real useful response was one containing a link to my [PBBans ban report](http://www.pbbans.com/mbi-viewban-97512ac5-vb247400.html) with the ever-so-helpful violation description of "**VIOLATION (GAMEHACK) 89241".** Looking at the [description](http://www.pbbans.com/info-center-pbviols.html) for the violation returns the following: **#80000s - Gamehack**. Very descriptive.
 
-During the time that all of this was occuring, there was a lot of drama surrounding PunkBuster and PBBans involving [innocent players being banned](http://www.egmnow.com/articles/news/hackers-ban-innocent-players-from-battlefield-3/). This wasn't the first time PunkBuster had been exploited either. With GUID spoofing and a [](http://bashandslash.com/index.php?Itemid=78&amp;id=297&amp;option=com_content&amp;task=view)code signature scanning proof of concept</a>. I figured there was a good chance that I was one of the many who were caught up in the mess.
+During the time that all of this was occurring, there was a lot of drama surrounding PunkBuster and PBBans involving [innocent players being banned](http://www.egmnow.com/articles/news/hackers-ban-innocent-players-from-battlefield-3/). This wasn't the first time PunkBuster had been exploited either. With GUID spoofing and a [](http://bashandslash.com/index.php?Itemid=78&amp;id=297&amp;option=com_content&amp;task=view)code signature scanning proof of concept</a>. I figured there was a good chance that I was one of the many who were caught up in the mess.
 
 #### The Appeal
 Having never dealt with punkbuster/pbbans before, I wasn't sure where to appeal first.

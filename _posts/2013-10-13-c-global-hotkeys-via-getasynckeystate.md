@@ -116,7 +116,7 @@ private class HookComparer : IComparer<KeyHook>
 Basically, it just compares hooked keys based on the following:
 
 1. [Keys](http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx) enumeration
-2. Number of ModiferKeys set
+2. Number of ModifierKeys set
 3. Underlying ModifierKeys integral type summation
 
 To sort the list, we use a simple lambda expression with our comparer:

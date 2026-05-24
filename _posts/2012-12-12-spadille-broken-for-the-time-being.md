@@ -11,7 +11,7 @@ tags:
 
 Since I keep getting messages from every direction about this, I figured I'd make a post.
 
-Jagex has bought Ace of Spades and has shut down their master server. Spadille 1.5.1 (latest public release) used their master server and is therefor broken.
+Jagex has bought Ace of Spades and has shut down their master server. Spadille 1.5.1 (latest public release) used their master server and is therefore broken.
 
 **I will be updating this when I get the chance.**
 

@@ -37,7 +37,7 @@ Let's move on and analyze those credits. First we need to take a solid look at 
 Anybody with a 2nd grade education is probably scratching their heads right now. Look at the last 2 sentences and how they repeat. No that wasn't my typo, that's in the game. It looks as though somebody made a last minute edit and copy/pasted the text without any final proof-read. Perhaps the text was just shifted to the right during the edit. If that's the case, I would like to know whether this is something that was known before release or if it was edited in at the very last minute without anybody noticing.
 
 #### Conclusion
-Regardless of conspiracies, motives and other drama, one point still remains. I don't care what company you work for. No company should be personally attacking an individual like this. Even moreso after everything he was put through until he finally had enough. Is it not bad enough that you ripped the guy off and made false promises, only to screw him over in the end? Then you recreate a watered-down copy of the game that panders to drooling Call of Duty kids while completely alienating the existing userbase. The game has severely flopped and you have yet to make a real profit off of it. Yet your priorities still seem to be personally attacking the developer. Good game. (No, not Ace of Spades 1.0. Are you even paying attention?)
+Regardless of conspiracies, motives and other drama, one point still remains. I don't care what company you work for. No company should be personally attacking an individual like this. Even more so after everything he was put through until he finally had enough. Is it not bad enough that you ripped the guy off and made false promises, only to screw him over in the end? Then you recreate a watered-down copy of the game that panders to drooling Call of Duty kids while completely alienating the existing userbase. The game has severely flopped and you have yet to make a real profit off of it. Yet your priorities still seem to be personally attacking the developer. Good game. (No, not Ace of Spades 1.0. Are you even paying attention?)
 
 They made sure to give credit to Blitz Game Studios and Mat, but not the primary developer, at least not by name. It's not as if they could've totally forgotten Ben's involvement, which makes me think this was a known edit.
 
@@ -64,7 +64,7 @@ And of course for reference, here are some screenshots of the credits:
 ![](aoscredit2.jpg)
 ![](aoscredit3.jpg) 
 
-This post in no way reflects the collective opinion of Build and Shoot and/or Buld Then Snip, LLC.
+This post in no way reflects the collective opinion of Build and Shoot and/or Build Then Snip, LLC.
 
 #### Update (06/17/2013)
     As of July 13th (5 days after originally posting this entry), Jagex released an update for the game. The complete change log can be found [here](http://www.aceofspades.com/forums/showthread.php?20030-Update-Notes-13th-June-Discussion-Thread).

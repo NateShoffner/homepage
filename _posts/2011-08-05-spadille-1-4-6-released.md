@@ -30,7 +30,7 @@ v1.4.6
 - Double-clicking blacklisted icon prompts dialog to add to favorites
 - Filtered servers are now correctly ordered by sorted column
 - Local pings are now permanent until proceeding refreshes
-- Fixed bug with accidently blacklisting the server above the intended one
+- Fixed bug with accidentally blacklisting the server above the intended one
 - Added clear option to server list manager
 - Added "History" to server list manager
 - Fixed bug when resetting columns and some column widths remain static

@@ -96,7 +96,7 @@ The screenshot functionality got a pretty big overhaul. The screenshot mechanism
 - Added server language options
 - Added client language options
 - Completely redesigned map manager/added more functionality
-- Fixed bug with inproper map save filename format
+- Fixed bug with improper map save filename format
 - Fixed bug with saving corrupt maps
 - Added quick match button
 - Redesigned about dialog/updated credits
