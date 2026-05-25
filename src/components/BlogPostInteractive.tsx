@@ -75,7 +75,7 @@ export default function BlogPostInteractive({
       <div className="row mb-3">
         <div className="col-12 col-sm-6">
           <div className="post-tags d-flex flex-wrap align-items-center gap-1">
-            <span><i className="fa fa-tag"></i></span>
+            <span><i className="fa fa-tag me-1"></i></span>
             {post.tags && post.tags.length > 0
               ? <div className="list-card-tags">
                   {post.tags.map((tag) => (

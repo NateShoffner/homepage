@@ -3,11 +3,43 @@ section.page-section {
     padding-bottom: 5rem !important;
 }
 
+@keyframes about-glitch {
+    0%   { transform: none; text-shadow: 0 0 8px rgba($highlight, 0.6); }
+    10%  { transform: translateX(-2px) skewX(-3deg); text-shadow: 3px 0 rgba($highlight, 1), -3px 0 rgba(255, 30, 80, 0.5); }
+    20%  { transform: translateX(2px); text-shadow: -2px 0 rgba($highlight, 0.8); }
+    30%  { transform: none; text-shadow: 0 0 12px rgba($highlight, 0.9), 0 0 30px rgba($highlight, 0.3); }
+    100% { transform: none; text-shadow: 0 0 8px rgba($highlight, 0.6); }
+}
+
+@keyframes about-subheading-flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: none;
+        opacity: 1;
+    }
+    19%, 23%, 54%, 56% {
+        text-shadow: 0 0 6px rgba($highlight, 0.6), 0 0 20px rgba($highlight, 0.2);
+        opacity: 0.9;
+    }
+}
+
 section.about-cover {
     background: linear-gradient( rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90)), url("/assets/images/bg.jpg");
     background-size: cover;
     color: $white !important;
     min-height: 100vh;
+    position: relative;
+
+    h1 {
+        animation: about-glitch 10s steps(1) infinite;
+    }
+
+    .subheading {
+        animation: about-subheading-flicker 12s infinite;
+    }
+
+    .text-highlight {
+        text-shadow: 0 0 10px rgba($highlight, 0.7), 0 0 30px rgba($highlight, 0.3);
+    }
 }
 
 @media (min-width: 992px) {
@@ -26,10 +58,10 @@ section.about-cover {
         display: inline-block;
         -webkit-transform: translate(0, -50%);
         transform: translate(0, -50%);
-        color: $white;
+        color: $highlight;
         letter-spacing: .1em;
         text-decoration: none;
-        transition: opacity .2s;
+        transition: filter .2s ease;
         padding-top: 30px;
         &.centered {
             position: absolute;
@@ -37,7 +69,7 @@ section.about-cover {
             left: 50%;
         }
         &:hover {
-            opacity: .5;
+            filter: brightness(1.4) drop-shadow(0 0 8px rgba($highlight, 0.9));
         }
         span {
             position: absolute;
@@ -45,9 +77,10 @@ section.about-cover {
             width: 48px;
             height: 48px;
             margin-left: -23px;
-            border-radius: 100%;
+            border-radius: 3px;
             box-sizing: border-box;
-            border: 2px solid $highlight;
+            border: 1px solid $highlight;
+            box-shadow: 0 0 10px rgba($highlight, 0.6), inset 0 0 8px rgba($highlight, 0.12), 0 0 2px rgba($highlight, 1);
             &::after {
                 position: absolute;
                 top: 50%;
@@ -56,8 +89,9 @@ section.about-cover {
                 width: 1rem;
                 height: 1rem;
                 box-sizing: border-box;
-                border-left: 1px solid $highlight;
-                border-bottom: 1px solid $highlight;
+                border-left: 2px solid $highlight;
+                border-bottom: 2px solid $highlight;
+                filter: drop-shadow(0 0 3px rgba($highlight, 0.8));
             }
             &.scroll-up::after {
                 margin: -5px 0 0 -8px;
@@ -77,8 +111,8 @@ section.about-cover {
                 content: '';
                 width: 44px;
                 height: 44px;
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, .1);
-                border-radius: 100%;
+                box-shadow: 0 0 0 0 rgba($highlight, 0.7);
+                border-radius: 3px;
                 opacity: 0;
                 -webkit-animation: scroll-btn-animation 1.5s infinite;
                 animation: scroll-btn-animation 1.5s infinite;
@@ -91,12 +125,13 @@ section.about-cover {
 @-webkit-keyframes scroll-btn-animation {
     0% {
         opacity: 0;
+        box-shadow: 0 0 0 0 rgba($highlight, 0.7);
     }
     30% {
         opacity: 1;
     }
     60% {
-        box-shadow: 0 0 0 15px rgba(255, 255, 255, .1);
+        box-shadow: 0 0 0 15px rgba($highlight, 0);
         opacity: 0;
     }
     100% {
@@ -107,12 +142,13 @@ section.about-cover {
 @keyframes scroll-btn-animation {
     0% {
         opacity: 0;
+        box-shadow: 0 0 0 0 rgba($highlight, 0.7);
     }
     30% {
         opacity: 1;
     }
     60% {
-        box-shadow: 0 0 0 15px rgba(255, 255, 255, .1);
+        box-shadow: 0 0 0 15px rgba($highlight, 0);
         opacity: 0;
     }
     100% {

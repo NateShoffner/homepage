@@ -5,10 +5,11 @@ import { usePathname } from 'next/navigation'
 import { useLayoutEffect, useState, MouseEvent } from 'react'
 import { useScrollSpy } from '@hooks/useScrollSpy'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faXTwitter, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 type NavItem = { id: string; label: string; route: string; hash: string }
-type SocialItem = { id: string; icon?: string; url: string }
+type SocialItem = { id: string; icon: IconDefinition; url: string }
 
 const NavItems: NavItem[] = [
   { id: 'about', label: 'About', route: '/about', hash: '/#about' },
@@ -18,9 +19,9 @@ const NavItems: NavItem[] = [
 ]
 
 const SocialItems: SocialItem[] = [
-  { id: 'x', url: 'https://x.com/NateShoffner' },
-  { id: 'github', icon: 'fa-github', url: 'https://github.com/NateShoffner' },
-  { id: 'linkedin', icon: 'fa-linkedin', url: 'https://www.linkedin.com/in/NateShoffner' },
+  { id: 'x', icon: faXTwitter, url: 'https://x.com/NateShoffner' },
+  { id: 'github', icon: faGithub, url: 'https://github.com/NateShoffner' },
+  { id: 'linkedin', icon: faLinkedinIn, url: 'https://www.linkedin.com/in/NateShoffner' },
 ]
 
 function scrollToId(id: string, smooth = true) {
@@ -78,7 +79,7 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
       <NextLink href="/" className="navbar-brand">
-        <span className="d-block d-lg-none">Nate Shoffner</span>
+        <span className="d-block d-lg-none navbar-brand-text">Nate Shoffner</span>
         <span className="d-none d-lg-block">
           <div className="circle-border">
             <div className="circle">
@@ -137,14 +138,7 @@ export default function Navbar() {
               {SocialItems.map((social) => (
                 <li key={social.id}>
                   <a href={social.url} target="_blank" rel="noopener noreferrer">
-                    <span className="fa-stack fa-lg">
-                      <i className="fa fa-circle fa-stack-2x"></i>
-                      {social.icon ? (
-                        <i className={`fa ${social.icon} fa-stack-1x fa-inverse`}></i>
-                      ) : (
-                        <FontAwesomeIcon icon={faXTwitter} className="fa-stack-1x fa-inverse" />
-                      )}
-                    </span>
+                    <FontAwesomeIcon icon={social.icon} />
                   </a>
                 </li>
               ))}
