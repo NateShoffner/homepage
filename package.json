@@ -35,6 +35,7 @@
     "remark": "^15.0.1",
     "remark-directive": "^4.0.0",
     "remark-parse": "^11.0.0",
+    "resend": "^6.12.3",
     "sass": "^1.89.2",
     "unified": "^11.0.5"
   },

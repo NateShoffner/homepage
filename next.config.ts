@@ -34,6 +34,7 @@ const nextConfig: NextConfig = {
       path.join(process.cwd(), 'node_modules'),
       path.join(process.cwd(), 'node_modules/bootstrap/scss'),
     ],
+    silenceDeprecations: ['import', 'mixed-decls', 'color-functions', 'global-builtin'],
   },
 }
 

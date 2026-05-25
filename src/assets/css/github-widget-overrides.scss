@@ -60,10 +60,10 @@
 .gw-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
 
   @media (max-width: 991px) { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: 575px) { grid-template-columns: 1fr; }
-  gap: 1.25rem;
 }
 
 .gw-card {
