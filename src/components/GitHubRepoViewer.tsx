@@ -18,7 +18,7 @@ interface Repo {
   owner: { login: string }
 }
 
-type SortOption = 'pushed' | 'stars' | 'name'
+type SortOption = 'stars' | 'pushed' | 'name'
 
 interface Props {
   usernames: string[]
@@ -40,7 +40,10 @@ function relativeTime(dateStr: string): string {
 
 function sortRepos(repos: Repo[], sort: SortOption): Repo[] {
   return [...repos].sort((a, b) => {
-    if (sort === 'stars') return b.stargazers_count - a.stargazers_count
+    if (sort === 'stars') {
+      const diff = b.stargazers_count - a.stargazers_count
+      return diff !== 0 ? diff : new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
+    }
     if (sort === 'name') return a.name.localeCompare(b.name)
     return new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
   })
@@ -51,7 +54,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
   includeForks = true,
   includePages = true,
   defaultVisibleCount = 12,
-  defaultSortBy = 'pushed',
+  defaultSortBy = 'stars',
   showFilters = true,
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
@@ -199,8 +202,8 @@ const GitHubRepoViewer: React.FC<Props> = ({
             value={sortBy}
             onChange={(e) => { setSortBy(e.target.value as SortOption); resetCount() }}
           >
-            <option value="pushed">Recently Updated</option>
             <option value="stars">Most Stars</option>
+            <option value="pushed">Recently Updated</option>
             <option value="name">Alphabetical</option>
           </select>
 

@@ -1,3 +1,7 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+
 const DR = 2;
 
 function Dot({ cx, cy }: { cx: number; cy: number }) {
@@ -38,61 +42,96 @@ function TraceLine({
   );
 }
 
+// Grid: background-size 24px, dot centers at (12+24n, 12+24m) in navbar-relative coords.
+// Left SVGs (left:0): svgX = navbarX → valid x: 12, 36, 60, 84, 108
+// Right SVGs (right:0, sidebar 240px, width 110): navbarX = 130+svgX → valid svgX: 26, 50, 74, 98
+// Top SVGs aligned exactly; bottom SVGs (bottom-relative) have grid-aligned x only.
+
 export default function NavCircuitTraces() {
+  const [bottomTop, setBottomTop] = useState<number | null>(null)
+
+  useEffect(() => {
+    const measure = () => {
+      const social = document.querySelector<HTMLElement>('#navbar ul.social-list')
+      const navbar = document.querySelector<HTMLElement>('#navbar')
+      if (social && navbar) {
+        const navbarRect = navbar.getBoundingClientRect()
+        const socialRect = social.getBoundingClientRect()
+        // Position SVG so its bottom (120px tall) ends one grid row above the social list
+        const socialRelTop = socialRect.top - navbarRect.top
+        const rawTop = socialRelTop - 120
+        const snapped = Math.round((rawTop - 12) / 24) * 24 + 12
+        setBottomTop(snapped)
+      }
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  const btL = bottomTop ?? -9999
+  const btR = bottomTop != null ? bottomTop - 24 : -9999
+
   return (
     <div
       className="d-none d-lg-block nav-circuit-traces"
       style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 0 }}
     >
-      {/* Top-left */}
-      <svg style={{ position: "absolute", top: 0, left: 0 }} width="110" height="95" viewBox="0 0 110 95" fill="none">
-        <TraceLine spd="5.0s" dim x1="0" y1="20" x2="38" y2="20" stroke="var(--circuit-stroke-dim)" />
-        <Dot cx={38} cy={20} />
+      {/* Top-left: top:0, left:0 */}
+      <svg style={{ position: "absolute", top: 0, left: 0 }} width="110" height="96" viewBox="0 0 110 96" fill="none">
+        {/* open-ended: enters from left, terminates inside */}
+        <TraceLine spd="5.0s" dim x1="0" y1="12" x2="36" y2="12" stroke="var(--circuit-stroke-dim)" />
+        <Dot cx={36} cy={12} />
 
-        <Trace spd="3.0s" points="0,35 70,35 70,72 100,72" stroke="var(--circuit-stroke)" />
-        <Dot cx={70} cy={35} />
-        <Dot cx={70} cy={72} />
-        <Dot cx={100} cy={72} />
+        <Trace spd="3.0s" points="0,36 84,36 84,60 108,60" stroke="var(--circuit-stroke)" />
+        <Dot cx={84} cy={36} />
+        <Dot cx={84} cy={60} />
+        <Dot cx={108} cy={60} />
 
-        <Trace spd="4.3s" dim points="0,54 48,54 48,82" stroke="var(--circuit-stroke-dim)" />
-        <Dot cx={48} cy={54} />
-        <Dot cx={48} cy={82} />
+        {/* closed-loop diagonal: enters left, diagonal, exits left */}
+        <Trace spd="4.3s" dim points="0,60 36,60 60,84 0,84" stroke="var(--circuit-stroke-dim)" />
+        <Dot cx={36} cy={60} />
+        <Dot cx={60} cy={84} />
       </svg>
 
-      {/* Top-right: offset 40px lower than top-left */}
-      <svg style={{ position: "absolute", top: 40, right: 0 }} width="110" height="95" viewBox="0 0 110 95" fill="none">
-        <Trace spd="3.5s" points="110,25 48,25 48,78" stroke="var(--circuit-stroke)" />
-        <Dot cx={48} cy={25} />
-        <Dot cx={48} cy={78} />
+      {/* Top-right: top:40, right:0 */}
+      <svg style={{ position: "absolute", top: 40, right: 0 }} width="110" height="96" viewBox="0 0 110 96" fill="none">
+        {/* closed-loop diagonal: enters right, diagonal, exits right */}
+        <Trace spd="3.5s" points="110,20 74,20 50,44 110,44" stroke="var(--circuit-stroke)" />
+        <Dot cx={74} cy={20} />
+        <Dot cx={50} cy={44} />
 
-        <Trace spd="5.9s" dim points="110,44 68,44 68,85" stroke="var(--circuit-stroke-dim)" />
-        <Dot cx={68} cy={44} />
-        <Dot cx={68} cy={85} />
+        {/* open-ended: enters from right, terminates inside */}
+        <Trace spd="5.9s" dim points="110,68 74,68 74,92" stroke="var(--circuit-stroke-dim)" />
+        <Dot cx={74} cy={68} />
+        <Dot cx={74} cy={92} />
       </svg>
 
-      {/* Bottom-left: sits above social buttons, routes upward */}
-      <svg style={{ position: "absolute", bottom: 110, left: 0 }} width="110" height="80" viewBox="0 0 110 80" fill="none">
-        <Trace spd="3.3s" points="0,55 62,55 62,22 92,22" stroke="var(--circuit-stroke)" />
-        <Dot cx={62} cy={55} />
-        <Dot cx={62} cy={22} />
-        <Dot cx={92} cy={22} />
+      {/* Bottom-left: dynamically positioned below navbar-collapse */}
+      <svg style={{ position: "absolute", top: btL, left: 0 }} width="110" height="120" viewBox="0 0 110 120" fill="none">
+        {/* open-ended: enters from left, terminates inside */}
+        <Trace spd="3.3s" points="0,24 60,24 60,48 84,48" stroke="var(--circuit-stroke)" />
+        <Dot cx={60} cy={24} />
+        <Dot cx={60} cy={48} />
+        <Dot cx={84} cy={48} />
 
-        <Trace spd="5.5s" dim points="0,70 40,70 40,40" stroke="var(--circuit-stroke-dim)" />
-        <Dot cx={40} cy={70} />
-        <Dot cx={40} cy={40} />
+        {/* closed-loop diagonal: enters left, diagonal, exits left */}
+        <Trace spd="5.5s" dim points="0,72 36,72 60,96 0,96" stroke="var(--circuit-stroke-dim)" />
+        <Dot cx={36} cy={72} />
+        <Dot cx={60} cy={96} />
       </svg>
 
-      {/* Bottom-right: higher than bottom-left */}
-      <svg style={{ position: "absolute", bottom: 152, right: 0 }} width="110" height="80" viewBox="0 0 110 80" fill="none">
-        <Trace spd="3.9s" points="110,48 68,48 68,28 40,28" stroke="var(--circuit-stroke)" />
-        <Dot cx={68} cy={48} />
-        <Dot cx={68} cy={28} />
-        <Dot cx={40} cy={28} />
+      {/* Bottom-right: dynamically positioned below navbar-collapse */}
+      <svg style={{ position: "absolute", top: btR, right: 0 }} width="110" height="120" viewBox="0 0 110 120" fill="none">
+        {/* closed-loop diagonal: enters right, diagonal, exits right */}
+        <Trace spd="3.9s" points="110,24 74,24 50,48 110,48" stroke="var(--circuit-stroke)" />
+        <Dot cx={74} cy={24} />
+        <Dot cx={50} cy={48} />
 
-        <Trace spd="6.4s" dim points="110,68 80,68 80,52 60,52" stroke="var(--circuit-stroke-dim)" />
-        <Dot cx={80} cy={68} />
-        <Dot cx={80} cy={52} />
-        <Dot cx={60} cy={52} />
+        {/* open-ended: enters from right, terminates inside */}
+        <Trace spd="6.4s" dim points="110,72 98,72 98,96" stroke="var(--circuit-stroke-dim)" />
+        <Dot cx={98} cy={72} />
+        <Dot cx={98} cy={96} />
       </svg>
     </div>
   );

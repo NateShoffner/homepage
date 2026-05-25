@@ -2,7 +2,7 @@
 
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useLayoutEffect, useState, MouseEvent } from 'react'
+import { useLayoutEffect, useEffect, useState, MouseEvent } from 'react'
 import { useScrollSpy } from '@hooks/useScrollSpy'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXTwitter, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
@@ -41,12 +41,29 @@ export default function Navbar() {
   const pathname = usePathname()
   const onHome = pathname === '/'
   const [navOpen, setNavOpen] = useState(false)
+  const [circuitY, setCircuitY] = useState({ tl: 30, tr: 31, bl: 140, br: 165 })
 
   const toggleTheme = () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
     localStorage.setItem('theme', next)
     document.documentElement.setAttribute('data-theme', next)
   }
+
+  useEffect(() => {
+    const measure = () => {
+      const circle = document.querySelector<HTMLElement>('#navbar .circle-border')
+      const navbar = document.querySelector<HTMLElement>('#navbar')
+      if (!circle || !navbar) return
+      const navRect = navbar.getBoundingClientRect()
+      const circRect = circle.getBoundingClientRect()
+      const svgTop = circRect.top - navRect.top - 20
+      const snap = (svgY: number) => Math.round((svgTop + svgY - 12) / 24) * 24 + 12 - svgTop
+      setCircuitY({ tl: snap(30), tr: snap(31), bl: snap(140), br: snap(165) })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
 
   useLayoutEffect(() => {
     if (!onHome || !window.location.hash) return
@@ -70,9 +87,6 @@ export default function Navbar() {
     (id: string) => (e: MouseEvent<HTMLAnchorElement>) => {
       if (!onHome) return
       e.preventDefault()
-      if (window.location.hash !== `#${id}`) {
-        history.replaceState(null, '', `/#${id}`)
-      }
       scrollToId(id)
       setNavOpen(false)
     }
@@ -92,18 +106,18 @@ export default function Navbar() {
               />
             </div>
             <svg className="profile-circuit" viewBox="0 0 200 200" fill="none" aria-hidden="true">
-              {/* TL — exits left then up toward sidebar left edge */}
-              <polyline className="pc-trace pc-trace-1" points="31,60 -15,60 -15,30" />
-              <circle className="pc-node" cx="-15" cy="30" r="2" />
-              {/* TR — exits right toward sidebar right edge */}
-              <polyline className="pc-trace pc-trace-2" points="140,31 218,31" />
-              <circle className="pc-node" cx="218" cy="31" r="2" />
-              {/* BL — exits left toward sidebar left edge */}
-              <polyline className="pc-trace pc-trace-3" points="31,140 -18,140" />
-              <circle className="pc-node" cx="-18" cy="140" r="2" />
-              {/* BR — exits right then down toward sidebar right edge */}
-              <polyline className="pc-trace pc-trace-4" points="169,140 210,140 210,165" />
-              <circle className="pc-node" cx="210" cy="165" r="2" />
+              {/* TL — exits left then up to snapped grid row */}
+              <polyline className="pc-trace pc-trace-1" points={`31,60 -8,60 -8,${circuitY.tl}`} />
+              <circle className="pc-node" cx="-8" cy={circuitY.tl} r="2" />
+              {/* TR — exits right then to snapped grid row */}
+              <polyline className="pc-trace pc-trace-2" points={`140,31 208,31 208,${circuitY.tr}`} />
+              <circle className="pc-node" cx="208" cy={circuitY.tr} r="2" />
+              {/* BL — exits left then to snapped grid row */}
+              <polyline className="pc-trace pc-trace-3" points={`31,140 -8,140 -8,${circuitY.bl}`} />
+              <circle className="pc-node" cx="-8" cy={circuitY.bl} r="2" />
+              {/* BR — exits right then down to snapped grid row */}
+              <polyline className="pc-trace pc-trace-4" points={`169,140 208,140 208,${circuitY.br}`} />
+              <circle className="pc-node" cx="208" cy={circuitY.br} r="2" />
             </svg>
           </div>
         </span>
@@ -158,6 +172,12 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
+              <li className="d-none d-lg-inline-block theme-toggle-item">
+                <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
+                  <i className="fa fa-moon-o theme-icon-for-light" />
+                  <i className="fa fa-sun-o theme-icon-for-dark" />
+                </button>
+              </li>
             </ul>
           </li>
         </ul>
@@ -174,12 +194,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="theme-toggle-wrapper d-none d-lg-flex">
-        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
-          <i className="fa fa-moon-o theme-icon-for-light" />
-          <i className="fa fa-sun-o theme-icon-for-dark" />
-        </button>
-      </div>
     </nav>
   )
 }

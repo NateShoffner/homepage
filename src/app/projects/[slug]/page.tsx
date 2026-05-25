@@ -29,10 +29,6 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       p.tags.some((t) => t.toLowerCase() === project.name.toLowerCase())
   )
 
-  const domain = project.homepage
-    ? new URL(project.homepage).hostname.replace('www.', '')
-    : null
-
   const formattedDate = project.updated
     ? new Date(project.updated).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric',
@@ -44,44 +40,58 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     project.open_source === 'No' ? 'Proprietary' :
     null
 
+  const infoItems = [
+    project.version && project.version !== 'N/A' && { icon: 'fa-tag', label: 'Version', value: `v${project.version}` },
+    formattedDate && { icon: 'fa-calendar', label: 'Updated', value: formattedDate },
+    project.platforms?.length && { icon: 'fa-desktop', label: 'Platform', value: project.platforms.join(', ') },
+    openSourceLabel && { icon: 'fa-code', label: 'Source', value: openSourceLabel },
+    project.license && project.license !== 'N/A' && { icon: 'fa-file-text-o', label: 'License', value: project.license },
+  ].filter(Boolean) as { icon: string; label: string; value: string }[]
+
   return (
     <section className="page-section p-4 p-lg-5 d-flex flex-column">
       <div className="project">
 
-        <div className="d-flex align-items-start gap-3 mb-3">
-          <img
-            src={`/assets/images/projects/${project.slug}/${project.logo}`}
-            className="project-logo"
-            alt={project.name}
-          />
-          <div>
+        {/* ── Header ── */}
+        <div className="project-header mb-4">
+          <div className="project-logo-wrap">
+            <img
+              src={`/assets/images/projects/${project.slug}/${project.logo}`}
+              className="project-logo"
+              alt={project.name}
+            />
+          </div>
+          <div className="project-header-body">
             <h1 className="mb-2">{project.name}</h1>
-            <div className="list-card-tags">
-              {project.version && project.version !== 'N/A' && (
-                <span className="badge"><i className="fa fa-tag" /> v{project.version}</span>
+            <p className="lead mb-3">{project.description}</p>
+            <div className="project-header-actions">
+              {project.homepage && (
+                <a href={project.homepage} className="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-external-link" /> Visit Website
+                </a>
               )}
-              {formattedDate && (
-                <span className="badge"><i className="fa fa-calendar" /> {formattedDate}</span>
-              )}
-              {project.platforms && project.platforms.map((p) => (
-                <span key={p} className="badge">{p}</span>
-              ))}
-              {project.license && project.license !== 'N/A' && (
-                <span className="badge"><i className="fa fa-file-text-o" /> {project.license}</span>
-              )}
-              {openSourceLabel && (
-                <span className="badge"><i className="fa fa-code" /> {openSourceLabel}</span>
-              )}
-              {domain && (
-                <a href={project.homepage} className="badge" target="_blank" rel="noopener noreferrer">
-                  <i className="fa fa-external-link" /> {domain}
+              {project.open_source === 'Yes' && (
+                <a href={`https://github.com/NateShoffner/${project.slug}`} className="btn btn-outline-secondary btn-sm" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-github" /> View Source
                 </a>
               )}
             </div>
           </div>
         </div>
 
-        <p className="lead mb-4">{project.description}</p>
+        {/* ── Info strip ── */}
+        {infoItems.length > 0 && (
+          <div className="project-info-strip mb-4">
+            {infoItems.map((item) => (
+              <div key={item.label} className="project-info-item">
+                <span className="project-info-label">
+                  <i className={`fa ${item.icon}`} /> {item.label}
+                </span>
+                <span className="project-info-value">{item.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
         <ProjectInteractive project={project} />
 

@@ -35,37 +35,6 @@ $highlight: $blue;
 // Theme CSS custom properties
 
 :root {
-    --body-bg: #ffffff;
-    --body-color: #{$gray-900};
-    --link-color: #{$link-color};
-    --border-color: #{$gray-200};
-    --border-color-md: #{$gray-300};
-    --blockquote-color: #6a737d;
-    --blockquote-border: #dfe2e5;
-    --card-bg: #ffffff;
-    --card-hover-bg: #{$gray-100};
-    --form-control-bg: #ffffff;
-    --form-control-color: #{$gray-900};
-    --form-control-border: #{$gray-400};
-    --form-control-placeholder: #{$gray-500};
-    --text-muted-color: #6c757d;
-    --badge-bg: rgba(51, 122, 183, 0.12);
-    --badge-color: #{$highlight};
-    --list-card-title-color: #{$gray-900};
-    --list-card-meta-color: #{$gray-500};
-    --list-card-excerpt-color: #{$gray-600};
-    --project-download-desc-color: #{$gray-600};
-    --project-post-date-color: #{$gray-500};
-    --code-bg: #{$gray-100};
-    --code-color: #{$gray-900};
-    --code-border: #{$gray-300};
-    --circuit-stroke: rgba(51, 122, 183, 0.14);
-    --circuit-stroke-dim: rgba(51, 122, 183, 0.07);
-    --circuit-dot: rgba(51, 122, 183, 0.20);
-    --dot-grid-color: rgba(0, 0, 0, 0.05);
-}
-
-[data-theme="dark"] {
     --body-bg: #181a1b;
     --body-color: #d4d4d4;
     --link-color: #5ba3d9;
@@ -87,6 +56,9 @@ $highlight: $blue;
     --list-card-excerpt-color: #8e979f;
     --project-download-desc-color: #8e979f;
     --project-post-date-color: #7a8a9a;
+    --project-logo-bg: rgba(255, 255, 255, 0.04);
+    --project-info-bg: #1e2028;
+    --text-muted: #8a9ab0;
     --code-bg: #1e2228;
     --code-color: #e6edf3;
     --code-border: #30363d;
@@ -94,4 +66,38 @@ $highlight: $blue;
     --circuit-stroke-dim: rgba(255, 255, 255, 0.05);
     --circuit-dot: rgba(255, 255, 255, 0.15);
     --dot-grid-color: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="light"] {
+    --body-bg: #ffffff;
+    --body-color: #{$gray-900};
+    --link-color: #{$link-color};
+    --border-color: #{$gray-200};
+    --border-color-md: #{$gray-300};
+    --blockquote-color: #6a737d;
+    --blockquote-border: #dfe2e5;
+    --card-bg: #ffffff;
+    --card-hover-bg: #{$gray-100};
+    --form-control-bg: #ffffff;
+    --form-control-color: #{$gray-900};
+    --form-control-border: #{$gray-400};
+    --form-control-placeholder: #{$gray-500};
+    --text-muted-color: #6c757d;
+    --badge-bg: rgba(51, 122, 183, 0.12);
+    --badge-color: #{$highlight};
+    --list-card-title-color: #{$gray-900};
+    --list-card-meta-color: #{$gray-500};
+    --list-card-excerpt-color: #{$gray-600};
+    --project-download-desc-color: #{$gray-600};
+    --project-post-date-color: #{$gray-500};
+    --project-logo-bg: #{$gray-100};
+    --project-info-bg: #{$gray-100};
+    --text-muted: #{$gray-500};
+    --code-bg: #{$gray-100};
+    --code-color: #{$gray-900};
+    --code-border: #{$gray-300};
+    --circuit-stroke: rgba(51, 122, 183, 0.14);
+    --circuit-stroke-dim: rgba(51, 122, 183, 0.07);
+    --circuit-dot: rgba(51, 122, 183, 0.20);
+    --dot-grid-color: rgba(0, 0, 0, 0.05);
 }

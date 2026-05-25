@@ -75,6 +75,7 @@
   gap: 0.6rem;
   position: relative;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.025);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 
   &::before {
@@ -90,6 +91,7 @@
   &:hover {
     border-color: rgba($highlight, 0.35);
     box-shadow: 0 0 0 1px rgba($highlight, 0.1), 0 4px 20px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.045);
 
     &::before { opacity: 1; }
 
@@ -97,11 +99,11 @@
   }
 }
 
-[data-theme="dark"] .gw-card {
-  background: rgba(255, 255, 255, 0.025);
+[data-theme="light"] .gw-card {
+  background: transparent;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.045);
+    background: transparent;
   }
 }
 

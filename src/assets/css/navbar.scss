@@ -21,14 +21,15 @@
     --circuit-stroke: rgba(255, 255, 255, 0.12);
     --circuit-stroke-dim: rgba(255, 255, 255, 0.06);
     --circuit-dot: rgba(255, 255, 255, 0.18);
-    --dot-grid-color: rgba(255, 255, 255, 0.06);
+    --dot-grid-color: rgba(255, 255, 255, 0.07);
 
     &::before {
         content: '';
         position: absolute;
         inset: 0;
-        background-image: radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px);
+        background-image: radial-gradient(circle, var(--dot-grid-color) 2px, transparent 2px);
         background-size: 24px 24px;
+        background-position: 0 0;
         pointer-events: none;
         z-index: 0;
         -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
@@ -139,21 +140,13 @@
 
             position: absolute;
             left: 10px;
-            bottom: 52px;
+            bottom: 20px;
             list-style: none;
             width: 90%;
 
             li {
                 display: inline-block;
             }
-        }
-
-        .theme-toggle-wrapper {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 0.75rem 1rem;
         }
 
     }
@@ -197,16 +190,29 @@
     justify-content: center;
 }
 
-.theme-toggle-wrapper {
-    padding-left: 1rem;
+.social-list li.theme-toggle-item {
+    margin-left: 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.theme-icon-for-dark { display: none; }
-.theme-icon-for-light { display: inline; }
+.social-list .theme-toggle {
+    width: 1.5rem;
+    height: 1.5rem;
+    justify-content: center;
+    gap: 0;
 
-[data-theme="dark"] {
-    .theme-icon-for-dark { display: inline; }
-    .theme-icon-for-light { display: none; }
+    i {
+        font-size: 1.1rem;
+    }
+}
+
+.theme-icon-for-dark { display: inline; }
+.theme-icon-for-light { display: none; }
+
+[data-theme="light"] {
+    .theme-icon-for-dark { display: none; }
+    .theme-icon-for-light { display: inline; }
 }
 
 .profile-circuit {
@@ -225,14 +231,10 @@
         stroke-linejoin: round;
     }
 
-    // TL: 46+30 = 76px
-    .pc-trace-1 { stroke-dasharray: 78;  stroke-dashoffset: 78; }
-    // TR: 78px
-    .pc-trace-2 { stroke-dasharray: 80;  stroke-dashoffset: 80; }
-    // BL: 49px
-    .pc-trace-3 { stroke-dasharray: 52;  stroke-dashoffset: 52; }
-    // BR: 41+25 = 66px
-    .pc-trace-4 { stroke-dasharray: 70;  stroke-dashoffset: 70; }
+    .pc-trace-1 { stroke-dasharray: 120; stroke-dashoffset: 120; }
+    .pc-trace-2 { stroke-dasharray: 120; stroke-dashoffset: 120; }
+    .pc-trace-3 { stroke-dasharray: 120; stroke-dashoffset: 120; }
+    .pc-trace-4 { stroke-dasharray: 120; stroke-dashoffset: 120; }
 
     .pc-node {
         fill: rgba($highlight, 0.6);

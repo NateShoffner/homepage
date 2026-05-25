@@ -52,6 +52,8 @@ body {
 
 .site-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (min-width: 992px) {
@@ -70,10 +72,18 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 2.5rem;
+
+    @media (max-width: 575.98px) { font-size: 1.75rem; }
 }
 
 h2 {
     font-size: 2.5rem;
+
+    @media (max-width: 575.98px) { font-size: 1.75rem; }
+}
+
+h3 {
+    @media (max-width: 575.98px) { font-size: 1.25rem; }
 }
 
 pre, code {
@@ -358,31 +368,29 @@ a.badge, button.badge {
     }
 }
 
-[data-theme="dark"] {
-    .card {
-        background-color: var(--card-bg);
-        border-color: var(--border-color);
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.form-control {
+    background-color: var(--form-control-bg);
+    color: var(--form-control-color);
+    border-color: var(--form-control-border);
+
+    &::placeholder {
+        color: var(--form-control-placeholder);
+        opacity: 1;
     }
 
-    .form-control {
+    &:focus {
         background-color: var(--form-control-bg);
         color: var(--form-control-color);
-        border-color: var(--form-control-border);
-
-        &::placeholder {
-            color: var(--form-control-placeholder);
-            opacity: 1;
-        }
-
-        &:focus {
-            background-color: var(--form-control-bg);
-            color: var(--form-control-color);
-            border-color: $highlight;
-            box-shadow: 0 0 0 0.2rem rgba($highlight, 0.25);
-        }
+        border-color: $highlight;
+        box-shadow: 0 0 0 0.2rem rgba($highlight, 0.25);
     }
+}
 
-    .text-muted {
-        color: var(--text-muted-color) !important;
-    }
+.text-muted {
+    color: var(--text-muted-color) !important;
 }
