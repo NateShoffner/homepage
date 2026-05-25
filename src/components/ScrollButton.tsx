@@ -9,7 +9,7 @@ interface ScrollButtonProps {
 function ScrollButton({ target = '' }: ScrollButtonProps) {
   return (
     <div className="scroll-btn">
-      <Link to={target} smooth={true} duration={500} className="centered">
+      <Link to={target} smooth={true} duration={500} className="centered" style={{ cursor: 'pointer' }}>
         <span className="scroll-down"></span>
       </Link>
     </div>

@@ -1,10 +1,8 @@
-@keyframes nav-glitch {
-    0%   { transform: none; }
-    15%  { transform: translateX(-3px) skewX(-4deg); text-shadow: 3px 0 rgba($highlight, 1), -3px 0 rgba(255, 30, 80, 0.6); }
-    30%  { transform: translateX(2px) skewX(1deg); text-shadow: -2px 0 rgba($highlight, 0.8); }
-    45%  { transform: none; text-shadow: 0 0 8px rgba($highlight, 0.7), 0 0 20px rgba($highlight, 0.3); }
-    100% { transform: none; }
+@keyframes trace-signal {
+    from { stroke-dashoffset: 0; }
+    to   { stroke-dashoffset: -368; }
 }
+
 
 @keyframes neon-flicker {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
@@ -20,6 +18,24 @@
 #navbar {
     background-color: $menu-bg;
     position: relative;
+    overflow: hidden;
+    --circuit-stroke: rgba(255, 255, 255, 0.12);
+    --circuit-stroke-dim: rgba(255, 255, 255, 0.06);
+    --circuit-dot: rgba(255, 255, 255, 0.18);
+    --dot-grid-color: rgba(255, 255, 255, 0.06);
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px);
+        background-size: 24px 24px;
+        pointer-events: none;
+        z-index: 0;
+        -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+        mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+        animation: dot-grid-pulse 3s ease-in-out infinite;
+    }
 
     .navbar-nav .nav-item .nav-link {
         font-weight: 200;
@@ -33,7 +49,6 @@
 
         &:hover {
             text-shadow: 0 0 8px rgba($highlight, 0.7), 0 0 20px rgba($highlight, 0.3);
-            animation: nav-glitch 0.4s steps(1) 1;
         }
     }
 
@@ -193,6 +208,68 @@
 [data-theme="dark"] {
     .theme-icon-for-dark { display: inline; }
     .theme-icon-for-light { display: none; }
+}
+
+.profile-circuit {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+    overflow: visible;
+
+    .pc-trace {
+        stroke: $highlight;
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    // TL: 13+38+18 = 69px
+    .pc-trace-1 { stroke-dasharray: 72;  stroke-dashoffset: 72; }
+    // TR: 38+13+22 = 73px
+    .pc-trace-2 { stroke-dasharray: 76;  stroke-dashoffset: 76; }
+    // BL: 13+38+42 = 93px
+    .pc-trace-3 { stroke-dasharray: 96;  stroke-dashoffset: 96; }
+    // BR: 14+28+17 = 59px
+    .pc-trace-4 { stroke-dasharray: 62;  stroke-dashoffset: 62; }
+
+    .pc-node {
+        fill: $highlight;
+        opacity: 0;
+    }
+}
+
+.circle-border:hover .profile-circuit {
+    filter: drop-shadow(0 0 5px rgba($highlight, 0.65));
+
+    .pc-trace-1 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.36s ease 0s; }
+    .pc-trace-2 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.38s ease 0.06s; }
+    .pc-trace-3 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.46s ease 0.02s; }
+    .pc-trace-4 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.30s ease 0.09s; }
+
+    .pc-node { opacity: 1; transition: opacity 0.15s ease 0.42s; }
+}
+
+.nct-pulse {
+    stroke: #fff;
+    stroke-dasharray: 8 360;
+    stroke-linecap: round;
+    animation: trace-signal var(--spd, 5s) linear infinite;
+    filter:
+        drop-shadow(0 0 1px #fff)
+        drop-shadow(0 0 4px $highlight)
+        drop-shadow(0 0 10px rgba($highlight, 0.5));
+}
+
+.nct-pulse.nct-dim {
+    stroke: rgba(255, 255, 255, 0.7);
+    stroke-dasharray: 5 363;
+    filter:
+        drop-shadow(0 0 1px rgba(255, 255, 255, 0.6))
+        drop-shadow(0 0 4px rgba($highlight, 0.7))
+        drop-shadow(0 0 8px rgba($highlight, 0.35));
 }
 
 .circle-border {

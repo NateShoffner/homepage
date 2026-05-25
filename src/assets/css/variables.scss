@@ -59,6 +59,10 @@ $highlight: $blue;
     --code-bg: #{$gray-100};
     --code-color: #{$gray-900};
     --code-border: #{$gray-300};
+    --circuit-stroke: rgba(51, 122, 183, 0.14);
+    --circuit-stroke-dim: rgba(51, 122, 183, 0.07);
+    --circuit-dot: rgba(51, 122, 183, 0.20);
+    --dot-grid-color: rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="dark"] {
@@ -86,4 +90,8 @@ $highlight: $blue;
     --code-bg: #1e2228;
     --code-color: #e6edf3;
     --code-border: #30363d;
+    --circuit-stroke: rgba(255, 255, 255, 0.10);
+    --circuit-stroke-dim: rgba(255, 255, 255, 0.05);
+    --circuit-dot: rgba(255, 255, 255, 0.15);
+    --dot-grid-color: rgba(255, 255, 255, 0.04);
 }
