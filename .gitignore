@@ -123,3 +123,4 @@ typings/
 .dynamodb/
 public/feed.xml
 /.claude
+.vercel

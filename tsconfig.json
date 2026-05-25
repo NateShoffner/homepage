@@ -35,12 +35,6 @@
       "@hooks/*": [
         "src/hooks/*"
       ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
       "@data/*": [
         "src/_data/*"
       ],
@@ -48,10 +42,7 @@
         "src/assets/*"
       ],
       "@lib/*": [
-        "src/lib/*"
-      ],
-      "@appTypes/*": [
-        "src/types/*"
+        "lib/*"
       ]
     }
   },

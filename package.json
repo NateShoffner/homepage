@@ -11,7 +11,7 @@
   "dependencies": {
     "@fancyapps/ui": "^6.0.22",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@types/js-yaml": "^4.0.9",
     "@uiw/react-md-editor": "^4.1.1",
