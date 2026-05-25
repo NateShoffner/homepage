@@ -1,67 +1,59 @@
 # nateshoffner.github.io
 
-Personal site built with Next.js and deployed via Vercel.
+Personal website and blog built with Next.js, deployed on Vercel.
 
-## Stack
+## Tech Stack
 
-- **Framework**: Next.js 15 (App Router, static export)
-- **Language**: TypeScript
-- **Styling**: SCSS + Bootstrap 5
-- **Markdown**: `react-markdown` + `gray-matter`
-- **Lightbox**: Fancybox
+- **Framework:** Next.js 16 (App Router)
+- **Styling:** Bootstrap 4 + SCSS
+- **Blog:** Markdown files with gray-matter frontmatter
+- **Deployment:** Vercel
+- **Contact form:** Resend + Cloudflare Turnstile
 
-## Architecture
+## Getting Started
 
-### Content
+```bash
+npm install --legacy-peer-deps
+cp .env.example .env.local
+# fill in .env.local values
+npm run dev
+```
 
-**Blog posts** live as plain Markdown files in `_posts/`. Frontmatter is parsed by `gray-matter`; post images are stored under `public/assets/images/posts/` and referenced by filename only — the `Markdown` component accepts an `imageBasePath` prop that the blog post renderer fills in automatically.
+Open [http://localhost:3000](http://localhost:3000).
 
-**Projects** are defined in a single YAML file at `src/_data/projects.yml`. Project images live in per-project subdirectories under `public/assets/images/projects/<slug>/`.
+## Environment Variables
 
-Both content types are read from disk at build time via `lib/blog.ts` and `lib/projects.ts` and generate fully static pages.
+See `.env.example` for all required variables.
 
-### Routes
-
-| Path | Description |
+| Variable | Description |
 |---|---|
-| `/` | Single-page home with scroll-spy nav |
-| `/blog` | Paginated post listing |
-| `/blog/[year]/[month]/[slug]` | Individual post |
-| `/blog/category/[category]` | Posts filtered by category |
-| `/blog/tag/[tag]` | Posts filtered by tag |
-| `/projects` | Project listing |
-| `/projects/[slug]` | Individual project |
-| `/about`, `/contact` | Static pages |
-| `/api/blog/posts` | JSON feed of all posts |
-| `/api/projects` | JSON feed of all projects |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key |
+| `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret key |
+| `RESEND_API_KEY` | Resend API key |
+| `RESEND_FROM` | Sender address for contact form emails |
+| `RESEND_TO` | Recipient address for contact form submissions |
 
-### Key files
+For local development, Cloudflare provides test keys that work on any domain:
+- Site key: `1x00000000000000000000AA`
+- Secret key: `1x0000000000000000000000000000000AA`
 
-```
-lib/
-  blog.ts          # Post parsing and querying
-  projects.ts      # Project parsing and querying
-src/
-  app/             # Next.js App Router pages and API routes
-  components/
-    Markdown.tsx   # react-markdown wrapper with Fancybox image support
-    PostBody.tsx   # Blog post body (sets imageBasePath for posts)
-    Navbar.tsx     # Scroll-spy nav with hash routing on home page
-  hooks/
-    useFancybox.ts
-    useScrollSpy.ts
-    useProjects.ts
-  types/
-    BlogPost.ts
-    Project.ts
-_posts/            # Markdown blog posts
-_drafts/           # Draft posts (not built)
-public/assets/     # Static images, CSS, and downloadable files
+## Blog Posts
+
+Posts live in `_posts/` as Markdown files with YAML frontmatter:
+
+```markdown
+---
+title: Post Title
+date: 2025-01-01
+description: Short description
+categories: [Category]
+tags: [tag1, tag2]
+image: optional-image.png
+---
+
+Post content here.
 ```
 
-### Build
+## Admin Panel
 
-Two environment variables are injected at build time via `next.config.ts`:
-
-- `NEXT_PUBLIC_GIT_REVISION` — short SHA of the current commit
-- `NEXT_PUBLIC_BUILD_TIME` — ISO timestamp of the build
+A dev-only admin panel is available at `/admin` for managing drafts and published posts. It is blocked in production (`NODE_ENV === 'production'`).
