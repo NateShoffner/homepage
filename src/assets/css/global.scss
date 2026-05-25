@@ -54,6 +54,55 @@ h2 {
     font-size: 2.5rem;
 }
 
+pre, code {
+    background-color: var(--code-bg);
+    color: var(--code-color);
+}
+
+pre {
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+
+    code {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font-size: 0.875em;
+    }
+}
+
+code {
+    border: 1px solid var(--code-border);
+    border-radius: 4px;
+    padding: 0.15em 0.35em;
+    font-size: 0.875em;
+}
+
+.contact-success {
+    text-align: center;
+    padding: 2.5rem 1rem;
+
+    .contact-success-icon {
+        font-size: 3rem;
+        color: $highlight;
+    }
+}
+
+.contact-feedback {
+    padding: 0.65rem 0.9rem;
+    border-left: 3px solid;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.9rem;
+
+    &.contact-feedback-error {
+        border-color: $red;
+        color: $red;
+        background-color: rgba($red, 0.07);
+    }
+}
+
 blockquote {
     padding: 0 1em;
     color: var(--blockquote-color);
@@ -121,6 +170,24 @@ ul.inlined-list {
 @media (min-width: 992px) {
     ul.inlined-list li {
         width: 50%;
+    }
+}
+
+.list-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+
+    .badge {
+        font-weight: 400;
+        font-size: 0.8rem;
+        background-color: var(--badge-bg) !important;
+        color: var(--badge-color);
+        border: none;
+        padding: 0.25em 0.4em;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
     }
 }
 
@@ -207,21 +274,6 @@ ul.inlined-list {
         overflow: hidden;
     }
 
-    .list-card-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.3rem;
-
-        .badge {
-            font-weight: 400;
-            font-size: 0.8rem;
-            background-color: var(--badge-bg) !important;
-            color: var(--badge-color);
-            border: none;
-            padding: 0.25em 0.4em;
-            cursor: pointer;
-        }
-    }
 
     @media (max-width: 575.98px) {
         gap: 0.75rem;

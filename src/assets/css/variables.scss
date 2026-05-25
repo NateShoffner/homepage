@@ -56,6 +56,9 @@ $highlight: $blue;
     --list-card-excerpt-color: #{$gray-600};
     --project-download-desc-color: #{$gray-600};
     --project-post-date-color: #{$gray-500};
+    --code-bg: #{$gray-100};
+    --code-color: #{$gray-900};
+    --code-border: #{$gray-300};
 }
 
 [data-theme="dark"] {
@@ -80,4 +83,7 @@ $highlight: $blue;
     --list-card-excerpt-color: #8e979f;
     --project-download-desc-color: #8e979f;
     --project-post-date-color: #7a8a9a;
+    --code-bg: #1e2228;
+    --code-color: #e6edf3;
+    --code-border: #30363d;
 }

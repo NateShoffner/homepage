@@ -24,9 +24,9 @@ export default function BlogPostInteractive({
 }: Props) {
   return (
     <>
-      <ul className="post-meta">
-        <li className="post-meta-item">
-          <i className="fa fa-calendar"></i>{' '}
+      <div className="post-meta list-card-tags mb-3">
+        <span className="badge">
+          <i className="fa fa-calendar" />{' '}
           {post.date
             ? new Date(post.date).toLocaleDateString(undefined, {
                 year: 'numeric',
@@ -34,38 +34,32 @@ export default function BlogPostInteractive({
                 day: 'numeric',
               })
             : ''}
-        </li>
+        </span>
         {post.lastUpdated && (
-          <li className="post-meta-item">
-            <i className="fa fa-pencil"></i>{' '}
+          <span className="badge">
+            <i className="fa fa-pencil" />{' '}
             Updated{' '}
             {new Date(post.lastUpdated).toLocaleDateString(undefined, {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
             })}
-          </li>
+          </span>
         )}
-        <li className="post-meta-item">
-          <i className="fa fa-comments"></i>{' '}
-          <a href={post.fullUrl}>
-            <CommentCount shortname="nateshoffner" config={{ url: post.fullUrl }}>
-              {0} Comments
-            </CommentCount>
-          </a>
-        </li>
-        <li className="post-meta-item">
-          <i className="fa fa-folder"></i>{' '}
-          {post.categories && post.categories.length > 0
-            ? post.categories.map((category, idx) => (
-                <span key={category}>
-                  <a href={`/blog/category/${encodeURIComponent(category)}/`}>{category}</a>
-                  {idx < post.categories.length - 1 ? ', ' : ''}
-                </span>
-              ))
-            : 'Uncategorized'}
-        </li>
-      </ul>
+        <a href={post.fullUrl} className="badge">
+          <i className="fa fa-comments" />{' '}
+          <CommentCount shortname="nateshoffner" config={{ url: post.fullUrl }}>
+            {0} Comments
+          </CommentCount>
+        </a>
+        {post.categories && post.categories.length > 0
+          ? post.categories.map((category) => (
+              <a key={category} href={`/blog/category/${encodeURIComponent(category)}/`} className="badge">
+                <i className="fa fa-folder" />{' '}{category}
+              </a>
+            ))
+          : null}
+      </div>
 
       <PostBody body={content} />
 
@@ -76,14 +70,13 @@ export default function BlogPostInteractive({
       <div className="row mb-3">
         <div className="col-12 col-sm-6">
           <div className="post-tags d-flex flex-wrap align-items-center gap-1">
-            <span><i className="fa fa-tag"></i> Tags:</span>
+            <span><i className="fa fa-tag"></i></span>
             {post.tags && post.tags.length > 0
-              ? post.tags.map((tag, i) => (
-                  <span key={tag}>
-                    <a href={`/blog/tag/${encodeURIComponent(tag)}`}>{tag}</a>
-                    {i < post.tags.length - 1 && ','}
-                  </span>
-                ))
+              ? <div className="list-card-tags">
+                  {post.tags.map((tag) => (
+                    <a key={tag} href={`/blog/tag/${encodeURIComponent(tag)}`} className="badge">{tag}</a>
+                  ))}
+                </div>
               : <span>None</span>}
           </div>
           <ShareButtons title={post.title} />

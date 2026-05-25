@@ -10,13 +10,16 @@ interface Props {
 
 export default function ProjectInteractive({ project }: Props) {
   return (
-    <div className="mb-4">
+    <div>
       {project.images && project.images.length > 0 && (
-        <div className="mb-3">
+        <div className="project-section">
+          <h3 className="subheading mb-3">Screenshots</h3>
           <ProjectImagesGallery slug={project.slug} images={project.images} />
         </div>
       )}
-      <ShareButtons title={project.name} />
+      <div className="project-section">
+        <ShareButtons title={project.name} />
+      </div>
     </div>
   )
 }

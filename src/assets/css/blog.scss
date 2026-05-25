@@ -21,23 +21,6 @@
 
 }
 
-ul.post-meta {
-    padding-left: 0;
-    list-style: none;
-
-    li.post-meta-item {
-        display: inline-block;
-
-        &:not(:last-child) {
-            margin-right: .5rem;
-        }
-
-        &:not(:last-child)::after {
-            content: "\2022";
-            padding-left: 1rem;
-        }
-    }
-}
 
 .blog-project-embed {
     border: 1px solid var(--border-color-md);

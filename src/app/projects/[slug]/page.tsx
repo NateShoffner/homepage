@@ -39,56 +39,55 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       })
     : null
 
+  const openSourceLabel =
+    project.open_source === 'Yes' ? 'Open Source' :
+    project.open_source === 'No' ? 'Proprietary' :
+    null
+
   return (
     <section className="page-section p-4 p-lg-5 d-flex flex-column">
       <div className="project">
 
-        <div className="d-flex align-items-center mb-3">
+        <div className="d-flex align-items-start gap-3 mb-3">
           <img
             src={`/assets/images/projects/${project.slug}/${project.logo}`}
-            className="project-logo mr-3"
+            className="project-logo"
             alt={project.name}
           />
-          <h1 className="mb-0">{project.name}</h1>
+          <div>
+            <h1 className="mb-2">{project.name}</h1>
+            <div className="list-card-tags">
+              {project.version && project.version !== 'N/A' && (
+                <span className="badge"><i className="fa fa-tag" /> v{project.version}</span>
+              )}
+              {formattedDate && (
+                <span className="badge"><i className="fa fa-calendar" /> {formattedDate}</span>
+              )}
+              {project.platforms && project.platforms.map((p) => (
+                <span key={p} className="badge">{p}</span>
+              ))}
+              {project.license && project.license !== 'N/A' && (
+                <span className="badge"><i className="fa fa-file-text-o" /> {project.license}</span>
+              )}
+              {openSourceLabel && (
+                <span className="badge"><i className="fa fa-code" /> {openSourceLabel}</span>
+              )}
+              {domain && (
+                <a href={project.homepage} className="badge" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-external-link" /> {domain}
+                </a>
+              )}
+            </div>
+          </div>
         </div>
 
-        <ul className="post-meta mb-3">
-          {project.version && (
-            <li className="post-meta-item">
-              <i className="fa fa-tag" /> v{project.version}
-            </li>
-          )}
-          {formattedDate && (
-            <li className="post-meta-item">
-              <i className="fa fa-calendar" /> {formattedDate}
-            </li>
-          )}
-          {project.platforms && project.platforms.length > 0 && (
-            <li className="post-meta-item">
-              <i className="fa fa-desktop" /> {project.platforms.join(', ')}
-            </li>
-          )}
-          {project.license && (
-            <li className="post-meta-item">
-              <i className="fa fa-file" /> {project.license}
-            </li>
-          )}
-          {domain && (
-            <li className="post-meta-item">
-              <a href={project.homepage} target="_blank" rel="noopener noreferrer">
-                <i className="fa fa-home" /> {domain}
-              </a>
-            </li>
-          )}
-        </ul>
-
-        <p className="mb-4">{project.description}</p>
+        <p className="lead mb-4">{project.description}</p>
 
         <ProjectInteractive project={project} />
 
         {project.downloads && project.downloads.length > 0 && (
-          <div className="mb-4">
-            <h4 className="mb-3">Downloads</h4>
+          <div className="project-section">
+            <h3 className="subheading mb-3">Downloads</h3>
             <div className="project-download-list">
               {project.downloads.map((download: ProjectDownload, index: number) => (
                 <div key={index} className="project-download-item">
@@ -108,8 +107,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         )}
 
         {blogPosts.length > 0 && (
-          <div>
-            <h4 className="mb-3">Related Blog Posts</h4>
+          <div className="project-section">
+            <h3 className="subheading mb-3">Related Posts</h3>
             <ul className="list-unstyled project-post-list">
               {blogPosts.slice(0, 4).map((post, index) => (
                 <li key={index} className="project-post-item">
