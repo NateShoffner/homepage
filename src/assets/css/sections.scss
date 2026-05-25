@@ -3,6 +3,72 @@ section.page-section {
     padding-bottom: 5rem !important;
 }
 
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+@keyframes about-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.console-output {
+    font-family: "Courier New", Courier, monospace;
+    font-size: clamp(0.7rem, 1.4vw, 0.875rem);
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.65;
+
+    .console-line {
+        display: block;
+    }
+
+    .console-blank {
+        height: 0.6em;
+    }
+
+    .console-prefix {
+        font-weight: bold;
+        margin-right: 0.5em;
+        user-select: none;
+    }
+
+    .console-prefix-info { color: rgba(255, 255, 255, 0.35); }
+    .console-prefix-ok   { color: #4ec994; }
+    .console-prefix-warn { color: #e5a040; }
+
+    .console-line-warn .console-text { color: #e5a040; }
+
+    .console-json {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        border: none;
+        font-family: inherit;
+        font-size: inherit;
+        white-space: pre-wrap;
+        word-break: break-word;
+        line-height: inherit;
+    }
+
+    .json-cursor {
+        animation: cursor-blink 1s step-end infinite;
+        color: $highlight;
+    }
+
+    .json-token-key         { color: #9cdcfe; }
+    .json-token-string      { color: #ce9178; }
+    .json-token-number      { color: #b5cea8; }
+    .json-token-boolean     { color: #569cd6; }
+    .json-token-null        { color: #569cd6; }
+    .json-token-punctuation { color: rgba(255, 255, 255, 0.5); }
+    .json-token-whitespace  { white-space: pre; }
+}
+
+.about-content-reveal {
+    animation: about-fade-in 0.5s ease forwards;
+}
+
 @keyframes about-glitch {
     0%   { transform: none; text-shadow: 0 0 8px rgba($highlight, 0.6); }
     10%  { transform: translateX(-2px) skewX(-3deg); text-shadow: 3px 0 rgba($highlight, 1), -3px 0 rgba(255, 30, 80, 0.5); }
