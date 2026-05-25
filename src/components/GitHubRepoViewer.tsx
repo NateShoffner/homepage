@@ -71,32 +71,22 @@ const GitHubRepoViewer: React.FC<Props> = ({
     const fetchRepos = async () => {
       setLoading(true)
       setLoadError(false)
-      const allRepos: Repo[] = []
-      let anyFailed = false
-      await Promise.all(
-        usernames.map(async (username) => {
-          try {
-            const response = await axios.get<Repo[]>(
-              `https://api.github.com/users/${username}/repos?per_page=100&sort=pushed`,
-              { headers: { Accept: 'application/vnd.github+json' } }
-            )
-            allRepos.push(...response.data)
-          } catch (err) {
-            console.error(`Failed to fetch repos for ${username}`, err)
-            anyFailed = true
-          }
+      try {
+        const response = await axios.get<Repo[]>(
+          `/api/github/repos?usernames=${usernames.join(',')}`
+        )
+        const filtered = response.data.filter((repo) => {
+          if (!includeForks && repo.fork) return false
+          if (!includePages && repo.name.endsWith('.github.io')) return false
+          return true
         })
-      )
-
-      const filtered = allRepos.filter((repo) => {
-        if (!includeForks && repo.fork) return false
-        if (!includePages && repo.name.endsWith('.github.io')) return false
-        return true
-      })
-
-      setRepos(filtered)
-      setLoadError(anyFailed && filtered.length === 0)
-      setLoading(false)
+        setRepos(filtered)
+      } catch (err) {
+        console.error('Failed to fetch repos', err)
+        setLoadError(true)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchRepos()
@@ -250,19 +240,33 @@ const GitHubRepoViewer: React.FC<Props> = ({
               </div>
             </div>
 
-            {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
-              <div className="gw-org-badge">
-                <i className="fa fa-users" /> {repo.owner.login}
-              </div>
-            )}
-
             <div className="gw-meta">
+              {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
+                <>
+                  <span className="gw-org"><i className="fa fa-users" /> {repo.owner.login}</span>
+                  <span className="gw-meta-sep">·</span>
+                </>
+              )}
               {repo.language
                 ? <span className="gw-lang">{repo.language}</span>
                 : <span className="gw-lang gw-placeholder">Unknown</span>
               }
               <span className="gw-meta-sep">·</span>
               <span className="gw-updated">{relativeTime(repo.pushed_at)}</span>
+              {repo.fork && (
+                <>
+                  <span className="gw-meta-sep">·</span>
+                  <span className="gw-fork"><i className="fa fa-code-fork" /> Fork</span>
+                </>
+              )}
+              {repo.homepage && (
+                <>
+                  <span className="gw-meta-sep">·</span>
+                  <a href={repo.homepage} className="gw-homepage" target="_blank" rel="noopener noreferrer">
+                    <i className="fa fa-external-link" />
+                  </a>
+                </>
+              )}
             </div>
 
             <div className="gw-desc">
@@ -275,7 +279,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
             {repo.topics?.length > 0 && (
               <div className="gw-topics">
                 {repo.topics.map((t) => (
-                  <span key={t} className="gw-topic">{t}</span>
+                  <span key={t} className="badge">{t}</span>
                 ))}
               </div>
             )}

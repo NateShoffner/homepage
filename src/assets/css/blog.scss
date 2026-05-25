@@ -1,5 +1,5 @@
 .blog-post {
-    
+
     width: 100%;
 
     .post-nav {
@@ -25,6 +25,21 @@
 
     }
 
+}
+
+.post-content {
+    .post-image {
+        border: 1px solid var(--border-color-md);
+        border-radius: 3px;
+    }
+
+    // Paragraphs containing multiple side-by-side images
+    p:has(> a > img) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
 }
 
 

@@ -23,7 +23,8 @@ export function ProjectsSection({
       </h2>
       <p>
         A collection of personal and hobby projects I&apos;ve built in my spare
-        time.
+        time. This list is rarely updated, for the most current view,{" "}
+        <a href="#open-source">see my open source projects below</a>.
       </p>
 
       <PublicProjects
@@ -40,7 +41,9 @@ export function ProjectsSection({
         </div>
       )}
 
-      <h3 className="mt-5">Open Source Projects</h3>
+      <h3 className="mt-5" id="open-source">
+        Open Source Projects
+      </h3>
       <p>
         A selection of open source projects across my personal and organization
         accounts. Most of these are hobby experiments, tools, or community

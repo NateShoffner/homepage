@@ -92,22 +92,18 @@ export default function Navbar() {
               />
             </div>
             <svg className="profile-circuit" viewBox="0 0 200 200" fill="none" aria-hidden="true">
-              {/* TL — circle edge ~(31,60), routes left→up, exits left edge */}
-              <polyline className="pc-trace pc-trace-1" points="31,60 18,60 18,22 0,22" />
-              <circle className="pc-node" cx="18" cy="60" r="2.5" />
-              <circle className="pc-node" cx="18" cy="22" r="2.5" />
-              {/* TR — circle edge ~(140,31), routes right→slight up, exits right edge */}
-              <polyline className="pc-trace pc-trace-2" points="140,31 178,31 178,18 200,18" />
-              <circle className="pc-node" cx="178" cy="31" r="2.5" />
-              <circle className="pc-node" cx="178" cy="18" r="2.5" />
-              {/* BL — circle edge ~(31,140), left→down→right, terminates at bottom */}
-              <polyline className="pc-trace pc-trace-3" points="31,140 18,140 18,178 60,178" />
-              <circle className="pc-node" cx="18" cy="140" r="2.5" />
-              <circle className="pc-node" cx="18" cy="178" r="2.5" />
-              {/* BR — circle edge ~(169,140), routes right→down, exits right edge */}
-              <polyline className="pc-trace pc-trace-4" points="169,140 183,140 183,168 200,168" />
-              <circle className="pc-node" cx="183" cy="140" r="2.5" />
-              <circle className="pc-node" cx="183" cy="168" r="2.5" />
+              {/* TL — exits left then up toward sidebar left edge */}
+              <polyline className="pc-trace pc-trace-1" points="31,60 -15,60 -15,30" />
+              <circle className="pc-node" cx="-15" cy="30" r="2" />
+              {/* TR — exits right toward sidebar right edge */}
+              <polyline className="pc-trace pc-trace-2" points="140,31 218,31" />
+              <circle className="pc-node" cx="218" cy="31" r="2" />
+              {/* BL — exits left toward sidebar left edge */}
+              <polyline className="pc-trace pc-trace-3" points="31,140 -18,140" />
+              <circle className="pc-node" cx="-18" cy="140" r="2" />
+              {/* BR — exits right then down toward sidebar right edge */}
+              <polyline className="pc-trace pc-trace-4" points="169,140 210,140 210,165" />
+              <circle className="pc-node" cx="210" cy="165" r="2" />
             </svg>
           </div>
         </span>

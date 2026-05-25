@@ -60,7 +60,7 @@ function AboutReveal({
   useEffect(() => {
     if (!revealed) return;
     const t1 = setTimeout(() => setState("fading"), revealDelay);
-    const t2 = setTimeout(() => setState("rendered"), revealDelay + 260);
+    const t2 = setTimeout(() => setState("rendered"), revealDelay + 160);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [revealed, revealDelay]);
 
@@ -99,7 +99,7 @@ export function AboutSection() {
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
-    const tid = setTimeout(() => setRevealed(true), 1400);
+    const tid = setTimeout(() => setRevealed(true), 900);
     return () => clearTimeout(tid);
   }, []);
 
@@ -115,7 +115,7 @@ export function AboutSection() {
         <h1 className="mb-5">
           <ReactTyped
             strings={['Nate <span class="text-highlight">Shoffner</span>']}
-            typeSpeed={80}
+            typeSpeed={50}
             showCursor={true}
           />
         </h1>
@@ -126,8 +126,8 @@ export function AboutSection() {
         <div className="col-12 col-md-12 col-lg-6">
           <AboutReveal
             revealed={revealed}
-            revealDelay={130}
-            appearDelay="0.3s"
+            revealDelay={85}
+            appearDelay="0.2s"
             jsonContent={<><JK k="about" /><JP c="{" /></>}
           >
             <h3 className="subheading mb-5">About</h3>
@@ -135,8 +135,8 @@ export function AboutSection() {
 
           <AboutReveal
             revealed={revealed}
-            revealDelay={290}
-            appearDelay="0.4s"
+            revealDelay={190}
+            appearDelay="0.25s"
             jsonContent={<><JK k="location" /><JS v="Lancaster, Pennsylvania" /></>}
           >
             <p>Software engineer based in Lancaster, Pennsylvania.</p>
@@ -144,8 +144,8 @@ export function AboutSection() {
 
           <AboutReveal
             revealed={revealed}
-            revealDelay={460}
-            appearDelay="0.5s"
+            revealDelay={300}
+            appearDelay="0.33s"
             jsonContent={
               <><JK k="description" /><JS v="Passionate about all things tech, solving interesting problems, learning how things work, and [simultaneously] breaking and building things." /></>
             }
@@ -159,8 +159,8 @@ export function AboutSection() {
 
           <AboutReveal
             revealed={revealed}
-            revealDelay={630}
-            appearDelay="0.62s"
+            revealDelay={410}
+            appearDelay="0.42s"
             jsonContent={<><JK k="role" /><JS v="Senior Software / Elastic Certified Engineer" /></>}
           >
             <p>
@@ -174,8 +174,8 @@ export function AboutSection() {
 
           <AboutReveal
             revealed={revealed}
-            revealDelay={800}
-            appearDelay="0.75s"
+            revealDelay={520}
+            appearDelay="0.52s"
             jsonContent={
               <><JK k="links" /><JArr items={["github.com/nateshoffner", "techlancaster.com"]} /></>
             }
@@ -193,8 +193,8 @@ export function AboutSection() {
         <div className="col-12 col-md-12 col-lg-6">
           <AboutReveal
             revealed={revealed}
-            revealDelay={180}
-            appearDelay="0.35s"
+            revealDelay={115}
+            appearDelay="0.22s"
             jsonContent={<><JK k="interests" /><JP c="[" /></>}
           >
             <h3 className="subheading mb-5">Interests</h3>
@@ -206,8 +206,8 @@ export function AboutSection() {
                 key={item}
                 asList
                 revealed={revealed}
-                revealDelay={300 + i * 110}
-                appearDelay={`${0.43 + i * 0.08}s`}
+                revealDelay={200 + i * 70}
+                appearDelay={`${0.28 + i * 0.05}s`}
                 jsonContent={
                   <>
                     <JS v={item} />

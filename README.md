@@ -1,4 +1,4 @@
-# nateshoffner.github.io
+# homepage
 
 Personal website and blog built with Next.js, deployed on Vercel.
 

@@ -17,7 +17,6 @@
 
 #navbar {
     background-color: $menu-bg;
-    position: relative;
     overflow: hidden;
     --circuit-stroke: rgba(255, 255, 255, 0.12);
     --circuit-stroke-dim: rgba(255, 255, 255, 0.06);
@@ -220,56 +219,56 @@
     overflow: visible;
 
     .pc-trace {
-        stroke: $highlight;
+        stroke: rgba($highlight, 0.5);
         stroke-width: 1;
         stroke-linecap: round;
         stroke-linejoin: round;
     }
 
-    // TL: 13+38+18 = 69px
-    .pc-trace-1 { stroke-dasharray: 72;  stroke-dashoffset: 72; }
-    // TR: 38+13+22 = 73px
-    .pc-trace-2 { stroke-dasharray: 76;  stroke-dashoffset: 76; }
-    // BL: 13+38+42 = 93px
-    .pc-trace-3 { stroke-dasharray: 96;  stroke-dashoffset: 96; }
-    // BR: 14+28+17 = 59px
-    .pc-trace-4 { stroke-dasharray: 62;  stroke-dashoffset: 62; }
+    // TL: 46+30 = 76px
+    .pc-trace-1 { stroke-dasharray: 78;  stroke-dashoffset: 78; }
+    // TR: 78px
+    .pc-trace-2 { stroke-dasharray: 80;  stroke-dashoffset: 80; }
+    // BL: 49px
+    .pc-trace-3 { stroke-dasharray: 52;  stroke-dashoffset: 52; }
+    // BR: 41+25 = 66px
+    .pc-trace-4 { stroke-dasharray: 70;  stroke-dashoffset: 70; }
 
     .pc-node {
-        fill: $highlight;
+        fill: rgba($highlight, 0.6);
         opacity: 0;
     }
 }
 
 .circle-border:hover .profile-circuit {
-    filter: drop-shadow(0 0 5px rgba($highlight, 0.65));
+    filter: drop-shadow(0 0 3px rgba($highlight, 0.25));
 
-    .pc-trace-1 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.36s ease 0s; }
-    .pc-trace-2 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.38s ease 0.06s; }
-    .pc-trace-3 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.46s ease 0.02s; }
-    .pc-trace-4 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.30s ease 0.09s; }
+    .pc-trace-1 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.28s ease 0s; }
+    .pc-trace-2 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.30s ease 0.04s; }
+    .pc-trace-3 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.22s ease 0.02s; }
+    .pc-trace-4 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.26s ease 0.06s; }
 
-    .pc-node { opacity: 1; transition: opacity 0.15s ease 0.42s; }
+    .pc-node { opacity: 1; transition: opacity 0.15s ease 0.30s; }
 }
 
 .nct-pulse {
-    stroke: #fff;
+    stroke: rgba(255, 255, 255, 0.75);
     stroke-dasharray: 8 360;
     stroke-linecap: round;
     animation: trace-signal var(--spd, 5s) linear infinite;
     filter:
-        drop-shadow(0 0 1px #fff)
-        drop-shadow(0 0 4px $highlight)
-        drop-shadow(0 0 10px rgba($highlight, 0.5));
+        drop-shadow(0 0 1px rgba(255, 255, 255, 0.6))
+        drop-shadow(0 0 3px $highlight)
+        drop-shadow(0 0 7px rgba($highlight, 0.35));
 }
 
 .nct-pulse.nct-dim {
-    stroke: rgba(255, 255, 255, 0.7);
+    stroke: rgba(255, 255, 255, 0.45);
     stroke-dasharray: 5 363;
     filter:
-        drop-shadow(0 0 1px rgba(255, 255, 255, 0.6))
-        drop-shadow(0 0 4px rgba($highlight, 0.7))
-        drop-shadow(0 0 8px rgba($highlight, 0.35));
+        drop-shadow(0 0 1px rgba(255, 255, 255, 0.35))
+        drop-shadow(0 0 3px rgba($highlight, 0.5))
+        drop-shadow(0 0 6px rgba($highlight, 0.2));
 }
 
 .circle-border {
@@ -281,11 +280,10 @@
     transition: box-shadow 0.4s ease;
 
     &:hover {
-        box-shadow: 0 0 0 2px rgba($highlight, 0.9), 0 0 16px rgba($highlight, 0.7), 0 0 40px rgba($highlight, 0.25);
+        box-shadow: 0 0 0 1px rgba($highlight, 0.3), 0 0 8px rgba($highlight, 0.1);
     }
 
-    &::before,
-    &::after {
+    &::before {
         box-sizing: border-box;
         content: '';
         position: absolute;
@@ -294,29 +292,12 @@
         border-radius: 100%;
         top: -4px;
         left: -4px;
-    }
-
-    &::before {
-        border: 2px solid transparent;
+        border: 1px solid transparent;
+        transition: border-color 0.4s ease;
     }
 
     &:hover::before {
-        border-top-color: $highlight;
-        border-right-color: $highlight;
-        border-bottom-color: $highlight;
-        transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.10s, border-bottom-color 0.15s linear 0.20s;
-    }
-
-    &::after {
-        border: 0 solid transparent;
-    }
-
-    &:hover::after {
-        border-top: 2px solid $highlight;
-        border-left-width: 2px;
-        border-right-width: 2px;
-        transform: rotate(270deg);
-        transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+        border-color: rgba($highlight, 0.25);
     }
 }
 
@@ -342,6 +323,6 @@
     }
 
     &:hover img {
-        transform: scale(1.04);
+        transform: scale(1.02);
     }
 }

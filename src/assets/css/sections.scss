@@ -139,20 +139,20 @@ section.about-cover {
 }
 
 @keyframes about-item-in {
-    from { opacity: 0; transform: translateY(7px); }
+    from { opacity: 0; transform: translateY(4px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
 .about-item {
     opacity: 0;
-    animation: about-item-in 0.45s ease forwards;
+    animation: about-item-in 0.35s cubic-bezier(0, 0, 0.2, 1) forwards;
     animation-delay: var(--ad, 0s);
 }
 
 .about-console {
     opacity: 0;
-    animation: about-item-in 0.3s ease forwards;
-    animation-delay: 1.4s;
+    animation: about-item-in 0.35s cubic-bezier(0, 0, 0.2, 1) forwards;
+    animation-delay: 0.9s;
 }
 
 li.about-json-reveal,
@@ -165,13 +165,13 @@ li.about-json-fading {
     font-size: 0.85rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.85);
-    transition: opacity 0.24s ease;
+    transition: opacity 0.12s ease-out;
 
     &.about-json-fading { opacity: 0; }
 }
 
 .about-reveal-in {
-    animation: about-item-in 0.35s ease forwards;
+    animation: about-item-in 0.28s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 @media (min-width: 992px) {
