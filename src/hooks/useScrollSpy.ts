@@ -10,10 +10,8 @@ export function useScrollSpy(ids: string[], offset = 80) {
 
     if (!elements.length) return;
 
-    // Root margin makes the "center band" the active zone.
     const observer = new IntersectionObserver(
       (entries) => {
-        // pick the one with the largest intersection ratio
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -22,14 +20,26 @@ export function useScrollSpy(ids: string[], offset = 80) {
       },
       {
         root: null,
-        // top and bottom offset so the highlighted item corresponds to the viewport center-ish
         rootMargin: `-${offset}px 0px -${window.innerHeight / 2}px 0px`,
         threshold: [0, 0.25, 0.5, 0.75, 1],
       }
     );
 
     elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    // The rootMargin bottom cutoff can miss a short last section (e.g. contact)
+    // that sits entirely below the active zone. Force it when at the page bottom.
+    const handleScroll = () => {
+      const atBottom =
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
+      if (atBottom) setActiveId(ids[ids.length - 1]);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [ids, offset]);
 
   return activeId;

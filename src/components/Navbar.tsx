@@ -95,7 +95,9 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
       <NavCircuitTraces />
       <NextLink href="/" className="navbar-brand">
-        <span className="d-block d-lg-none navbar-brand-text">Nate Shoffner</span>
+        {!(onHome && (activeSectionId ?? 'about') === 'about') && (
+          <span className="d-block d-lg-none navbar-brand-text">Nate Shoffner</span>
+        )}
         <span className="d-none d-lg-block">
           <div className="circle-border">
             <div className="circle">
@@ -172,6 +174,11 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a href="/feed.xml" aria-label="RSS feed">
+                  <i className="fa fa-rss" />
+                </a>
+              </li>
               <li className="d-none d-lg-inline-block theme-toggle-item">
                 <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
                   <i className="fa fa-moon-o theme-icon-for-light" />

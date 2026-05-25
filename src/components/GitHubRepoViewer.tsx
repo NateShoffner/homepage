@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import axios from 'axios'
 
 interface Repo {
@@ -32,10 +32,17 @@ interface Props {
 function relativeTime(dateStr: string): string {
   const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000)
   if (days < 1) return 'today'
-  if (days < 7) return `${days}d ago`
-  if (days < 30) return `${Math.floor(days / 7)}w ago`
-  if (days < 365) return `${Math.floor(days / 30)}mo ago`
-  return `${Math.floor(days / 365)}y ago`
+  if (days === 1) return '1 day ago'
+  if (days < 7) return `${days} days ago`
+  const weeks = Math.floor(days / 7)
+  if (weeks === 1) return '1 week ago'
+  if (days < 30) return `${weeks} weeks ago`
+  const months = Math.floor(days / 30)
+  if (months === 1) return '1 month ago'
+  if (days < 365) return `${months} months ago`
+  const years = Math.floor(days / 365)
+  if (years === 1) return '1 year ago'
+  return `${years} years ago`
 }
 
 function sortRepos(repos: Repo[], sort: SortOption): Repo[] {
@@ -49,12 +56,57 @@ function sortRepos(repos: Repo[], sort: SortOption): Repo[] {
   })
 }
 
+
+function Sparkline({ data, id, flatline = false }: { data: number[]; id: number; flatline?: boolean }) {
+  const W = 100, H = 40, pad = 1.5
+  const midY = (H / 2).toFixed(2)
+
+  if (flatline) {
+    return (
+      <svg viewBox={`0 0 ${W} ${H}`} className="gw-sparkline gw-sparkline--flat" preserveAspectRatio="none" aria-hidden="true">
+        <line x1={pad} y1={midY} x2={W - pad} y2={midY} stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      </svg>
+    )
+  }
+
+  const weeks = data.slice(-26)
+  const max = Math.max(...weeks, 1)
+  if (weeks.every((v) => v === 0)) {
+    return (
+      <svg viewBox={`0 0 ${W} ${H}`} className="gw-sparkline gw-sparkline--flat" preserveAspectRatio="none" aria-hidden="true">
+        <line x1={pad} y1={midY} x2={W - pad} y2={midY} stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      </svg>
+    )
+  }
+
+  const pts = weeks.map((v, i) => [
+    pad + (i / (weeks.length - 1)) * (W - pad * 2),
+    pad + (1 - v / max) * (H - pad * 2),
+  ])
+
+  const line = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(2)},${p[1].toFixed(2)}`).join(' ')
+  const area = `${line} L${pts[pts.length - 1][0].toFixed(2)},${H} L${pts[0][0].toFixed(2)},${H} Z`
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="gw-sparkline" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id={`sg-${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={area} fill={`url(#sg-${id})`} />
+      <path d={line} fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 const GitHubRepoViewer: React.FC<Props> = ({
   usernames,
   includeForks = true,
   includePages = true,
   defaultVisibleCount = 12,
-  defaultSortBy = 'stars',
+  defaultSortBy = 'pushed',
   showFilters = true,
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
@@ -65,6 +117,8 @@ const GitHubRepoViewer: React.FC<Props> = ({
   const [selectedOrg, setSelectedOrg] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>(defaultSortBy)
   const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
+  const [activityMap, setActivityMap] = useState<Record<number, number[]>>({})
+  const fetchingIds = useRef(new Set<number>())
 
   useEffect(() => {
     setVisibleCount(defaultVisibleCount)
@@ -141,6 +195,29 @@ const GitHubRepoViewer: React.FC<Props> = ({
   }, [repos, searchQuery, selectedLang, selectedOrg, sortBy])
 
   const visible = filtered.slice(0, visibleCount)
+
+  const fetchActivity = useRef((owner: string, repoName: string, repoId: number, attempt = 0) => {
+    fetch(`/api/github/activity?owner=${owner}&repo=${repoName}`)
+      .then((r) => r.json())
+      .then(({ weeks, pending }: { weeks: number[]; pending: boolean }) => {
+        if (pending && attempt < 4) {
+          setTimeout(() => fetchActivity.current(owner, repoName, repoId, attempt + 1), 3000 * (attempt + 1))
+          return
+        }
+        if (weeks.length > 0) {
+          setActivityMap((prev) => ({ ...prev, [repoId]: weeks }))
+        }
+      })
+      .catch(() => {})
+  })
+
+  useEffect(() => {
+    for (const repo of visible) {
+      if (fetchingIds.current.has(repo.id)) continue
+      fetchingIds.current.add(repo.id)
+      fetchActivity.current(repo.owner.login, repo.name, repo.id)
+    }
+  }, [repos])
 
   if (loading) {
     return (
@@ -225,67 +302,78 @@ const GitHubRepoViewer: React.FC<Props> = ({
       <div className="gw-grid">
         {visible.map((repo) => (
           <div key={repo.id} className="gw-card">
-            <div className="gw-card-header">
+            <div className="gw-card-body">
               <a href={repo.html_url} className="gw-name" target="_blank" rel="noopener noreferrer">
                 {repo.name}
               </a>
-              <div className="gw-stats">
+
+              <div className="gw-desc">
+                {repo.description
+                  ? repo.description
+                  : <span className="gw-placeholder">No description provided.</span>
+                }
+              </div>
+
+              <div className="gw-meta">
+                {repo.language
+                  ? <span className="gw-lang">{repo.language}</span>
+                  : <span className="gw-lang gw-placeholder">Unknown</span>
+                }
                 {repo.stargazers_count > 0 && (
-                  <span className="gw-stat">
-                    <i className="fa fa-star" /> {repo.stargazers_count}
-                  </span>
+                  <>
+                    <span className="gw-meta-sep">·</span>
+                    <span className="gw-stat"><i className="fa fa-star" /> {repo.stargazers_count}</span>
+                  </>
                 )}
                 {repo.forks_count > 0 && (
-                  <span className="gw-stat">
-                    <i className="fa fa-code-fork" /> {repo.forks_count}
-                  </span>
+                  <>
+                    <span className="gw-meta-sep">·</span>
+                    <span className="gw-stat"><i className="fa fa-code-fork" /> {repo.forks_count}</span>
+                  </>
+                )}
+                <span className="gw-meta-sep">·</span>
+                <span className="gw-updated">Updated {relativeTime(repo.pushed_at)}</span>
+                {repo.fork && (
+                  <>
+                    <span className="gw-meta-sep">·</span>
+                    <span className="gw-fork"><i className="fa fa-code-fork" /> Fork</span>
+                  </>
+                )}
+                {repo.homepage && (() => {
+                  let host = repo.homepage
+                  try { host = new URL(repo.homepage).hostname.replace(/^www\./, '') } catch {}
+                  return (
+                    <>
+                      <span className="gw-meta-sep">·</span>
+                      <a href={repo.homepage} className="gw-homepage-link" target="_blank" rel="noopener noreferrer">
+                        <i className="fa fa-external-link" /> {host}
+                      </a>
+                    </>
+                  )
+                })()}
+                {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
+                  <>
+                    <span className="gw-meta-sep">·</span>
+                    <span className="gw-org"><i className="fa fa-users" /> {repo.owner.login}</span>
+                  </>
                 )}
               </div>
-            </div>
 
-            <div className="gw-meta">
-              {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
-                <>
-                  <span className="gw-org"><i className="fa fa-users" /> {repo.owner.login}</span>
-                  <span className="gw-meta-sep">·</span>
-                </>
-              )}
-              {repo.language
-                ? <span className="gw-lang">{repo.language}</span>
-                : <span className="gw-lang gw-placeholder">Unknown</span>
-              }
-              <span className="gw-meta-sep">·</span>
-              <span className="gw-updated">{relativeTime(repo.pushed_at)}</span>
-              {repo.fork && (
-                <>
-                  <span className="gw-meta-sep">·</span>
-                  <span className="gw-fork"><i className="fa fa-code-fork" /> Fork</span>
-                </>
-              )}
-              {repo.homepage && (
-                <>
-                  <span className="gw-meta-sep">·</span>
-                  <a href={repo.homepage} className="gw-homepage" target="_blank" rel="noopener noreferrer">
-                    <i className="fa fa-external-link" />
-                  </a>
-                </>
+              {repo.topics?.length > 0 && (
+                <div className="gw-topics">
+                  {repo.topics.map((t) => (
+                    <span key={t} className="badge">{t}</span>
+                  ))}
+                </div>
               )}
             </div>
 
-            <div className="gw-desc">
-              {repo.description
-                ? repo.description
-                : <span className="gw-placeholder">No description provided.</span>
+            <div className="gw-sparkline-wrap">
+              {activityMap[repo.id]
+                ? <Sparkline data={activityMap[repo.id]} id={repo.id} />
+                : <Sparkline data={[]} id={repo.id} flatline />
               }
             </div>
-
-            {repo.topics?.length > 0 && (
-              <div className="gw-topics">
-                {repo.topics.map((t) => (
-                  <span key={t} className="badge">{t}</span>
-                ))}
-              </div>
-            )}
           </div>
         ))}
       </div>

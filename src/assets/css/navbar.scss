@@ -57,7 +57,9 @@
     }
 
     ul.social-list {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding-left: 0px;
         padding-top: 0.8rem;
         margin-top: 0.8rem;
@@ -87,7 +89,6 @@
         }
 
         li {
-            display: inline-block;
             margin: 0 0.5rem;
         }
     }
@@ -137,16 +138,13 @@
         }
 
         ul.social-list {
-
+            display: flex;
+            align-items: center;
             position: absolute;
             left: 10px;
             bottom: 20px;
             list-style: none;
             width: 90%;
-
-            li {
-                display: inline-block;
-            }
         }
 
     }
@@ -191,9 +189,7 @@
 }
 
 .social-list li.theme-toggle-item {
-    margin-left: 0.75rem;
-    padding-left: 0.75rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    margin-left: 0.5rem;
 }
 
 .social-list .theme-toggle {
