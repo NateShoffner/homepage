@@ -35,7 +35,7 @@ export function ProjectsSection({
       {showMore && (
         <div className="mt-4">
           <Link href="/projects" className="btn btn-primary px-4">
-            All projects →
+            All projects <i className="fa fa-arrow-right" />
           </Link>
         </div>
       )}

@@ -28,28 +28,31 @@ function BlogPostCard({ post, onCategoryClick, showImage = true }: Props) {
       <div className="list-card-body">
         <div className="list-card-header">
           <span className="list-card-title">{post.title}</span>
-          <span className="list-card-meta">{dateLabel}</span>
         </div>
         <p className="list-card-excerpt">{post.description}</p>
-        {post.categories.length > 0 && (
+        <div className="list-card-footer">
           <div className="list-card-tags">
-            {post.categories.map((cat) =>
-              onCategoryClick ? (
-                <button
-                  key={cat}
-                  className="badge"
-                  onClick={(e) => { e.preventDefault(); onCategoryClick(cat) }}
-                >
-                  {cat}
-                </button>
-              ) : (
-                <span key={cat} className="badge">
-                  {cat}
-                </span>
-              )
-            )}
+            {post.date && <span className="badge">{dateLabel}</span>}
+            {post.readingTime && <span className="badge">{post.readingTime}</span>}
           </div>
-        )}
+          {post.categories.length > 0 && (
+            <div className="list-card-tags">
+              {post.categories.map((cat) =>
+                onCategoryClick ? (
+                  <button
+                    key={cat}
+                    className="badge"
+                    onClick={(e) => { e.preventDefault(); onCategoryClick(cat) }}
+                  >
+                    {cat}
+                  </button>
+                ) : (
+                  <span key={cat} className="badge">{cat}</span>
+                )
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </Link>
   )

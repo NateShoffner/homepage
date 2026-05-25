@@ -10,7 +10,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <>
       {!isAdmin && <Navbar />}
-      <div className={isAdmin ? undefined : 'my-auto'}>{children}</div>
+      <div className={isAdmin ? undefined : 'site-content'}>{children}</div>
       {!isAdmin && <Footer />}
     </>
   )

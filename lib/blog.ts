@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import readingTime from 'reading-time'
 import { siteUrl } from '@/src/config'
 
 const postsDir = path.resolve(process.cwd(), '_posts')
@@ -17,6 +18,7 @@ export interface PostMeta {
   tags: string[]
   url: string
   fullUrl: string
+  readingTime: string
 }
 
 export interface BlogPost extends PostMeta {
@@ -63,6 +65,7 @@ function parsePostFile(filePath: string): BlogPost {
     content,
     url: `/blog/${year}/${month}/${slug}/`,
     fullUrl: `${siteUrl}/blog/${year}/${month}/${slug}/`,
+    readingTime: readingTime(content).text,
   }
 }
 

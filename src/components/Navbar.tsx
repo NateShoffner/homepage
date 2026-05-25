@@ -164,10 +164,10 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="theme-toggle-wrapper d-none d-lg-flex justify-content-center">
+      <div className="theme-toggle-wrapper d-none d-lg-flex">
         <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
-          <i className="fa fa-lg fa-moon-o theme-icon-for-light" />
-          <i className="fa fa-lg fa-sun-o theme-icon-for-dark" />
+          <i className="fa fa-moon-o theme-icon-for-light" />
+          <i className="fa fa-sun-o theme-icon-for-dark" />
         </button>
       </div>
     </nav>

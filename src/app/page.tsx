@@ -50,7 +50,7 @@ export default function HomePage() {
             <BlogSection posts={posts.slice(0, 6)} />
             <div className="mt-4">
               <a href="/blog" className="btn btn-primary px-4">
-                All posts →
+                All posts <i className="fa fa-arrow-right" />
               </a>
             </div>
           </div>

@@ -25,16 +25,20 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="list-card-body">
         <div className="list-card-header">
           <span className="list-card-title">{project.name}</span>
-          {dateLabel && <span className="list-card-meta">{dateLabel}</span>}
         </div>
         <p className="list-card-excerpt">{project.description}</p>
-        {project.platforms && project.platforms.length > 0 && (
+        <div className="list-card-footer">
+          {project.platforms && project.platforms.length > 0 && (
+            <div className="list-card-tags">
+              {project.platforms.map((p) => (
+                <span key={p} className="badge">{p}</span>
+              ))}
+            </div>
+          )}
           <div className="list-card-tags">
-            {project.platforms.map((p) => (
-              <span key={p} className="badge">{p}</span>
-            ))}
+            {dateLabel && <span className="badge">{dateLabel}</span>}
           </div>
-        )}
+        </div>
       </div>
     </Link>
   )

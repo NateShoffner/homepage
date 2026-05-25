@@ -35,6 +35,11 @@ export default function BlogPostInteractive({
               })
             : ''}
         </span>
+        {post.readingTime && (
+          <span className="badge">
+            <i className="fa fa-clock-o" />{' '}{post.readingTime}
+          </span>
+        )}
         {post.lastUpdated && (
           <span className="badge">
             <i className="fa fa-pencil" />{' '}

@@ -1,22 +1,25 @@
 'use client'
 
-import {
-  XShareButton, XIcon,
-  FacebookShareButton, FacebookIcon,
-  LinkedinShareButton, LinkedinIcon,
-} from 'react-share'
+import { XShareButton, FacebookShareButton, LinkedinShareButton } from 'react-share'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXTwitter, faFacebook, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 
 type Props = { title: string }
 
 export default function ShareButtons({ title }: Props) {
   const url = typeof window !== 'undefined' ? window.location.href : ''
-  const size = 32
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '0.4rem' }}>
-      <XShareButton url={url} title={title}><XIcon size={size} round /></XShareButton>
-      <FacebookShareButton url={url}><FacebookIcon size={size} round /></FacebookShareButton>
-      <LinkedinShareButton url={url} title={title}><LinkedinIcon size={size} round /></LinkedinShareButton>
+    <div className="share-buttons">
+      <XShareButton url={url} title={title}>
+        <span className="share-btn"><FontAwesomeIcon icon={faXTwitter} /></span>
+      </XShareButton>
+      <FacebookShareButton url={url}>
+        <span className="share-btn"><FontAwesomeIcon icon={faFacebook} /></span>
+      </FacebookShareButton>
+      <LinkedinShareButton url={url} title={title}>
+        <span className="share-btn"><FontAwesomeIcon icon={faLinkedinIn} /></span>
+      </LinkedinShareButton>
     </div>
   )
 }

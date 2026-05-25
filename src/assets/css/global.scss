@@ -30,6 +30,13 @@ body {
     padding-top: 54px;
     color: var(--body-color);
     background-color: var(--body-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-content {
+    flex: 1;
 }
 
 @media (min-width: 992px) {
@@ -78,6 +85,35 @@ code {
     border-radius: 4px;
     padding: 0.15em 0.35em;
     font-size: 0.875em;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 0.4rem;
+
+    button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    background-color: var(--badge-bg);
+    color: var(--badge-color);
+    font-size: 0.95rem;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+        opacity: 0.75;
+    }
 }
 
 .contact-success {
@@ -173,22 +209,27 @@ ul.inlined-list {
     }
 }
 
+.badge {
+    font-weight: 400;
+    font-size: 0.8rem;
+    background-color: var(--badge-bg) !important;
+    color: var(--badge-color);
+    border: none;
+    padding: 0.25em 0.4em;
+    cursor: default;
+    text-decoration: none;
+    white-space: nowrap;
+
+}
+
+a.badge, button.badge {
+    cursor: pointer;
+}
+
 .list-card-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.3rem;
-
-    .badge {
-        font-weight: 400;
-        font-size: 0.8rem;
-        background-color: var(--badge-bg) !important;
-        color: var(--badge-color);
-        border: none;
-        padding: 0.25em 0.4em;
-        cursor: pointer;
-        text-decoration: none;
-        white-space: nowrap;
-    }
 }
 
 .list-cards {
@@ -259,9 +300,21 @@ ul.inlined-list {
 
     .list-card-meta {
         flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.15rem;
         font-size: 0.8rem;
         color: var(--list-card-meta-color);
         white-space: nowrap;
+    }
+
+    .list-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
     }
 
     .list-card-excerpt {

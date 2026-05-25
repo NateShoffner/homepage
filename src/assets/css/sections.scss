@@ -1,19 +1,13 @@
 section.page-section {
     padding-top: 5rem !important;
     padding-bottom: 5rem !important;
-    min-height: 100vh;
 }
 
 section.about-cover {
     background: linear-gradient( rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90)), url("/assets/images/bg.jpg");
     background-size: cover;
     color: $white !important;
-}
-
-@media (min-width: 768px) {
-    section.page-section {
-        min-height: 100vh;
-    }
+    min-height: 100vh;
 }
 
 @media (min-width: 992px) {
