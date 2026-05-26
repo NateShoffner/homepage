@@ -71,6 +71,28 @@ export default function Navbar() {
     scrollToId(id)
   }, [onHome])
 
+  useEffect(() => {
+    if (!navOpen) return
+    const onScroll = () => { if (window.innerWidth < 992) setNavOpen(false) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [navOpen])
+
+  useEffect(() => {
+    if (!navOpen) return
+    const onOutsideClick = (e: Event) => {
+      if (window.innerWidth >= 992) return
+      const navbar = document.getElementById('navbar')
+      if (navbar && !navbar.contains(e.target as Node)) setNavOpen(false)
+    }
+    document.addEventListener('mousedown', onOutsideClick)
+    document.addEventListener('touchstart', onOutsideClick)
+    return () => {
+      document.removeEventListener('mousedown', onOutsideClick)
+      document.removeEventListener('touchstart', onOutsideClick)
+    }
+  }, [navOpen])
+
   const activeSectionId = useScrollSpy(
     NavItems.map((n) => n.id),
     100

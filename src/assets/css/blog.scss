@@ -33,12 +33,22 @@
         border-radius: 3px;
     }
 
+    a:has(> .post-image) {
+        display: block;
+        margin: 1.5rem 0;
+    }
+
     // Paragraphs containing multiple side-by-side images
     p:has(> a > img) {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         align-items: flex-start;
+        margin: 1.5rem 0;
+
+        a:has(> .post-image) {
+            margin: 0;
+        }
     }
 }
 
