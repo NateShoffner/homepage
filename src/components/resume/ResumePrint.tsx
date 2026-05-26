@@ -28,9 +28,9 @@ export default function ResumePrint({ resume }: Props) {
             <p className={styles.title}>{resume.title}</p>
           </div>
           <ul className={styles.contactList}>
+            <li><FaMapMarkerAlt className={styles.contactIcon} /><span>{resume.contact.location}</span></li>
             <li><FaEnvelope className={styles.contactIcon} /><span>{resume.contact.email}</span></li>
             <li><FaPhone className={styles.contactIcon} /><span>{resume.contact.phone}</span></li>
-            <li><FaMapMarkerAlt className={styles.contactIcon} /><span>{resume.contact.location}</span></li>
             <li><FaLinkedin className={styles.contactIcon} /><span>{resume.contact.linkedin}</span></li>
             <li><FaGithub className={styles.contactIcon} /><span>{resume.contact.github}</span></li>
             <li><FaGlobe className={styles.contactIcon} /><span>{resume.contact.website}</span></li>

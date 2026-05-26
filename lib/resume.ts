@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { execSync } from 'child_process'
 import yaml from 'js-yaml'
 
 export interface ResumeContact {
@@ -49,6 +50,12 @@ const resumeFile = path.resolve(process.cwd(), 'src/_data/resume.yml')
 
 export function getResume(): Resume {
   const raw = fs.readFileSync(resumeFile, 'utf-8')
+  if (process.env.NODE_ENV === 'development' && raw.includes('ENC[AES256_GCM') && process.env.AGE_SECRET_KEY) {
+    const decrypted = execSync(`sops --decrypt "${resumeFile}"`, {
+      env: { ...process.env, SOPS_AGE_KEY: process.env.AGE_SECRET_KEY },
+    }).toString()
+    return yaml.load(decrypted) as Resume
+  }
   return yaml.load(raw) as Resume
 }
 

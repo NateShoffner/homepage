@@ -13,6 +13,8 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1rem;
+
+  @media (max-width: 767px) { justify-content: center; }
 }
 
 // ── Header ────────────────────────────────────────────────────────────────────
@@ -46,9 +48,8 @@
   padding: 0;
   margin: 0;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 0.5rem 1rem;
-  overflow: hidden;
 
   li {
     display: flex;
@@ -230,6 +231,7 @@
 .entryMeta {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.35rem;
   font-size: 0.78rem;
   color: var(--text-muted-color);

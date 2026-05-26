@@ -34,14 +34,6 @@ export default function ResumeWeb({ resume }: Props) {
         <p className={styles.title}>{resume.title}</p>
         <ul className={styles.contactRow}>
           <li>
-            <FaEnvelope />
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          </li>
-          <li>
-            <FaPhone />
-            <a href={`tel:${contact.phone.replace(/\D/g, '')}`}>{contact.phone}</a>
-          </li>
-          <li>
             <FaMapMarkerAlt />
             <a
               href={`https://maps.google.com/?q=${encodeURIComponent(contact.location)}`}
@@ -49,6 +41,14 @@ export default function ResumeWeb({ resume }: Props) {
             >
               {contact.location}
             </a>
+          </li>
+          <li>
+            <FaEnvelope />
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </li>
+          <li>
+            <FaPhone />
+            <a href={`tel:${contact.phone.replace(/\D/g, '')}`}>{contact.phone}</a>
           </li>
           <li>
             <FaLinkedin />
