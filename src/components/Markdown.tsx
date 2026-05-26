@@ -1,6 +1,7 @@
 'use client'
 
 import ReactMarkdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
 import useFancybox from '@hooks/useFancybox'
 
 type Props = {
@@ -51,6 +52,7 @@ export default function Markdown({ children, imageBasePath, fileBasePath }: Prop
   return (
     <div ref={fancyboxRef}>
       <ReactMarkdown
+        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
         components={{
           img: ({ src, alt, title }) => (
             <BlogImage
