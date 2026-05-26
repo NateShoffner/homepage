@@ -6,7 +6,7 @@ import { BlogPostCard } from '@components/BlogPostCard'
 interface Params { tag: string }
 
 export async function generateStaticParams() {
-  return getAllTags().map((tag) => ({ tag: encodeURIComponent(tag) }))
+  return getAllTags().map((tag) => ({ tag }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {

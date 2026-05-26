@@ -6,7 +6,7 @@ import { BlogPostCard } from '@components/BlogPostCard'
 interface Params { category: string }
 
 export async function generateStaticParams() {
-  return getAllCategories().map((category) => ({ category: encodeURIComponent(category) }))
+  return getAllCategories().map((category) => ({ category }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {

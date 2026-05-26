@@ -1,5 +1,5 @@
 import React from 'react'
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
+import { Document, Page, Text, View, StyleSheet, type TextProps } from '@react-pdf/renderer'
 import type { Resume } from '@lib/resume'
 
 const DARK_BG = '#2d2d2d'
@@ -157,7 +157,7 @@ const s = StyleSheet.create({
   },
 })
 
-function Bullet({ text, style }: { text: string; style: object }) {
+function Bullet({ text, style }: { text: string; style: TextProps['style'] }) {
   return <Text style={style}>{'• ' + text}</Text>
 }
 

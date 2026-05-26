@@ -51,7 +51,7 @@ export default function BlogPostInteractive({
             })}
           </span>
         )}
-        <a href={post.fullUrl} className="badge">
+        <a href="#disqus_thread" className="badge">
           <i className="fa fa-comments" />{" "}
           <CommentCount shortname="nateshoffner" config={{ url: post.fullUrl }}>
             {0} Comments

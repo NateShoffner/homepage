@@ -1,12 +1,12 @@
-# homepage
+# nateshoffner.github.io
 
-Personal website and blog built with Next.js, deployed on Vercel.
+Personal website and blog. Built with Next.js (App Router), deployed on Vercel.
 
 ## Tech Stack
 
-- **Framework:** Next.js 16 (App Router)
+- **Framework:** Next.js (App Router)
 - **Styling:** Bootstrap 4 + SCSS
-- **Blog:** Markdown files with gray-matter frontmatter
+- **Blog:** Markdown files with gray-matter frontmatter, Disqus comments
 - **Deployment:** Vercel
 - **Contact form:** Resend + Cloudflare Turnstile
 
@@ -54,6 +54,26 @@ image: optional-image.png
 Post content here.
 ```
 
+Posts are served at `/blog/[year]/[month]/[slug]/`. Tags and categories link to filtered listing pages at `/blog/tag/[tag]/` and `/blog/category/[category]/`.
+
+## Resume
+
+The resume lives at `/resume/view` and is protected by Cloudflare Access. The underlying data is stored in `src/_data/resume.yml`, which is encrypted with [git-crypt](https://github.com/AGWA/git-crypt).
+
+| Variable | Description |
+|---|---|
+| `GIT_CRYPT_KEY` | Base64-encoded git-crypt key, used to decrypt `resume.yml` at build time |
+| `CF_ACCESS_TEAM_DOMAIN` | Cloudflare Access team domain (e.g. `example.cloudflareaccess.com`) |
+| `CF_ACCESS_AUD` | Cloudflare Access application audience tag |
+| `CF_ACCESS_BYPASS` | Set to `true` to skip JWT validation in local development |
+
+The build script (`scripts/unlock-resume.sh`) decodes `GIT_CRYPT_KEY` and unlocks git-crypt before `next build` runs. On Vercel, set `GIT_CRYPT_KEY` as an environment variable.
+
+Routes:
+- `/resume/view` — interactive web view
+- `/resume/view/print` — print-optimized layout
+- `/resume/pdf` — downloads a generated PDF via `@react-pdf/renderer`
+
 ## Admin Panel
 
-A dev-only admin panel is available at `/admin` for managing drafts and published posts. It is blocked in production (`NODE_ENV === 'production'`).
+A dev-only admin panel is available at `/admin` for managing drafts and published posts. Blocked in production (`NODE_ENV === 'production'`).
