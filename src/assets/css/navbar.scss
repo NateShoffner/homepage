@@ -60,6 +60,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        list-style: none;
         padding-left: 0px;
         padding-top: 0.8rem;
         margin-top: 0.8rem;
@@ -91,6 +92,12 @@
         li {
             margin: 0 0.5rem;
         }
+    }
+}
+
+@media (max-width: 991.98px) {
+    #navbar::before {
+        display: none;
     }
 }
 

@@ -184,6 +184,14 @@ ul.highlighted li.about-json-fading::before {
         padding-top: 3rem !important;
         padding-bottom: 3rem !important;
     }
+
+    section.about-cover .focus-areas-list {
+        flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        row-gap: 0.75rem;
+    }
 }
 
 .scroll-btn {

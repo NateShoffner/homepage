@@ -92,6 +92,25 @@
         }
     }
 
+    @media (max-width: 575.98px) {
+        .project-info-strip {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .project-info-item {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            border-right: none;
+            border-bottom: 1px solid var(--border-color);
+
+            &:last-child { border-bottom: none; }
+        }
+    }
+
     @media (max-width: 767.98px) {
         .project-images-container {
             text-align: center;

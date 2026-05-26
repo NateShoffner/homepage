@@ -17,7 +17,7 @@ export interface ProfileRole {
 
 export interface Profile {
   author: string
-  description: string
+  description: string[]
   years_experience: number
   open_to_work: boolean
   location: ProfileLocation

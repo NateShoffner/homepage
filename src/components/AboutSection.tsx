@@ -11,13 +11,17 @@ import type { Profile, ProfileRole } from "@/lib/profile";
 function jsnip(snippet: string): React.ReactNode {
   if (!snippet.includes("\n")) {
     return tokenizeJson(snippet).map(({ text, type }, i) => (
-      <span key={i} className={`json-token-${type}`}>{text}</span>
+      <span key={i} className={`json-token-${type}`}>
+        {text}
+      </span>
     ));
   }
   return snippet.split("\n").map((line, li) => (
     <div key={li}>
       {tokenizeJson(line).map(({ text, type }, i) => (
-        <span key={i} className={`json-token-${type}`}>{text}</span>
+        <span key={i} className={`json-token-${type}`}>
+          {text}
+        </span>
       ))}
     </div>
   ));
@@ -109,13 +113,17 @@ export function AboutSection({ profile }: AboutSectionProps) {
   const snippets = useMemo(() => {
     if (!profile) return null;
     return {
-      author:      jsnip(field("author", profile.author)),
-      about:       jsnip(field("about", { yearsExperience: profile.years_experience, openToWork: profile.open_to_work })),
-      location:    jsnip(field("location", profile.location)),
+      author: jsnip(field("author", profile.author)),
+      about: jsnip(
+        field("about", {
+          yearsExperience: profile.years_experience,
+          openToWork: profile.open_to_work,
+        }),
+      ),
       description: jsnip(field("description", profile.description)),
-      roles:       jsnip(rolesSnippet(profile.roles)),
-      focusAreas:  jsnip('"focus_areas": ['),
-      focusItem:   (item: string, last: boolean) =>
+      roles: jsnip(rolesSnippet(profile.roles)),
+      focusAreas: jsnip('"focus_areas": ['),
+      focusItem: (item: string, last: boolean) =>
         jsnip(`${JSON.stringify(item)}${last ? "" : ","}`),
     };
   }, [profile]);
@@ -156,11 +164,18 @@ export function AboutSection({ profile }: AboutSectionProps) {
             revealed={revealed}
             revealDelay={190}
             appearDelay="0.25s"
-            jsonContent={snippets?.location}
+            jsonContent={snippets?.roles}
           >
             <p>
-              Software engineer based in{" "}
-              {profile ? `${profile.location.city}, ${profile.location.state}.` : ""}
+              {profile?.roles.map((r, i) => (
+                <span key={r.title}>
+                  {r.url ? <a href={r.url}>{r.title}</a> : r.title}
+                  {i < (profile?.roles.length ?? 0) - 1 ? " & " : ""}
+                </span>
+              ))}
+              {profile
+                ? `, based in ${profile.location.city}, ${profile.location.state}.`
+                : ""}
             </p>
           </AboutReveal>
 
@@ -170,45 +185,28 @@ export function AboutSection({ profile }: AboutSectionProps) {
             appearDelay="0.33s"
             jsonContent={snippets?.description}
           >
-            <p>{profile?.description}</p>
+            {profile?.description.map((line, i) => <p key={i}>{line}</p>)}
           </AboutReveal>
 
           <AboutReveal
             revealed={revealed}
             revealDelay={410}
             appearDelay="0.42s"
-            jsonContent={snippets?.roles}
-          >
-            <p>
-              Currently working as a{" "}
-              {profile?.roles.map((r, i) => (
-                <span key={r.title}>
-                  {r.url ? <a href={r.url}>{r.title}</a> : r.title}
-                  {i < (profile?.roles.length ?? 0) - 1 ? " and " : ""}
-                </span>
-              ))}
-              .
-            </p>
-          </AboutReveal>
-
-          <AboutReveal
-            revealed={revealed}
-            revealDelay={520}
-            appearDelay="0.52s"
-            jsonContent={jsnip('"links": [\n  "github.com/nateshoffner",\n  "techlancaster.org"\n]')}
+            jsonContent={jsnip(
+              '"links": [\n  "github.com/nateshoffner",\n  "techlancaster.org"\n]',
+            )}
           >
             <p className="mb-5">
-              I enjoy working on lots of little passion projects which you can
-              find on my{" "}
-              <a href="https://github.com/nateshoffner">GitHub</a> and getting
-              involved within the{" "}
-              <a href="https://techlancaster.org/">Lancaster Tech</a> scene.
+              Always working on something new. Check out my{" "}
+              <a href="https://github.com/nateshoffner">GitHub</a> or find me
+              in the{" "}
+              <a href="https://techlancaster.org/">Lancaster Tech</a> community.
             </p>
           </AboutReveal>
         </div>
 
         {/* ── Focus Areas column ── */}
-        <div className="col-12 col-md-12 col-lg-6">
+        <div className="col-12 col-md-12 col-lg-6 d-lg-flex flex-lg-column">
           <AboutReveal
             revealed={revealed}
             revealDelay={115}
@@ -218,7 +216,7 @@ export function AboutSection({ profile }: AboutSectionProps) {
             <h3 className="subheading mb-5">Focus Areas</h3>
           </AboutReveal>
 
-          <ul className="highlighted inlined-list">
+          <ul className="highlighted inlined-list focus-areas-list">
             {focusAreas.map((item, i) => (
               <AboutReveal
                 key={item}
@@ -226,7 +224,10 @@ export function AboutSection({ profile }: AboutSectionProps) {
                 revealed={revealed}
                 revealDelay={200 + i * 70}
                 appearDelay={`${0.28 + i * 0.05}s`}
-                jsonContent={snippets?.focusItem(item, i === focusAreas.length - 1)}
+                jsonContent={snippets?.focusItem(
+                  item,
+                  i === focusAreas.length - 1,
+                )}
               >
                 {item}
               </AboutReveal>
