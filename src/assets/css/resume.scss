@@ -1,0 +1,25 @@
+// ── Resume gate (password form) ───────────────────────────────────────────────
+
+.resume-gate {
+  flex: 1;
+  min-height: calc(100vh - 54px);
+
+  @media (min-width: 992px) {
+    min-height: 100vh;
+  }
+}
+
+.resume-gate-inner {
+  width: 100%;
+  max-width: 360px;
+  padding: 0 1rem;
+}
+
+.resume-gate-form {
+  text-align: left;
+
+  .form-control {
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
+}
