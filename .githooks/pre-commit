@@ -1,40 +1,18 @@
 #!/bin/bash
-# Pre-commit hook: abort if git-crypt is not installed or resume.yml is not encrypted.
+# Pre-commit hook: abort if resume.yml is staged without SOPS encryption.
 
 RESUME_FILE="src/_data/resume.yml"
 
-# Only check if resume.yml is staged for this commit
 if ! git diff --cached --name-only | grep -q "^${RESUME_FILE}$"; then
   exit 0
 fi
 
-# Check git-crypt is installed
-if ! command -v git-crypt &> /dev/null; then
+# SOPS-encrypted YAML files contain an "sops:" key
+if ! git show ":${RESUME_FILE}" | grep -q "^sops:"; then
   echo ""
-  echo "ERROR: git-crypt is not installed."
-  echo "  ${RESUME_FILE} is staged but cannot be verified as encrypted."
-  echo "  Install git-crypt before committing this file."
-  echo ""
-  exit 1
-fi
-
-# Check git-crypt has been initialized in this repo
-if ! git-crypt status &> /dev/null; then
-  echo ""
-  echo "ERROR: git-crypt is not initialized in this repository."
-  echo "  Run: git-crypt init"
-  echo "  Then export your key: git-crypt export-key ~/resume-key"
-  echo ""
-  exit 1
-fi
-
-# Check the file is actually marked as encrypted (not 'not encrypted')
-STATUS=$(git-crypt status "${RESUME_FILE}" 2>&1)
-if echo "$STATUS" | grep -q "not encrypted"; then
-  echo ""
-  echo "ERROR: ${RESUME_FILE} is staged but git-crypt reports it as NOT encrypted."
+  echo "ERROR: ${RESUME_FILE} is staged but does not appear to be SOPS-encrypted."
   echo "  This would commit the file in plaintext. Aborting."
-  echo "  Verify your .gitattributes has the correct filter and re-stage the file."
+  echo "  Encrypt with: sops --encrypt --in-place ${RESUME_FILE}"
   echo ""
   exit 1
 fi

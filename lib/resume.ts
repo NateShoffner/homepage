@@ -51,3 +51,4 @@ export function getResume(): Resume {
   const raw = fs.readFileSync(resumeFile, 'utf-8')
   return yaml.load(raw) as Resume
 }
+

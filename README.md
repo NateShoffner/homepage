@@ -58,16 +58,18 @@ Posts are served at `/blog/[year]/[month]/[slug]/`. Tags and categories link to 
 
 ## Resume
 
-The resume lives at `/resume/view` and is protected by Cloudflare Access. The underlying data is stored in `src/_data/resume.yml`, which is encrypted with [git-crypt](https://github.com/AGWA/git-crypt).
+The resume lives at `/resume/view` and is protected by Cloudflare Access. The underlying data is stored in `src/_data/resume.yml`, which is encrypted with [SOPS](https://github.com/getsops/sops) using an [age](https://github.com/FiloSottile/age) keypair.
 
 | Variable | Description |
 |---|---|
-| `GIT_CRYPT_KEY` | Base64-encoded git-crypt key, used to decrypt `resume.yml` at build time |
+| `AGE_SECRET_KEY` | age private key used to decrypt `resume.yml` at build time |
 | `CF_ACCESS_TEAM_DOMAIN` | Cloudflare Access team domain (e.g. `example.cloudflareaccess.com`) |
 | `CF_ACCESS_AUD` | Cloudflare Access application audience tag |
 | `CF_ACCESS_BYPASS` | Set to `true` to skip JWT validation in local development |
 
-The build script (`scripts/unlock-resume.sh`) decodes `GIT_CRYPT_KEY` and unlocks git-crypt before `next build` runs. On Vercel, set `GIT_CRYPT_KEY` as an environment variable.
+The build script (`scripts/unlock-resume.sh`) downloads the SOPS binary if needed, then decrypts `resume.yml` in-place before `next build` runs. On Vercel, set `AGE_SECRET_KEY` as an environment variable.
+
+To generate a new keypair locally: `age-keygen`. Add the public key to `.sops.yaml` and the private key to `AGE_SECRET_KEY` in `.env.local`.
 
 Routes:
 - `/resume/view` — interactive web view
