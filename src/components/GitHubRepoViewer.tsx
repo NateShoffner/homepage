@@ -30,19 +30,16 @@ interface Props {
 }
 
 function relativeTime(dateStr: string): string {
-  const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000)
+  const date = new Date(dateStr)
+  const days = Math.floor((Date.now() - date.getTime()) / 86400000)
   if (days < 1) return 'today'
   if (days === 1) return '1 day ago'
   if (days < 7) return `${days} days ago`
   const weeks = Math.floor(days / 7)
   if (weeks === 1) return '1 week ago'
-  if (days < 30) return `${weeks} weeks ago`
-  const months = Math.floor(days / 30)
-  if (months === 1) return '1 month ago'
-  if (days < 365) return `${months} months ago`
-  const years = Math.floor(days / 365)
-  if (years === 1) return '1 year ago'
-  return `${years} years ago`
+  if (days < 60) return `${weeks} weeks ago`
+  const sameYear = date.getFullYear() === new Date().getFullYear()
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', ...(!sameYear && { year: 'numeric' }) })
 }
 
 function sortRepos(repos: Repo[], sort: SortOption): Repo[] {

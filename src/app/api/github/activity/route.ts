@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const CACHE_SECONDS = 3600
-const WEEKS = 8
+const WEEKS = 52
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000
 
 export async function GET(request: NextRequest) {
