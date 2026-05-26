@@ -1,0 +1,272 @@
+// Web view — uses site design language (dark theme, Raleway/Open Sans, card patterns)
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+
+  @media (max-width: 767px) { padding: 1.5rem 1rem; }
+}
+
+// ── Toolbar (Download PDF button, sits above the resume card) ─────────────────
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+.header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.name {
+  font-size: 2rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--body-color);
+  margin-bottom: 0.2rem;
+
+  @media (max-width: 575px) { font-size: 1.4rem; }
+}
+
+.title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted-color);
+  margin-bottom: 1rem;
+}
+
+.contactRow {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem 1rem;
+  overflow: hidden;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    color: var(--text-muted-color);
+    white-space: nowrap;
+
+    svg { font-size: 0.75rem; color: var(--badge-color); flex-shrink: 0; }
+
+    a {
+      color: var(--text-muted-color);
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:hover { color: var(--link-color); }
+    }
+  }
+}
+
+.btnIcon {
+  font-size: 0.7rem;
+  margin-right: 0.3rem;
+}
+
+// ── Body layout ───────────────────────────────────────────────────────────────
+.body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+}
+
+// ── Aside ─────────────────────────────────────────────────────────────────────
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+}
+
+.cardHeading {
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--badge-color);
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.projectEntry {
+  margin-bottom: 1rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.projectName {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--body-color);
+  margin: 0 0 0.05rem;
+
+  // when rendered as <a>
+  &:is(a) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--body-color);
+    transition: color 0.15s ease;
+
+    &:hover { color: var(--link-color); }
+  }
+}
+
+.projectRole {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--body-color);
+  margin: 0 0 0.05rem;
+}
+
+.projectDates {
+  font-size: 0.75rem;
+  color: var(--text-muted-color);
+  margin: 0 0 0.35rem;
+}
+
+.projectBullets {
+  list-style: disc;
+  padding-left: 1rem;
+  margin: 0;
+
+  li {
+    font-size: 0.75rem;
+    color: var(--text-muted-color);
+    line-height: 1.5;
+    margin-bottom: 0.2rem;
+
+    &:last-child { margin-bottom: 0; }
+  }
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section {}
+
+.sectionHeading {
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--badge-color);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.objective {
+  font-size: 0.9rem;
+  color: var(--body-color);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.entry {
+  margin-bottom: 1.5rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.entryTitle {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: var(--body-color);
+  margin: 0 0 0.1rem;
+}
+
+.entryCompany {
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--badge-color);
+  margin: 0 0 0.2rem;
+
+  // when rendered as <a>
+  &:is(a) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--badge-color);
+    transition: color 0.15s ease;
+
+    &:hover { color: var(--link-color); }
+  }
+}
+
+.entryMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--text-muted-color);
+  margin-bottom: 0.6rem;
+}
+
+.metaIcon {
+  font-size: 0.68rem;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.metaLink {
+  color: var(--text-muted-color);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover { color: var(--link-color); }
+}
+
+.externalIcon {
+  font-size: 0.6rem;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.bulletList {
+  list-style: disc;
+  padding-left: 1.1rem;
+  margin: 0;
+
+  li {
+    font-size: 0.83rem;
+    color: var(--body-color);
+    line-height: 1.65;
+    margin-bottom: 0.3rem;
+
+    &:last-child { margin-bottom: 0; }
+  }
+}

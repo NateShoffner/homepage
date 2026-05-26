@@ -1,3 +1,15 @@
+// ── Print route body reset ────────────────────────────────────────────────────
+// Strips the site's body padding-left (sidebar offset) on the print route.
+// The print layout wrapper sets data-print-page so this only applies there.
+body:has([data-print-page]) {
+  padding: 0 !important;
+  background: #fff !important;
+}
+
+@media print {
+  nav, footer { display: none !important; }
+}
+
 // ── Resume gate (password form) ───────────────────────────────────────────────
 
 .resume-gate {

@@ -1,0 +1,318 @@
+// Print view — faithful reproduction of the original PDF layout.
+// No site chrome, no theme vars. All colours hardcoded for print accuracy.
+
+$font-display: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+$font-body:    'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+
+$dark-bg:    #2d2d2d;
+$dark-text:  #e0e0e0;
+$light-bg:   #f0f0f0;
+$light-text: #212529;
+$muted:      #555;
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 1.75rem;
+  background: #fff;
+  border-bottom: 3px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  @media print {
+    display: none !important;
+  }
+}
+
+// ── Page shell ────────────────────────────────────────────────────────────────
+// On screen: letter-sized preview centered on gray background
+// On print:  fills the page exactly
+
+.page {
+  font-family: $font-body;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  align-items: stretch;
+  width: 816px;   // 8.5in @ 96dpi
+  min-height: 1056px; // 11in @ 96dpi
+  margin: 0 auto;
+  background: #fff;
+
+  // Reset any h* overrides from site globals
+  h1, h2, h3, h4 {
+    font-family: $font-body;
+    font-weight: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  @media print {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+  }
+}
+
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────────────────
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+// Dark top block: name + title + contact
+.sidebarTop {
+  background-color: $dark-bg;
+  color: $dark-text;
+  padding: 2rem 1.25rem 1.5rem;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.nameBlock {
+  margin-bottom: 1.25rem;
+}
+
+.name {
+  font-family: $font-display;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  color: #fff;
+  line-height: 1.1;
+  margin: 0 0 0.3rem;
+  white-space: nowrap;
+}
+
+.title {
+  font-family: $font-body;
+  font-size: 0.95rem;
+  font-style: italic;
+  font-weight: 400;
+  color: $dark-text;
+  margin: 0;
+}
+
+.contactList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.9rem;
+    color: $dark-text;
+    word-break: break-all;
+  }
+}
+
+.contactIcon {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  color: $dark-text;
+  opacity: 0.85;
+}
+
+// Light bottom block: skills, languages, projects
+.sidebarBottom {
+  background-color: $light-bg;
+  color: $light-text;
+  padding: 1.5rem 1.25rem;
+  flex: 1;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.sidebarSection {
+  margin-bottom: 1.5rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.sidebarHeading {
+  font-family: $font-body;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em;
+  color: $light-text;
+  margin: 0 0 0.5rem;
+}
+
+// "Languages" uses mixed-case bold, not all-caps
+.sidebarHeadingMixed {
+  font-family: $font-body;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  letter-spacing: 0;
+  color: $light-text;
+  margin: 0 0 0.5rem;
+}
+
+.skillList {
+  list-style: disc;
+  padding-left: 1.1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  li {
+    font-size: 0.9rem;
+    color: $light-text;
+    line-height: 1.5;
+  }
+}
+
+.languagesInline {
+  font-size: 0.9rem;
+  color: $light-text;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.projectEntry {
+  margin-bottom: 1.25rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.projectName {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: $light-text;
+  margin: 0 0 0.1rem;
+}
+
+.projectRole {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $light-text;
+  margin: 0 0 0.1rem;
+}
+
+.projectDates {
+  font-size: 0.85rem;
+  color: $muted;
+  margin: 0 0 0.3rem;
+}
+
+.projectBullets {
+  list-style: disc;
+  padding-left: 1rem;
+  margin: 0;
+
+  li {
+    font-size: 0.85rem;
+    color: $light-text;
+    line-height: 1.6;
+    margin-bottom: 0.2rem;
+
+    &:last-child { margin-bottom: 0; }
+  }
+}
+
+// ── Main column ───────────────────────────────────────────────────────────────
+.main {
+  background: #fff;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section {}
+
+.sectionHeading {
+  font-family: $font-display;
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em;
+  color: $light-text;
+  margin: 0 0 0.65rem;
+}
+
+.objective {
+  font-size: 0.9rem;
+  color: $light-text;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.entry {
+  margin-bottom: 1.75rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.entryTitle {
+  font-family: $font-body;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: $light-text;
+  margin: 0 0 0.1rem;
+}
+
+.entryCompany {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: $light-text;
+  margin: 0 0 0.1rem;
+}
+
+.entryMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+  color: $muted;
+  margin-bottom: 0.6rem;
+}
+
+.metaIcon {
+  font-size: 0.65rem;
+  flex-shrink: 0;
+  opacity: 0.65;
+}
+
+.metaSep {
+  color: $muted;
+  margin: 0 0.1rem;
+}
+
+.bulletList {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin: 0;
+
+  li {
+    font-size: 0.9rem;
+    color: $light-text;
+    line-height: 1.6;
+    margin-bottom: 0.35rem;
+
+    &:last-child { margin-bottom: 0; }
+  }
+}

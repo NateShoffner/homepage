@@ -1,0 +1,174 @@
+'use client'
+
+import type { Resume } from '@lib/resume'
+import {
+  FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGithub, FaGlobe,
+  FaCalendarAlt, FaExternalLinkAlt,
+} from 'react-icons/fa'
+import styles from './ResumeWeb.module.scss'
+
+interface Props {
+  resume: Resume
+}
+
+export default function ResumeWeb({ resume }: Props) {
+  const { contact } = resume
+
+  return (
+    <div className={styles.page}>
+      {/* ── Toolbar (outside resume content) ── */}
+      <div className={styles.toolbar}>
+        <a
+          className="btn btn-primary"
+          href="/resume/view/print"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaExternalLinkAlt className={styles.btnIcon} /> Print / Download Friendly Version
+        </a>
+      </div>
+
+      {/* ── Header ── */}
+      <section className={styles.header}>
+        <h1 className={styles.name}>{resume.name}</h1>
+        <p className={styles.title}>{resume.title}</p>
+        <ul className={styles.contactRow}>
+          <li>
+            <FaEnvelope />
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </li>
+          <li>
+            <FaPhone />
+            <a href={`tel:${contact.phone.replace(/\D/g, '')}`}>{contact.phone}</a>
+          </li>
+          <li>
+            <FaMapMarkerAlt />
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(contact.location)}`}
+              target="_blank" rel="noopener noreferrer"
+            >
+              {contact.location}
+            </a>
+          </li>
+          <li>
+            <FaLinkedin />
+            <a
+              href={`https://linkedin.com/in/${contact.linkedin}`}
+              target="_blank" rel="noopener noreferrer"
+            >
+              {contact.linkedin}
+            </a>
+          </li>
+          <li>
+            <FaGithub />
+            <a
+              href={`https://github.com/${contact.github}`}
+              target="_blank" rel="noopener noreferrer"
+            >
+              {contact.github}
+            </a>
+          </li>
+          <li>
+            <FaGlobe />
+            <a
+              href={`https://${contact.website}`}
+              target="_blank" rel="noopener noreferrer"
+            >
+              {contact.website}
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <div className={styles.body}>
+        {/* ── Left column ── */}
+        <aside className={styles.aside}>
+
+          <div className={styles.card}>
+            <h2 className={styles.cardHeading}>Skills</h2>
+            <ul className={styles.bulletList}>
+              {resume.skills.soft.map(s => <li key={s}>{s}</li>)}
+            </ul>
+          </div>
+
+          <div className={styles.card}>
+            <h2 className={styles.cardHeading}>Languages</h2>
+            <ul className={styles.bulletList}>
+              {resume.skills.languages.map(l => <li key={l}>{l}</li>)}
+            </ul>
+          </div>
+
+          <div className={styles.card}>
+            <h2 className={styles.cardHeading}>Recent Projects</h2>
+            {resume.projects.map((proj, i) => (
+              <div key={i} className={styles.projectEntry}>
+                {proj.homepage ? (
+                  <a
+                    className={styles.projectName}
+                    href={proj.homepage}
+                    target="_blank" rel="noopener noreferrer"
+                  >
+                    {proj.name} <FaExternalLinkAlt className={styles.externalIcon} />
+                  </a>
+                ) : (
+                  <p className={styles.projectName}>{proj.name}</p>
+                )}
+                <p className={styles.projectRole}>{proj.role}</p>
+                <p className={styles.projectDates}>{proj.start} – {proj.end}</p>
+                <ul className={styles.projectBullets}>
+                  {proj.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+        </aside>
+
+        {/* ── Main column ── */}
+        <main className={styles.main}>
+
+          <div className={styles.section}>
+            <h2 className={styles.sectionHeading}>Career Objective</h2>
+            <p className={styles.objective}>{resume.objective}</p>
+          </div>
+
+          <div className={styles.section}>
+            <h2 className={styles.sectionHeading}>Work Experience</h2>
+            {resume.experience.map((exp, i) => (
+              <div key={i} className={styles.entry}>
+                <h3 className={styles.entryTitle}>{exp.title}</h3>
+                {exp.homepage ? (
+                  <a
+                    className={styles.entryCompany}
+                    href={exp.homepage}
+                    target="_blank" rel="noopener noreferrer"
+                  >
+                    {exp.company} <FaExternalLinkAlt className={styles.externalIcon} />
+                  </a>
+                ) : (
+                  <p className={styles.entryCompany}>{exp.company}</p>
+                )}
+                <p className={styles.entryMeta}>
+                  <FaCalendarAlt className={styles.metaIcon} />
+                  <span>{exp.start} – {exp.end}</span>
+                  <FaMapMarkerAlt className={styles.metaIcon} style={{ marginLeft: '0.6rem' }} />
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(exp.location)}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className={styles.metaLink}
+                  >
+                    {exp.location}
+                  </a>
+                </p>
+                <ul className={styles.bulletList}>
+                  {exp.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+        </main>
+      </div>
+    </div>
+  )
+}

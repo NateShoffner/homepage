@@ -7,11 +7,13 @@ import Footer from '@components/Footer'
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isAdmin = pathname.startsWith('/admin')
+  const isPrint = pathname.startsWith('/resume/view/print')
+  const noChrome = isAdmin || isPrint
   return (
     <>
-      {!isAdmin && <Navbar />}
-      <div className={isAdmin ? undefined : 'site-content'}>{children}</div>
-      {!isAdmin && <Footer />}
+      {!noChrome && <Navbar />}
+      <div className={noChrome ? undefined : 'site-content'}>{children}</div>
+      {!noChrome && <Footer />}
     </>
   )
 }

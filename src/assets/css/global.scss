@@ -187,6 +187,16 @@ footer {
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
+
+    @media print {
+        display: none;
+    }
+}
+
+nav {
+    @media print {
+        display: none;
+    }
 }
 
 ul.highlighted {
