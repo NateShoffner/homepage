@@ -1,0 +1,22 @@
+author: Nate Shoffner
+description: "Passionate about all things tech, solving interesting problems, learning how things work, and [simultaneously] breaking and building things."
+years_experience: 15
+open_to_work: false
+location:
+  city: Lancaster
+  state: Pennsylvania
+  country: US
+roles:
+  - title: Senior Software Engineer
+    current: true
+  - title: Elastic Certified Engineer
+    current: true
+    verified: true
+    url: https://certified.elastic.co/d2170b39-7c27-4811-952f-3085d6a0dda5
+focus_areas:
+  - Full-Stack & API Development
+  - "Observability & Data Engineering (ELK)"
+  - Mobile Development
+  - "Embedded & IoT (ESP32)"
+  - Reverse Engineering
+  - Homelab & Home Automation

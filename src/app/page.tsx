@@ -10,10 +10,12 @@ import TopButton from '@components/TopButton'
 import { Element } from 'react-scroll'
 import type { PostMeta } from '@/lib/blog'
 import type { Project } from '@/src/types/Project'
+import type { Profile } from '@/lib/profile'
 
 export default function HomePage() {
   const [posts, setPosts] = useState<PostMeta[]>([])
   const [projects, setProjects] = useState<Project[]>([])
+  const [profile, setProfile] = useState<Profile | null>(null)
 
   useEffect(() => {
     fetch('/api/blog/posts')
@@ -25,6 +27,11 @@ export default function HomePage() {
       .then((r) => r.json())
       .then((data: Project[]) => setProjects(data))
       .catch(() => {})
+
+    fetch('/api/profile')
+      .then((r) => r.json())
+      .then((data: Profile) => setProfile(data))
+      .catch(() => {})
   }, [])
 
   return (
@@ -32,7 +39,7 @@ export default function HomePage() {
       <Element name="about">
         <section className="page-section about-cover p-4 p-lg-5 d-flex d-column" id="about">
           <div className="my-auto">
-            <AboutSection />
+            <AboutSection profile={profile} />
           </div>
           <ScrollButton target="blog" />
         </section>
