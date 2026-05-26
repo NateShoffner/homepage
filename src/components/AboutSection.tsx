@@ -100,15 +100,24 @@ function AboutReveal({
 
 interface AboutSectionProps {
   profile: Profile | null;
+  onRevealed?: () => void;
 }
 
-export function AboutSection({ profile }: AboutSectionProps) {
+export function AboutSection({ profile, onRevealed }: AboutSectionProps) {
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const tid = setTimeout(() => setRevealed(true), 900);
     return () => clearTimeout(tid);
   }, []);
+
+  // Notify parent after the last AboutReveal item finishes its transition.
+  // Last item has revealDelay=410, plus 160ms fade = 570ms after revealed fires.
+  useEffect(() => {
+    if (!revealed || !onRevealed) return;
+    const tid = setTimeout(onRevealed, 570);
+    return () => clearTimeout(tid);
+  }, [revealed, onRevealed]);
 
   const snippets = useMemo(() => {
     if (!profile) return null;

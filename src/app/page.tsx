@@ -16,6 +16,7 @@ export default function HomePage() {
   const [posts, setPosts] = useState<PostMeta[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [aboutRevealed, setAboutRevealed] = useState(false)
 
   useEffect(() => {
     fetch('/api/blog/posts')
@@ -39,9 +40,11 @@ export default function HomePage() {
       <Element name="about">
         <section className="page-section about-cover p-4 p-lg-5 d-flex d-column" id="about">
           <div className="my-auto">
-            <AboutSection profile={profile} />
+            <AboutSection profile={profile} onRevealed={() => setAboutRevealed(true)} />
           </div>
-          <ScrollButton target="blog" />
+          <div style={{ opacity: aboutRevealed ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+            <ScrollButton target="blog" />
+          </div>
         </section>
       </Element>
 
