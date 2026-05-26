@@ -69,7 +69,7 @@ function Sparkline({ data, id, flatline = false }: { data: number[]; id: number;
     )
   }
 
-  const weeks = data.slice(-26)
+  const weeks = data
   const max = Math.max(...weeks, 1)
   if (weeks.every((v) => v === 0)) {
     return (
@@ -196,28 +196,31 @@ const GitHubRepoViewer: React.FC<Props> = ({
 
   const visible = filtered.slice(0, visibleCount)
 
-  const fetchActivity = useRef((owner: string, repoName: string, repoId: number, attempt = 0) => {
-    fetch(`/api/github/activity?owner=${owner}&repo=${repoName}`)
+  // Stable string key so the effect only fires when the visible repo set actually changes.
+  const visibleKey = visible.map((r) => r.id).join(',')
+
+  useEffect(() => {
+    const unfetched = visible.filter((r) => !fetchingIds.current.has(r.id))
+    if (unfetched.length === 0) return
+
+    for (const repo of unfetched) fetchingIds.current.add(repo.id)
+
+    const repoPaths = unfetched.map((r) => `${r.owner.login}/${r.name}`).join(',')
+    fetch(`/api/github/activity/batch?repos=${repoPaths}`)
       .then((r) => r.json())
-      .then(({ weeks, pending }: { weeks: number[]; pending: boolean }) => {
-        if (pending && attempt < 4) {
-          setTimeout(() => fetchActivity.current(owner, repoName, repoId, attempt + 1), 3000 * (attempt + 1))
-          return
+      .then((data: Record<string, number[]>) => {
+        const updates: Record<number, number[]> = {}
+        for (const repo of unfetched) {
+          const weeks = data[`${repo.owner.login}/${repo.name}`]
+          if (weeks && weeks.length > 0) updates[repo.id] = weeks
         }
-        if (weeks.length > 0) {
-          setActivityMap((prev) => ({ ...prev, [repoId]: weeks }))
+        if (Object.keys(updates).length > 0) {
+          setActivityMap((prev) => ({ ...prev, ...updates }))
         }
       })
       .catch(() => {})
-  })
-
-  useEffect(() => {
-    for (const repo of visible) {
-      if (fetchingIds.current.has(repo.id)) continue
-      fetchingIds.current.add(repo.id)
-      fetchActivity.current(repo.owner.login, repo.name, repo.id)
-    }
-  }, [repos])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visibleKey])
 
   if (loading) {
     return (

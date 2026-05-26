@@ -68,7 +68,7 @@ export function ProjectsSection({
         includeForks={false}
         includePages={true}
         defaultVisibleCount={showMore ? 6 : Infinity}
-        defaultSortBy={showMore ? "stars" : "pushed"}
+        defaultSortBy="pushed"
         showFilters={!showMore}
       />
     </>

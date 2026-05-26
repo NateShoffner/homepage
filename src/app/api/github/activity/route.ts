@@ -1,25 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const CACHE_SECONDS = 3600
-
-async function poll(owner: string, repo: string, headers: HeadersInit, maxAttempts = 5, delayMs = 2000): Promise<{ weeks: number[]; pending: boolean }> {
-  for (let i = 0; i < maxAttempts; i++) {
-    if (i > 0) await new Promise((r) => setTimeout(r, delayMs))
-
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/stats/commit_activity`,
-      { headers, cache: 'no-store' }
-    )
-
-    if (res.status === 202) continue
-    if (!res.ok) return { weeks: [], pending: false }
-
-    const data: { week: number; total: number }[] = await res.json()
-    return { weeks: data.map((w) => w.total), pending: false }
-  }
-
-  return { weeks: [], pending: true }
-}
+const WEEKS = 8
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
@@ -27,7 +10,7 @@ export async function GET(request: NextRequest) {
   const repo = searchParams.get('repo')
 
   if (!owner || !repo) {
-    return NextResponse.json({ weeks: [], pending: false }, { status: 400 })
+    return NextResponse.json({ weeks: [] }, { status: 400 })
   }
 
   const headers: HeadersInit = { Accept: 'application/vnd.github+json' }
@@ -35,13 +18,29 @@ export async function GET(request: NextRequest) {
     headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`
   }
 
-  const result = await poll(owner, repo, headers)
+  const since = new Date(Date.now() - WEEKS * WEEK_MS).toISOString()
+  const res = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/commits?since=${since}&per_page=100`,
+    { headers, next: { revalidate: CACHE_SECONDS } }
+  )
 
-  if (result.pending) {
-    return NextResponse.json({ weeks: [], pending: true })
+  if (!res.ok) {
+    return NextResponse.json({ weeks: [] })
   }
 
-  return NextResponse.json({ weeks: result.weeks, pending: false }, {
+  const commits: { commit: { author: { date: string } } }[] = await res.json()
+
+  const buckets = Array<number>(WEEKS).fill(0)
+  const now = Date.now()
+  for (const c of commits) {
+    const age = now - new Date(c.commit.author.date).getTime()
+    const weekIndex = Math.floor(age / WEEK_MS)
+    if (weekIndex >= 0 && weekIndex < WEEKS) {
+      buckets[WEEKS - 1 - weekIndex]++
+    }
+  }
+
+  return NextResponse.json({ weeks: buckets }, {
     headers: { 'Cache-Control': `public, s-maxage=${CACHE_SECONDS}, stale-while-revalidate` },
   })
 }
