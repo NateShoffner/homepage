@@ -10,7 +10,12 @@ if [ -n "$GIT_CRYPT_KEY" ]; then
   echo "Unlocking git-crypt..."
   echo "$GIT_CRYPT_KEY" | base64 -d > /tmp/git-crypt-key
   if ! command -v git-crypt &> /dev/null; then
-    apt-get install -y git-crypt > /dev/null 2>&1 || true
+    apt-get update -qq && apt-get install -y git-crypt > /dev/null 2>&1 || true
+  fi
+  if ! command -v git-crypt &> /dev/null; then
+    echo "apt-get failed, downloading git-crypt binary..."
+    curl -fsSL "https://github.com/AGWA/git-crypt/releases/download/0.7.0/git-crypt-0.7.0-linux-x86_64" \
+      -o /usr/local/bin/git-crypt && chmod +x /usr/local/bin/git-crypt || true
   fi
   if ! command -v git-crypt &> /dev/null; then
     echo "git-crypt not found — skipping unlock."
