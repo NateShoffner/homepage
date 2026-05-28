@@ -17,6 +17,13 @@ export default function HomePage() {
   const [projects, setProjects] = useState<Project[]>([])
   const [profile, setProfile] = useState<Profile | null>(null)
   const [aboutRevealed, setAboutRevealed] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setHasScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     fetch('/api/blog/posts')
@@ -42,7 +49,7 @@ export default function HomePage() {
           <div className="my-auto">
             <AboutSection profile={profile} onRevealed={() => setAboutRevealed(true)} />
           </div>
-          <div style={{ opacity: aboutRevealed ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+          <div style={{ opacity: aboutRevealed && !hasScrolled ? 1 : 0, transition: 'opacity 0.5s ease' }}>
             <ScrollButton target="blog" />
           </div>
         </section>

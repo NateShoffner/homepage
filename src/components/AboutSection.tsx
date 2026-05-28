@@ -62,36 +62,63 @@ function AboutReveal({
   appearDelay,
   asList,
 }: RevealProps) {
-  const [state, setState] = useState<"json" | "fading" | "rendered">("json");
+  const [jsonFading, setJsonFading] = useState(false);
+  const [jsonGone, setJsonGone] = useState(false);
   const Tag = asList ? "li" : "div";
 
   useEffect(() => {
     if (!revealed) return;
-    const t1 = setTimeout(() => setState("fading"), revealDelay);
-    const t2 = setTimeout(() => setState("rendered"), revealDelay + 160);
+    const t1 = setTimeout(() => setJsonFading(true), revealDelay);
+    const t2 = setTimeout(() => setJsonGone(true), revealDelay + 180);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
   }, [revealed, revealDelay]);
 
-  if (state === "rendered") {
-    return (
-      <Tag
-        className="about-item about-reveal-in"
-        style={{ "--ad": "0s" } as React.CSSProperties}
-      >
-        {children}
-      </Tag>
-    );
-  }
-
   return (
     <Tag
-      className={`about-item about-json-reveal${state === "fading" ? " about-json-fading" : ""}`}
-      style={{ "--ad": appearDelay } as React.CSSProperties}
+      className={`about-item${asList && !jsonGone ? " about-list-json-phase" : ""}`}
+      style={{ "--ad": appearDelay, position: "relative" } as React.CSSProperties}
     >
-      {jsonContent}
+      {/* Real content always in DOM — sets the container height.
+          Use span for list items so the ::before bullet stays inline. */}
+      {asList ? (
+        <span
+          style={{
+            opacity: jsonGone ? 1 : 0,
+            transition: jsonGone ? "opacity 0.28s cubic-bezier(0,0,0.2,1)" : undefined,
+          }}
+        >
+          {children}
+        </span>
+      ) : (
+        <div
+          style={{
+            opacity: jsonGone ? 1 : 0,
+            transition: jsonGone ? "opacity 0.28s cubic-bezier(0,0,0.2,1)" : undefined,
+          }}
+        >
+          {children}
+        </div>
+      )}
+      {/* JSON overlay sits on top without affecting layout */}
+      {!jsonGone && (
+        <div
+          className="about-json-overlay"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            opacity: jsonFading ? 0 : 1,
+            transition: "opacity 0.18s ease-out",
+            pointerEvents: "none",
+          }}
+        >
+          {jsonContent}
+        </div>
+      )}
     </Tag>
   );
 }
@@ -194,7 +221,9 @@ export function AboutSection({ profile, onRevealed }: AboutSectionProps) {
             appearDelay="0.33s"
             jsonContent={snippets?.description}
           >
-            {profile?.description.map((line, i) => <p key={i}>{line}</p>)}
+            {profile?.description.map((line, i) => (
+              <p key={i}>{line}</p>
+            ))}
           </AboutReveal>
 
           <AboutReveal
@@ -207,9 +236,9 @@ export function AboutSection({ profile, onRevealed }: AboutSectionProps) {
           >
             <p className="mb-5">
               Always working on something new. Check out my{" "}
-              <a href="https://github.com/nateshoffner">GitHub</a> or find me
-              in the{" "}
-              <a href="https://techlancaster.org/">Lancaster Tech</a> community.
+              <a href="https://github.com/nateshoffner">GitHub</a> or find me in
+              the <a href="https://techlancaster.org/">Tech Lancaster</a>{" "}
+              community.
             </p>
           </AboutReveal>
         </div>

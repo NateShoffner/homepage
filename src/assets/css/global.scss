@@ -205,14 +205,16 @@ ul.highlighted {
      padding: 0;
 
      li:before {
-        background-color: $highlight;
-        border-radius: 50%;
-        content: "";
+        content: ">";
+        color: $highlight;
         display: inline-block;
-        margin-right: 10px;
-        margin-bottom: 2px;
-        height: 8px;
-        width: 8px;
+        margin-right: 8px;
+        font-family: monospace;
+        font-size: 0.8em;
+        font-weight: 700;
+        line-height: 1;
+        vertical-align: middle;
+        text-shadow: 0 0 6px rgba($highlight, 0.5);
     }
 }
 

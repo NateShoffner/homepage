@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo, useRef } from 'react'
 import axios from 'axios'
+import { LanguageIcon } from '@components/LanguageIcon'
 
 interface Repo {
   id: number
@@ -19,6 +20,7 @@ interface Repo {
 }
 
 type SortOption = 'stars' | 'pushed' | 'name'
+type ViewMode = 'cards' | 'table'
 
 interface Props {
   usernames: string[]
@@ -27,6 +29,7 @@ interface Props {
   defaultVisibleCount?: number
   defaultSortBy?: SortOption
   showFilters?: boolean
+  showCompactFilters?: boolean
 }
 
 function relativeTime(dateStr: string): string {
@@ -105,6 +108,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
   defaultVisibleCount = 12,
   defaultSortBy = 'pushed',
   showFilters = true,
+  showCompactFilters = false,
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
   const [loading, setLoading] = useState(true)
@@ -115,6 +119,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
   const [sortBy, setSortBy] = useState<SortOption>(defaultSortBy)
   const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
   const [activityMap, setActivityMap] = useState<Record<number, number[]>>({})
+  const [viewMode, setViewMode] = useState<ViewMode>('cards')
   const fetchingIds = useRef(new Set<number>())
 
   useEffect(() => {
@@ -219,6 +224,27 @@ const GitHubRepoViewer: React.FC<Props> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visibleKey])
 
+  const ViewToggle = () => (
+    <div className="gw-view-toggle">
+      <button
+        className={`gw-view-btn${viewMode === 'cards' ? ' active' : ''}`}
+        onClick={() => setViewMode('cards')}
+        title="Card view"
+        aria-label="Card view"
+      >
+        <i className="fa fa-th-large" />
+      </button>
+      <button
+        className={`gw-view-btn${viewMode === 'table' ? ' active' : ''}`}
+        onClick={() => setViewMode('table')}
+        title="Table view"
+        aria-label="Table view"
+      >
+        <i className="fa fa-list" />
+      </button>
+    </div>
+  )
+
   if (loading) {
     return (
       <div className="py-5 text-center text-muted">
@@ -239,58 +265,101 @@ const GitHubRepoViewer: React.FC<Props> = ({
 
   return (
     <div>
-      {showFilters && <div className="gw-filter-bar">
-        <span className="gw-filter-label">
-          <i className="fa fa-filter" /> Filters
-        </span>
-        <div className="gw-filters">
-          <input
-            type="search"
-            className="form-control gw-search"
-            placeholder="Search repos…"
-            value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); resetCount() }}
-          />
+      {showFilters && (
+        <div className="gw-filter-bar">
+          <span className="gw-filter-label">
+            <i className="fa fa-filter" /> Filters
+          </span>
+          <div className="gw-filters">
+            <input
+              type="search"
+              className="form-control gw-search"
+              placeholder="Search repos…"
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); resetCount() }}
+            />
 
-          <select
-            className="form-control gw-select"
-            value={selectedLang}
-            onChange={(e) => { setSelectedLang(e.target.value); resetCount() }}
-          >
-            <option value="">All Languages</option>
-            {languages.map(({ lang, count }) => (
-              <option key={lang} value={lang}>{lang} ({count})</option>
-            ))}
-          </select>
+            <select
+              className="form-control gw-select"
+              value={selectedLang}
+              onChange={(e) => { setSelectedLang(e.target.value); resetCount() }}
+            >
+              <option value="">All Languages</option>
+              {languages.map(({ lang, count }) => (
+                <option key={lang} value={lang}>{lang} ({count})</option>
+              ))}
+            </select>
 
-          <select
-            className="form-control gw-select"
-            value={selectedOrg}
-            onChange={(e) => { setSelectedOrg(e.target.value); resetCount() }}
-          >
-            <option value="">All Accounts</option>
-            {orgs.map(({ org, count }) => (
-              <option key={org} value={org}>{org} ({count})</option>
-            ))}
-          </select>
+            <select
+              className="form-control gw-select"
+              value={selectedOrg}
+              onChange={(e) => { setSelectedOrg(e.target.value); resetCount() }}
+            >
+              <option value="">All Accounts</option>
+              {orgs.map(({ org, count }) => (
+                <option key={org} value={org}>{org} ({count})</option>
+              ))}
+            </select>
 
-          <select
-            className="form-control gw-select"
-            value={sortBy}
-            onChange={(e) => { setSortBy(e.target.value as SortOption); resetCount() }}
-          >
-            <option value="stars">Most Stars</option>
-            <option value="pushed">Recently Updated</option>
-            <option value="name">Alphabetical</option>
-          </select>
+            <select
+              className="form-control gw-select"
+              value={sortBy}
+              onChange={(e) => { setSortBy(e.target.value as SortOption); resetCount() }}
+            >
+              <option value="stars">Most Stars</option>
+              <option value="pushed">Recently Updated</option>
+              <option value="name">Alphabetical</option>
+            </select>
 
-          {hasActiveFilters && (
-            <button className="btn btn-sm btn-outline-secondary gw-clear" onClick={clearFilters}>
-              <i className="fa fa-times" /> Clear
-            </button>
-          )}
+            {hasActiveFilters && (
+              <button className="btn btn-sm btn-outline-secondary gw-clear" onClick={clearFilters}>
+                <i className="fa fa-times" /> Clear
+              </button>
+            )}
+
+            <ViewToggle />
+          </div>
         </div>
-      </div>}
+      )}
+
+      {showCompactFilters && (
+        <div className="gw-compact-toolbar">
+          <span className="gw-compact-count">
+            {filtered.length} {filtered.length === 1 ? 'repo' : 'repos'}
+            {hasActiveFilters && ' (filtered)'}
+          </span>
+          <div className="gw-compact-controls">
+            <select
+              className="form-control gw-select"
+              value={selectedLang}
+              onChange={(e) => { setSelectedLang(e.target.value); resetCount() }}
+            >
+              <option value="">All Languages</option>
+              {languages.map(({ lang, count }) => (
+                <option key={lang} value={lang}>{lang} ({count})</option>
+              ))}
+            </select>
+
+            <select
+              className="form-control gw-select"
+              value={sortBy}
+              onChange={(e) => { setSortBy(e.target.value as SortOption); resetCount() }}
+            >
+              <option value="pushed">Recently Updated</option>
+              <option value="stars">Most Stars</option>
+              <option value="name">A–Z</option>
+            </select>
+
+            {hasActiveFilters && (
+              <button className="gw-compact-clear" onClick={clearFilters} title="Clear filters" aria-label="Clear filters">
+                <i className="fa fa-times" />
+              </button>
+            )}
+
+            <ViewToggle />
+          </div>
+        </div>
+      )}
 
       {filtered.length === 0 && (
         <div className="py-5 text-center text-muted">
@@ -299,84 +368,145 @@ const GitHubRepoViewer: React.FC<Props> = ({
         </div>
       )}
 
-      <div className="gw-grid">
-        {visible.map((repo) => (
-          <div key={repo.id} className="gw-card">
-            <div className="gw-card-body">
-              <a href={repo.html_url} className="gw-name" target="_blank" rel="noopener noreferrer">
-                {repo.name}
-              </a>
+      {viewMode === 'cards' && (
+        <div className="gw-grid">
+          {visible.map((repo) => (
+            <div key={repo.id} className="gw-card">
+              <div className="gw-card-body">
+                <a href={repo.html_url} className="gw-name" target="_blank" rel="noopener noreferrer">
+                  {repo.name}
+                </a>
 
-              <div className="gw-desc">
-                {repo.description
-                  ? repo.description
-                  : <span className="gw-placeholder">No description provided.</span>
-                }
-              </div>
+                <div className="gw-desc">
+                  {repo.description
+                    ? repo.description
+                    : <span className="gw-placeholder">No description provided.</span>
+                  }
+                </div>
 
-              <div className="gw-meta">
-                {repo.language
-                  ? <span className="gw-lang">{repo.language}</span>
-                  : <span className="gw-lang gw-placeholder">Unknown</span>
-                }
-                {repo.stargazers_count > 0 && (
-                  <>
-                    <span className="gw-meta-sep">·</span>
-                    <span className="gw-stat"><i className="fa fa-star" /> {repo.stargazers_count}</span>
-                  </>
-                )}
-                {repo.forks_count > 0 && (
-                  <>
-                    <span className="gw-meta-sep">·</span>
-                    <span className="gw-stat"><i className="fa fa-code-fork" /> {repo.forks_count}</span>
-                  </>
-                )}
-                <span className="gw-meta-sep">·</span>
-                <span className="gw-updated">Updated {relativeTime(repo.pushed_at)}</span>
-                {repo.fork && (
-                  <>
-                    <span className="gw-meta-sep">·</span>
-                    <span className="gw-fork"><i className="fa fa-code-fork" /> Fork</span>
-                  </>
-                )}
-                {repo.homepage && (() => {
-                  let host = repo.homepage
-                  try { host = new URL(repo.homepage).hostname.replace(/^www\./, '') } catch {}
-                  return (
+                <div className="gw-meta">
+                  {repo.language
+                    ? <span className="gw-lang"><LanguageIcon language={repo.language} /> {repo.language}</span>
+                    : <span className="gw-lang gw-placeholder">Unknown</span>
+                  }
+                  {repo.stargazers_count > 0 && (
                     <>
                       <span className="gw-meta-sep">·</span>
-                      <a href={repo.homepage} className="gw-homepage-link" target="_blank" rel="noopener noreferrer">
-                        <i className="fa fa-external-link" /> {host}
-                      </a>
+                      <span className="gw-stat"><i className="fa fa-star" /> {repo.stargazers_count}</span>
                     </>
-                  )
-                })()}
-                {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
-                  <>
-                    <span className="gw-meta-sep">·</span>
-                    <span className="gw-org"><i className="fa fa-users" /> {repo.owner.login}</span>
-                  </>
+                  )}
+                  {repo.forks_count > 0 && (
+                    <>
+                      <span className="gw-meta-sep">·</span>
+                      <span className="gw-stat"><i className="fa fa-code-fork" /> {repo.forks_count}</span>
+                    </>
+                  )}
+                  <span className="gw-meta-sep">·</span>
+                  <span className="gw-updated">Updated {relativeTime(repo.pushed_at)}</span>
+                  {repo.fork && (
+                    <>
+                      <span className="gw-meta-sep">·</span>
+                      <span className="gw-fork"><i className="fa fa-code-fork" /> Fork</span>
+                    </>
+                  )}
+                  {repo.homepage && (() => {
+                    let host = repo.homepage
+                    try { host = new URL(repo.homepage).hostname.replace(/^www\./, '') } catch {}
+                    return (
+                      <>
+                        <span className="gw-meta-sep">·</span>
+                        <a href={repo.homepage} className="gw-homepage-link" target="_blank" rel="noopener noreferrer">
+                          <i className="fa fa-external-link" /> {host}
+                        </a>
+                      </>
+                    )
+                  })()}
+                  {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
+                    <>
+                      <span className="gw-meta-sep">·</span>
+                      <span className="gw-org"><i className="fa fa-users" /> {repo.owner.login}</span>
+                    </>
+                  )}
+                </div>
+
+                {repo.topics?.length > 0 && (
+                  <div className="gw-topics">
+                    {repo.topics.map((t) => (
+                      <span key={t} className="badge">{t}</span>
+                    ))}
+                  </div>
                 )}
               </div>
 
-              {repo.topics?.length > 0 && (
-                <div className="gw-topics">
-                  {repo.topics.map((t) => (
-                    <span key={t} className="badge">{t}</span>
-                  ))}
-                </div>
-              )}
+              <div className="gw-sparkline-wrap">
+                {activityMap[repo.id]
+                  ? <Sparkline data={activityMap[repo.id]} id={repo.id} />
+                  : <Sparkline data={[]} id={repo.id} flatline />
+                }
+              </div>
             </div>
+          ))}
+        </div>
+      )}
 
-            <div className="gw-sparkline-wrap">
-              {activityMap[repo.id]
-                ? <Sparkline data={activityMap[repo.id]} id={repo.id} />
-                : <Sparkline data={[]} id={repo.id} flatline />
-              }
-            </div>
-          </div>
-        ))}
-      </div>
+      {viewMode === 'table' && (
+        <table className="gw-table">
+          <thead>
+            <tr>
+              <th>Repository</th>
+              <th className="d-none d-sm-table-cell">Language</th>
+              <th className="d-none d-md-table-cell">Stars</th>
+              <th className="d-none d-md-table-cell">Forks</th>
+              <th className="d-none d-sm-table-cell">Updated</th>
+              <th className="d-none d-lg-table-cell">Activity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visible.map((repo) => (
+              <tr key={repo.id}>
+                <td>
+                  <a href={repo.html_url} className="gw-name" target="_blank" rel="noopener noreferrer">
+                    {repo.name}
+                  </a>
+                  {repo.description && (
+                    <span className="gw-table-desc">{repo.description}</span>
+                  )}
+                  {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
+                    <span className="gw-table-org">{repo.owner.login}</span>
+                  )}
+                </td>
+                <td className="gw-table-lang d-none d-sm-table-cell">
+                  {repo.language
+                    ? <><LanguageIcon language={repo.language} /> {repo.language}</>
+                    : <span className="gw-placeholder">—</span>
+                  }
+                </td>
+                <td className="gw-table-stars d-none d-md-table-cell">
+                  {repo.stargazers_count > 0
+                    ? <><i className="fa fa-star" /> {repo.stargazers_count}</>
+                    : <span className="gw-placeholder">—</span>
+                  }
+                </td>
+                <td className="gw-table-forks d-none d-md-table-cell">
+                  {repo.forks_count > 0
+                    ? <><i className="fa fa-code-fork" /> {repo.forks_count}</>
+                    : <span className="gw-placeholder">—</span>
+                  }
+                </td>
+                <td className="gw-table-date d-none d-sm-table-cell">
+                  {relativeTime(repo.pushed_at)}
+                </td>
+                <td className="gw-table-activity d-none d-lg-table-cell">
+                  {activityMap[repo.id]
+                    ? <Sparkline data={activityMap[repo.id]} id={repo.id} />
+                    : <Sparkline data={[]} id={repo.id} flatline />
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {visibleCount < filtered.length && (
         <div className="gw-load-more">

@@ -67,10 +67,18 @@ export function ProjectsSection({
         ]}
         includeForks={false}
         includePages={true}
-        defaultVisibleCount={showMore ? 6 : Infinity}
+        defaultVisibleCount={showMore ? 6 : 9}
         defaultSortBy="pushed"
-        showFilters={!showMore}
+        showFilters={false}
+        showCompactFilters={true}
       />
+      {showMore && (
+        <div className="mt-4">
+          <Link href="/projects#open-source" className="btn btn-primary px-4">
+            All open source projects <i className="fa fa-arrow-right" />
+          </Link>
+        </div>
+      )}
     </>
   );
 }

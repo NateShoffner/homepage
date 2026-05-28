@@ -155,28 +155,19 @@ section.about-cover {
     animation-delay: 0.9s;
 }
 
-li.about-json-reveal,
-li.about-json-fading {
+li.about-list-json-phase {
     list-style: none;
 }
 
-ul.highlighted li.about-json-reveal::before,
-ul.highlighted li.about-json-fading::before {
+ul.highlighted li.about-list-json-phase::before {
     content: none;
 }
 
-.about-json-reveal {
+.about-json-overlay {
     font-family: "Courier New", Courier, monospace;
     font-size: 0.85rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.85);
-    transition: opacity 0.12s ease-out;
-
-    &.about-json-fading { opacity: 0; }
-}
-
-.about-reveal-in {
-    animation: about-item-in 0.28s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 @media (min-width: 992px) {
