@@ -147,6 +147,7 @@ section.about-cover {
     opacity: 0;
     animation: about-item-in 0.35s cubic-bezier(0, 0, 0.2, 1) forwards;
     animation-delay: var(--ad, 0s);
+    overflow: hidden;
 }
 
 .about-console {

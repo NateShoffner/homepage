@@ -32,8 +32,8 @@ function BlogPostCard({ post, onCategoryClick, showImage = true }: Props) {
         <p className="list-card-excerpt">{post.description}</p>
         <div className="list-card-footer">
           <div className="list-card-tags">
-            {post.date && <span className="badge">{dateLabel}</span>}
-            {post.readingTime && <span className="badge">{post.readingTime}</span>}
+            {post.date && <span className="badge"><i className="fa fa-calendar" /> {dateLabel}</span>}
+            {post.readingTime && <span className="badge"><i className="fa fa-clock-o" /> {post.readingTime}</span>}
           </div>
           {post.categories.length > 0 && (
             <div className="list-card-tags">

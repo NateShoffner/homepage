@@ -235,11 +235,6 @@
         stroke-linejoin: round;
     }
 
-    .pc-trace-1 { stroke-dasharray: 120; stroke-dashoffset: 120; }
-    .pc-trace-2 { stroke-dasharray: 120; stroke-dashoffset: 120; }
-    .pc-trace-3 { stroke-dasharray: 120; stroke-dashoffset: 120; }
-    .pc-trace-4 { stroke-dasharray: 120; stroke-dashoffset: 120; }
-
     .pc-node {
         fill: rgba($highlight, 0.6);
         opacity: 0;
@@ -248,11 +243,6 @@
 
 .circle-border:hover .profile-circuit {
     filter: drop-shadow(0 0 3px rgba($highlight, 0.25));
-
-    .pc-trace-1 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.28s ease 0s; }
-    .pc-trace-2 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.30s ease 0.04s; }
-    .pc-trace-3 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.22s ease 0.02s; }
-    .pc-trace-4 { stroke-dashoffset: 0; transition: stroke-dashoffset 0.26s ease 0.06s; }
 
     .pc-node { opacity: 1; transition: opacity 0.15s ease 0.30s; }
 }

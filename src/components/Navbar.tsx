@@ -2,7 +2,7 @@
 
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useLayoutEffect, useEffect, useState, MouseEvent } from 'react'
+import React, { useLayoutEffect, useEffect, useState, useRef, MouseEvent } from 'react'
 import { useScrollSpy } from '@hooks/useScrollSpy'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXTwitter, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
@@ -25,6 +25,48 @@ const SocialItems: SocialItem[] = [
   { id: 'linkedin', icon: faLinkedinIn, url: 'https://www.linkedin.com/in/NateShoffner' },
 ]
 
+type TraceData = { points: string; nodeX: number; nodeY: number; length: number }
+
+const CX = 100, CY = 100, CR = 84;
+const ANG_MARGIN = Math.PI / 18;
+
+function snapGridY(svgY: number, svgTop: number): number {
+  const navY = svgTop + svgY;
+  return Math.round((navY - 12) / 24) * 24 + 12 - svgTop;
+}
+
+function genTrace(aMin: number, aMax: number, exitX: number, svgTop: number): TraceData {
+  const angle = aMin + Math.random() * (aMax - aMin);
+  const px = CX + CR * Math.cos(angle);
+  const py = CY + CR * Math.sin(angle);
+  const offsets = [-48, -24, 0, 24, 48];
+  const off = offsets[Math.floor(Math.random() * offsets.length)];
+  const snapY = snapGridY(py + off, svgTop);
+  const len = Math.max(Math.abs(exitX - px) + Math.abs(snapY - py), 24);
+  return {
+    points: `${px.toFixed(1)},${py.toFixed(1)} ${exitX},${py.toFixed(1)} ${exitX},${snapY.toFixed(1)}`,
+    nodeX: exitX,
+    nodeY: snapY,
+    length: len,
+  };
+}
+
+function genAllTraces(svgTop: number): TraceData[] {
+  return [
+    genTrace(Math.PI + ANG_MARGIN,       3 * Math.PI / 2 - ANG_MARGIN, -8,  svgTop), // TL
+    genTrace(3 * Math.PI / 2 + ANG_MARGIN, 2 * Math.PI - ANG_MARGIN,   208, svgTop), // TR
+    genTrace(Math.PI / 2 + ANG_MARGIN,   Math.PI - ANG_MARGIN,         -8,  svgTop), // BL
+    genTrace(ANG_MARGIN,                 Math.PI / 2 - ANG_MARGIN,     208, svgTop), // BR
+  ];
+}
+
+const DEFAULT_TRACES: TraceData[] = [
+  { points: '31,60 -8,60 -8,30',       nodeX: -8,  nodeY: 30,  length: 81 },
+  { points: '140,31 208,31 208,55',     nodeX: 208, nodeY: 55,  length: 92 },
+  { points: '31,140 -8,140 -8,165',     nodeX: -8,  nodeY: 165, length: 64 },
+  { points: '169,140 208,140 208,165',  nodeX: 208, nodeY: 165, length: 64 },
+];
+
 function scrollToId(id: string, smooth = true) {
   const el =
     document.getElementById(id) ||
@@ -41,7 +83,10 @@ export default function Navbar() {
   const pathname = usePathname()
   const onHome = pathname === '/'
   const [navOpen, setNavOpen] = useState(false)
-  const [circuitY, setCircuitY] = useState({ tl: 30, tr: 31, bl: 140, br: 165 })
+  const [traces, setTraces] = useState<TraceData[]>(DEFAULT_TRACES)
+  const [traceHovered, setTraceHovered] = useState(false)
+  const svgTopRef = useRef(0)
+  const rAFRef = useRef<number | null>(null)
 
   const toggleTheme = () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
@@ -56,14 +101,40 @@ export default function Navbar() {
       if (!circle || !navbar) return
       const navRect = navbar.getBoundingClientRect()
       const circRect = circle.getBoundingClientRect()
-      const svgTop = circRect.top - navRect.top - 20
-      const snap = (svgY: number) => Math.round((svgTop + svgY - 12) / 24) * 24 + 12 - svgTop
-      setCircuitY({ tl: snap(30), tr: snap(31), bl: snap(140), br: snap(165) })
+      svgTopRef.current = circRect.top - navRect.top - 20
     }
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
   }, [])
+
+  const handleCircleEnter = () => {
+    if (rAFRef.current != null) cancelAnimationFrame(rAFRef.current)
+    setTraces(genAllTraces(svgTopRef.current))
+    setTraceHovered(false)
+    const id1 = requestAnimationFrame(() => {
+      const id2 = requestAnimationFrame(() => {
+        setTraceHovered(true)
+        rAFRef.current = null
+      })
+      rAFRef.current = id2
+    })
+    rAFRef.current = id1
+  }
+
+  const handleCircleLeave = () => {
+    if (rAFRef.current != null) {
+      cancelAnimationFrame(rAFRef.current)
+      rAFRef.current = null
+    }
+    setTraceHovered(false)
+  }
+
+  const traceStyle = (i: number, delay: number): React.CSSProperties => ({
+    strokeDasharray: traces[i].length,
+    strokeDashoffset: traceHovered ? 0 : traces[i].length,
+    transition: traceHovered ? `stroke-dashoffset 0.28s ease ${delay}s` : 'none',
+  })
 
   useLayoutEffect(() => {
     if (!onHome || !window.location.hash) return
@@ -121,7 +192,7 @@ export default function Navbar() {
           <span className="d-block d-lg-none navbar-brand-text">Nate Shoffner</span>
         )}
         <span className="d-none d-lg-block">
-          <div className="circle-border">
+          <div className="circle-border" onMouseEnter={handleCircleEnter} onMouseLeave={handleCircleLeave}>
             <div className="circle">
               <img
                 className="img-fluid rounded-circle img-profile mx-auto"
@@ -130,18 +201,14 @@ export default function Navbar() {
               />
             </div>
             <svg className="profile-circuit" viewBox="0 0 200 200" fill="none" aria-hidden="true">
-              {/* TL — exits left then up to snapped grid row */}
-              <polyline className="pc-trace pc-trace-1" points={`31,60 -8,60 -8,${circuitY.tl}`} />
-              <circle className="pc-node" cx="-8" cy={circuitY.tl} r="2" />
-              {/* TR — exits right then to snapped grid row */}
-              <polyline className="pc-trace pc-trace-2" points={`140,31 208,31 208,${circuitY.tr}`} />
-              <circle className="pc-node" cx="208" cy={circuitY.tr} r="2" />
-              {/* BL — exits left then to snapped grid row */}
-              <polyline className="pc-trace pc-trace-3" points={`31,140 -8,140 -8,${circuitY.bl}`} />
-              <circle className="pc-node" cx="-8" cy={circuitY.bl} r="2" />
-              {/* BR — exits right then down to snapped grid row */}
-              <polyline className="pc-trace pc-trace-4" points={`169,140 208,140 208,${circuitY.br}`} />
-              <circle className="pc-node" cx="208" cy={circuitY.br} r="2" />
+              <polyline className="pc-trace pc-trace-1" points={traces[0].points} style={traceStyle(0, 0)} />
+              <circle className="pc-node" cx={traces[0].nodeX} cy={traces[0].nodeY} r="2" />
+              <polyline className="pc-trace pc-trace-2" points={traces[1].points} style={traceStyle(1, 0.04)} />
+              <circle className="pc-node" cx={traces[1].nodeX} cy={traces[1].nodeY} r="2" />
+              <polyline className="pc-trace pc-trace-3" points={traces[2].points} style={traceStyle(2, 0.02)} />
+              <circle className="pc-node" cx={traces[2].nodeX} cy={traces[2].nodeY} r="2" />
+              <polyline className="pc-trace pc-trace-4" points={traces[3].points} style={traceStyle(3, 0.06)} />
+              <circle className="pc-node" cx={traces[3].nodeX} cy={traces[3].nodeY} r="2" />
             </svg>
           </div>
         </span>
