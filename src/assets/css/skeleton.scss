@@ -1,0 +1,59 @@
+@keyframes skeleton-shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position:  400px 0; }
+}
+
+.skeleton-card {
+    pointer-events: none;
+    cursor: default;
+
+    &::before { display: none !important; }
+
+    &:hover {
+        background-color: transparent !important;
+        border-color: var(--border-color-md) !important;
+        box-shadow: none !important;
+
+        .list-card-title {
+            color: var(--list-card-title-color) !important;
+        }
+    }
+}
+
+.skeleton-block,
+.skeleton-line {
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 25%,
+        var(--skeleton-shine) 50%,
+        var(--skeleton-base) 75%
+    );
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+.skeleton-block {
+    width: 100%;
+    height: 100%;
+}
+
+.skeleton-title {
+    height: 1rem;
+    width: 60%;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-excerpt {
+    height: 0.8rem;
+    width: 90%;
+    margin-bottom: 0.35rem;
+
+    &.short { width: 70%; }
+}
+
+.skeleton-badge {
+    height: 0.75rem;
+    width: 30%;
+    margin-top: 0.25rem;
+}

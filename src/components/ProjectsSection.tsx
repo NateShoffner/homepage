@@ -9,12 +9,14 @@ interface ProjectsSectionProps {
   projects: Project[];
   limit?: number;
   showMore?: boolean;
+  loading?: boolean;
 }
 
 export function ProjectsSection({
   projects,
   limit,
   showMore,
+  loading,
 }: ProjectsSectionProps) {
   return (
     <>
@@ -32,6 +34,7 @@ export function ProjectsSection({
         limit={limit}
         sortBy="updated"
         sortOrder="desc"
+        loading={loading}
       />
       {showMore && (
         <div className="mt-4">

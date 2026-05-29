@@ -19,6 +19,8 @@ export default function HomePage() {
   const [projects, setProjects] = useState<Project[]>([])
   const [profile, setProfile] = useState<Profile | null>(null)
   const [certSummary, setCertSummary] = useState<CertSummary | null>(null)
+  const [postsLoading, setPostsLoading] = useState(true)
+  const [projectsLoading, setProjectsLoading] = useState(true)
   const [aboutRevealed, setAboutRevealed] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
 
@@ -33,11 +35,13 @@ export default function HomePage() {
       .then((r) => r.json())
       .then((data: PostMeta[]) => setPosts(data))
       .catch(() => {})
+      .finally(() => setPostsLoading(false))
 
     fetch('/api/projects')
       .then((r) => r.json())
       .then((data: Project[]) => setProjects(data))
       .catch(() => {})
+      .finally(() => setProjectsLoading(false))
 
     fetch('/api/profile')
       .then((r) => r.json())
@@ -72,7 +76,7 @@ export default function HomePage() {
                 <i className="fa fa-rss pl-4"></i>
               </a>
             </h2>
-            <BlogSection posts={posts.slice(0, 6)} />
+            <BlogSection posts={posts.slice(0, 6)} loading={postsLoading} />
             <div className="mt-4">
               <a href="/blog" className="btn btn-primary px-4">
                 All posts <i className="fa fa-arrow-right" />
@@ -85,7 +89,7 @@ export default function HomePage() {
       <Element name="projects">
         <section className="page-section p-4 p-lg-5 d-flex flex-column" id="projects">
           <div className="my-auto">
-            <ProjectsSection projects={projects} limit={6} showMore={true} />
+            <ProjectsSection projects={projects} limit={6} showMore={true} loading={projectsLoading} />
           </div>
         </section>
       </Element>

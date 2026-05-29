@@ -66,6 +66,8 @@ $highlight: $blue;
     --circuit-stroke-dim: rgba(255, 255, 255, 0.05);
     --circuit-dot: rgba(255, 255, 255, 0.15);
     --dot-grid-color: rgba(255, 255, 255, 0.04);
+    --skeleton-base: #22252c;
+    --skeleton-shine: #2d3039;
 }
 
 [data-theme="light"] {
@@ -100,4 +102,6 @@ $highlight: $blue;
     --circuit-stroke-dim: rgba(51, 122, 183, 0.07);
     --circuit-dot: rgba(51, 122, 183, 0.20);
     --dot-grid-color: rgba(0, 0, 0, 0.05);
+    --skeleton-base: #e9ecef;
+    --skeleton-shine: #f8f9fa;
 }

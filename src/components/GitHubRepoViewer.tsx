@@ -4,6 +4,23 @@ import { useEffect, useState, useMemo, useRef } from 'react'
 import axios from 'axios'
 import { LanguageIcon } from '@components/LanguageIcon'
 
+function SkeletonGitHubCard() {
+  return (
+    <div className="gw-card skeleton-card" aria-hidden="true">
+      <div className="gw-card-body">
+        <div className="skeleton-line" style={{ width: '55%', height: '0.9rem' }} />
+        <div className="skeleton-line" style={{ width: '90%', height: '0.78rem' }} />
+        <div className="skeleton-line" style={{ width: '70%', height: '0.78rem' }} />
+        <div style={{ display: 'flex', gap: '0.35rem', marginTop: '0.25rem' }}>
+          <div className="skeleton-line" style={{ width: '3.5rem', height: '0.7rem', borderRadius: '999px' }} />
+          <div className="skeleton-line" style={{ width: '4.5rem', height: '0.7rem', borderRadius: '999px' }} />
+        </div>
+        <div className="skeleton-line" style={{ width: '65%', height: '0.72rem', marginTop: '0.1rem' }} />
+      </div>
+    </div>
+  )
+}
+
 interface Repo {
   id: number
   name: string
@@ -247,9 +264,10 @@ const GitHubRepoViewer: React.FC<Props> = ({
 
   if (loading) {
     return (
-      <div className="py-5 text-center text-muted">
-        <i className="fa fa-spinner fa-spin fa-2x mb-3 d-block" />
-        Loading repositories…
+      <div className="gw-grid">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <SkeletonGitHubCard key={i} />
+        ))}
       </div>
     )
   }
