@@ -20,7 +20,7 @@ export default function ResumeWeb({ resume }: Props) {
       <div className={styles.toolbar}>
         <a
           className="btn btn-primary"
-          href="/resume/view/print"
+          href="/work/resume/print"
           target="_blank"
           rel="noopener noreferrer"
         >

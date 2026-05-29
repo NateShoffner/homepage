@@ -1,3 +1,5 @@
 creation_rules:
   - path_regex: resume\.yml$
     age: age12s42k28ut35qplemfkyfuy6mfe38nvwrfu5d66re8rnu20jn4uesg95fhj
+  - path_regex: certs\.yaml$
+    age: age12s42k28ut35qplemfkyfuy6mfe38nvwrfu5d66re8rnu20jn4uesg95fhj

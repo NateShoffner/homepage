@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { AboutSection } from '@components/AboutSection'
 import BlogSection from '@components/BlogSection'
 import { ProjectsSection } from '@components/ProjectsSection'
+import WorkSection from '@components/WorkSection'
 import ContactSection from '@components/ContactSection'
 import ScrollButton from '@components/ScrollButton'
 import TopButton from '@components/TopButton'
@@ -11,11 +12,13 @@ import { Element } from 'react-scroll'
 import type { PostMeta } from '@/lib/blog'
 import type { Project } from '@/src/types/Project'
 import type { Profile } from '@/lib/profile'
+import type { CertSummary } from '@/src/types/CertSummary'
 
 export default function HomePage() {
   const [posts, setPosts] = useState<PostMeta[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [certSummary, setCertSummary] = useState<CertSummary | null>(null)
   const [aboutRevealed, setAboutRevealed] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
 
@@ -39,6 +42,11 @@ export default function HomePage() {
     fetch('/api/profile')
       .then((r) => r.json())
       .then((data: Profile) => setProfile(data))
+      .catch(() => {})
+
+    fetch('/api/certs/summary')
+      .then((r) => r.json())
+      .then((data: CertSummary) => setCertSummary(data))
       .catch(() => {})
   }, [])
 
@@ -78,6 +86,14 @@ export default function HomePage() {
         <section className="page-section p-4 p-lg-5 d-flex flex-column" id="projects">
           <div className="my-auto">
             <ProjectsSection projects={projects} limit={6} showMore={true} />
+          </div>
+        </section>
+      </Element>
+
+      <Element name="work">
+        <section className="page-section p-4 p-lg-5 d-flex flex-column" id="work">
+          <div className="my-auto">
+            <WorkSection profile={profile} certSummary={certSummary} />
           </div>
         </section>
       </Element>

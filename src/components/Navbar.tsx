@@ -16,6 +16,7 @@ const NavItems: NavItem[] = [
   { id: 'about', label: 'About', route: '/about', hash: '/#about' },
   { id: 'blog', label: 'Blog', route: '/blog', hash: '/#blog' },
   { id: 'projects', label: 'Projects', route: '/projects', hash: '/#projects' },
+  { id: 'work', label: 'Work', route: '/work', hash: '/#work' },
   { id: 'contact', label: 'Contact', route: '/contact', hash: '/#contact' },
 ]
 

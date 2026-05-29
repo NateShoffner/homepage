@@ -1,0 +1,124 @@
+import Link from 'next/link'
+import type { Profile } from '@lib/profile'
+import type { CertSummary } from '@/src/types/CertSummary'
+import styles from './WorkContent.module.scss'
+
+interface Props {
+  profile: Profile | null
+  certs?: CertSummary
+  compact?: boolean
+}
+
+export default function WorkContent({ profile, certs, compact = false }: Props) {
+  const openToWork = profile?.open_to_work ?? false
+
+  return (
+    <div className={styles.wrap}>
+      <div className={styles.availabilityRow}>
+        <span className={openToWork ? styles.openBadge : styles.closedBadge}>
+          <span className={openToWork ? styles.openDot : styles.closedDot} />
+          {openToWork ? 'Available for New Roles' : 'Not Currently Available'}
+        </span>
+        <span className={styles.availabilityNote}>
+          {openToWork
+            ? 'Open to full-time and contract opportunities.'
+            : 'Currently employed and not seeking new positions.'}
+        </span>
+      </div>
+
+      <div className={compact ? styles.panelsCompact : styles.panels}>
+
+        {/* ── Resume ── */}
+        <div className={styles.panel}>
+          <div className={styles.panelLeft}>
+            <div className={styles.panelMeta}>
+              <i className={`fa fa-file-text-o ${styles.panelIcon}`} />
+              <span className={styles.panelLabel}>Resume</span>
+            </div>
+            <h3 className={styles.panelTitle}>Work History &amp; Skills</h3>
+            <p className={styles.panelDesc}>
+              A detailed record of professional experience, technical skills,
+              and career background.
+            </p>
+            <Link href="/work/resume" className={styles.panelBtn}>
+              View Resume <i className="fa fa-arrow-right" />
+            </Link>
+          </div>
+
+          <div className={styles.panelRight}>
+            <div className={styles.docPreview}>
+              <div className={styles.docLine} style={{ width: '70%' }} />
+              <div className={styles.docLine} style={{ width: '45%' }} />
+              <div className={styles.docDivider} />
+              <div className={styles.docLine} style={{ width: '55%' }} />
+              <div className={styles.docLine} style={{ width: '80%' }} />
+              <div className={styles.docLine} style={{ width: '60%' }} />
+              <div className={styles.docDivider} />
+              <div className={styles.docLine} style={{ width: '50%' }} />
+              <div className={styles.docLine} style={{ width: '75%' }} />
+              <div className={styles.docLine} style={{ width: '40%' }} />
+            </div>
+          </div>
+        </div>
+
+        {/* ── Certifications ── */}
+        <div className={styles.panel}>
+          <div className={styles.panelLeft}>
+            <div className={styles.panelMeta}>
+              <i className={`fa fa-certificate ${styles.panelIcon}`} />
+              <span className={styles.panelLabel}>Certifications</span>
+            </div>
+            <h3 className={styles.panelTitle}>Industry Credentials</h3>
+            <p className={styles.panelDesc}>
+              Verified certifications across security, observability, and
+              enterprise search, spanning multiple platforms and vendors.
+            </p>
+            <Link href="/work/certifications" className={styles.panelBtn}>
+              View Certifications <i className="fa fa-arrow-right" />
+            </Link>
+          </div>
+
+          <div className={styles.panelRight}>
+            {certs && (
+              <>
+                <div className={styles.issuerLogos}>
+                  {certs.issuers.map(({ name, logo }) =>
+                    logo ? (
+                      <img
+                        key={name}
+                        src={`/assets/images/certs/${logo}`}
+                        alt={name}
+                        className={styles.issuerLogo}
+                      />
+                    ) : (
+                      <div key={name} className={styles.issuerLogoPlaceholder}>
+                        {name.charAt(0)}
+                      </div>
+                    )
+                  )}
+                </div>
+                <div className={styles.statsStrip}>
+                  <div className={styles.stat}>
+                    <span className={styles.statValue}>{certs.active}</span>
+                    <span className={styles.statLabel}>Active</span>
+                  </div>
+                  <div className={styles.statDivider} />
+                  <div className={styles.stat}>
+                    <span className={styles.statValue}>{certs.total}</span>
+                    <span className={styles.statLabel}>Total</span>
+                  </div>
+                  <div className={styles.statDivider} />
+                  <div className={styles.stat}>
+                    <span className={styles.statValue}>{certs.issuers.length}</span>
+                    <span className={styles.statLabel}>Issuers</span>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  )
+}

@@ -394,6 +394,11 @@ a.badge, button.badge {
     color: var(--form-control-color);
     border-color: var(--form-control-border);
 
+    &[type="select"],
+    &:is(select) {
+        padding-right: 2rem;
+    }
+
     &::placeholder {
         color: var(--form-control-placeholder);
         opacity: 1;
