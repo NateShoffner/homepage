@@ -6,7 +6,7 @@ import type { Certification } from '@/src/types/Certification'
 
 export type { Certification }
 
-const certsFile = path.resolve(process.cwd(), 'src/_data/certs.yaml')
+const certsFile = path.resolve(process.cwd(), '_data/certs.yaml')
 
 export function getAllCertifications(): Certification[] {
   const raw = fs.readFileSync(certsFile, 'utf-8')

@@ -36,7 +36,7 @@
         "src/hooks/*"
       ],
       "@data/*": [
-        "src/_data/*"
+        "_data/*"
       ],
       "@assets/*": [
         "src/assets/*"

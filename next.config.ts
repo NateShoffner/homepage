@@ -12,6 +12,15 @@ const gitRevision = (() => {
 
 const nextConfig: NextConfig = {
   serverExternalPackages: ['@react-pdf/renderer'],
+  async redirects() {
+    return [
+      { source: '/resume', destination: '/work/resume', permanent: true },
+      { source: '/resume/view', destination: '/work/resume', permanent: true },
+      { source: '/resume/view/print', destination: '/work/resume/print', permanent: true },
+      { source: '/resume/pdf', destination: '/work/resume/pdf', permanent: true },
+      { source: '/certifications', destination: '/work/certifications', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {

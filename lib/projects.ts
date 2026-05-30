@@ -3,7 +3,7 @@ import path from 'path'
 import yaml from 'js-yaml'
 import type { Project } from '@/src/types/Project'
 
-const projectsFile = path.resolve(process.cwd(), 'src/_data/projects.yml')
+const projectsFile = path.resolve(process.cwd(), '_data/projects.yml')
 
 export type { Project }
 

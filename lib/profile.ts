@@ -25,7 +25,7 @@ export interface Profile {
   focus_areas: string[]
 }
 
-const profileFile = path.resolve(process.cwd(), 'src/_data/profile.yml')
+const profileFile = path.resolve(process.cwd(), '_data/profile.yml')
 
 export function getProfile(): Profile {
   const raw = fs.readFileSync(profileFile, 'utf-8')

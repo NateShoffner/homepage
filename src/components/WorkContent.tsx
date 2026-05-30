@@ -47,16 +47,25 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
 
           <div className={styles.panelRight}>
             <div className={styles.docPreview}>
-              <div className={styles.docLine} style={{ width: '70%' }} />
-              <div className={styles.docLine} style={{ width: '45%' }} />
+              <div className={styles.docSection}>
+                <div className={styles.docSectionLabel}>Experience</div>
+                <div className={styles.docLine} style={{ width: '85%' }} />
+                <div className={styles.docLine} style={{ width: '65%' }} />
+                <div className={styles.docLine} style={{ width: '75%' }} />
+              </div>
               <div className={styles.docDivider} />
-              <div className={styles.docLine} style={{ width: '55%' }} />
-              <div className={styles.docLine} style={{ width: '80%' }} />
-              <div className={styles.docLine} style={{ width: '60%' }} />
+              <div className={styles.docSection}>
+                <div className={styles.docSectionLabel}>Skills</div>
+                <div className={styles.docLine} style={{ width: '60%' }} />
+                <div className={styles.docLine} style={{ width: '50%' }} />
+                <div className={styles.docLine} style={{ width: '70%' }} />
+              </div>
               <div className={styles.docDivider} />
-              <div className={styles.docLine} style={{ width: '50%' }} />
-              <div className={styles.docLine} style={{ width: '75%' }} />
-              <div className={styles.docLine} style={{ width: '40%' }} />
+              <div className={styles.docSection}>
+                <div className={styles.docSectionLabel}>Projects</div>
+                <div className={styles.docLine} style={{ width: '70%' }} />
+                <div className={styles.docLine} style={{ width: '45%' }} />
+              </div>
             </div>
           </div>
         </div>

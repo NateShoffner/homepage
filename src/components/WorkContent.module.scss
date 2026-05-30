@@ -209,6 +209,21 @@ $highlight: #337ab7;
   gap: 0.45rem;
 }
 
+.docSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.docSectionLabel {
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--badge-color);
+  margin-bottom: 0.1rem;
+}
+
 .docLine {
   height: 7px;
   border-radius: 4px;

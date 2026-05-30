@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Raleway, Open_Sans } from 'next/font/google'
+import Script from 'next/script'
 import SiteChrome from '@components/SiteChrome'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'

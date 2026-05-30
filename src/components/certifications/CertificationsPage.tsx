@@ -2,13 +2,13 @@
 
 import { useState, useMemo } from 'react'
 import type { Certification } from '@/src/types/Certification'
-import { FaExternalLinkAlt, FaCalendarAlt, FaTools } from 'react-icons/fa'
 import styles from './CertificationsPage.module.scss'
 
 const MONTHS: Record<string, number> = {
-  Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
-  Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
+  January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+  July: 6, August: 7, September: 8, October: 9, November: 10, December: 11,
 }
+
 
 function parseMonthYear(str: string): Date {
   const [mon, year] = str.split(' ')
@@ -162,22 +162,31 @@ export default function CertificationsPage({ certifications }: Props) {
               <div className={styles.list}>
                 {certs.map((cert, i) => {
                   const active = certIsActive(cert)
-                  const dateStr = cert.expires
-                    ? `Issued ${cert.issued} · Expires ${cert.expires}`
-                    : `Issued ${cert.issued}`
                   return (
                     <div key={i} className={`${styles.item} ${!active ? styles.itemExpired : ''}`}>
                       <div className={styles.nameRow}>
                         <p className={styles.name}>{cert.name}</p>
-                        {!active && <span className={styles.expiredBadge}>Expired</span>}
+                        {active
+                          ? <span className={styles.activeBadge}>Active</span>
+                          : <span className={styles.expiredBadge}>Expired</span>
+                        }
                       </div>
-                      <p className={styles.meta}>
-                        <FaCalendarAlt className={styles.metaIcon} /> {dateStr}
-                      </p>
+                      <div className={styles.metaGrid}>
+                        <span className={styles.metaKey}><i className="fa fa-calendar-o" /> Issued</span>
+                        <span className={styles.metaVal}>{cert.issued}</span>
+                        {cert.expires && (
+                          <>
+                            <span className={styles.metaKey}><i className="fa fa-clock-o" /> Expires</span>
+                            <span className={styles.metaVal}>{cert.expires}</span>
+                          </>
+                        )}
+                      </div>
                       {cert.skills && cert.skills.length > 0 && (
-                        <p className={styles.skills}>
-                          <FaTools className={styles.metaIcon} /> {cert.skills.join(', ')}
-                        </p>
+                        <div className={styles.skills}>
+                          {cert.skills.map((skill) => (
+                            <span key={skill} className="badge">{skill}</span>
+                          ))}
+                        </div>
                       )}
                       {cert.credential_url && (
                         <a
@@ -186,7 +195,7 @@ export default function CertificationsPage({ certifications }: Props) {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          Show credential <FaExternalLinkAlt className={styles.metaIcon} />
+                          Show credential <i className="fa fa-external-link" />
                         </a>
                       )}
                     </div>
@@ -218,7 +227,11 @@ export default function CertificationsPage({ certifications }: Props) {
                   <td>
                     <span className={styles.tableName}>{cert.name}</span>
                     {cert.skills && cert.skills.length > 0 && (
-                      <span className="gw-table-desc">{cert.skills.join(', ')}</span>
+                      <div className={styles.skills}>
+                        {cert.skills.map((skill) => (
+                          <span key={skill} className="badge">{skill}</span>
+                        ))}
+                      </div>
                     )}
                   </td>
                   <td>
@@ -243,7 +256,7 @@ export default function CertificationsPage({ certifications }: Props) {
                         rel="noopener noreferrer"
                         className={styles.credentialLink}
                       >
-                        Show credential <FaExternalLinkAlt className={styles.metaIcon} />
+                        Show credential <i className="fa fa-external-link" />
                       </a>
                     )}
                   </td>

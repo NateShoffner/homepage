@@ -73,7 +73,6 @@ function sortRepos(repos: Repo[], sort: SortOption): Repo[] {
   })
 }
 
-
 function Sparkline({ data, id, flatline = false }: { data: number[]; id: number; flatline?: boolean }) {
   const W = 100, H = 40, pad = 1.5
   const midY = (H / 2).toFixed(2)
@@ -134,13 +133,13 @@ const GitHubRepoViewer: React.FC<Props> = ({
   const [selectedLang, setSelectedLang] = useState('')
   const [selectedOrg, setSelectedOrg] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>(defaultSortBy)
-  const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
+  const [currentPage, setCurrentPage] = useState(1)
   const [activityMap, setActivityMap] = useState<Record<number, number[]>>({})
   const [viewMode, setViewMode] = useState<ViewMode>('cards')
   const fetchingIds = useRef(new Set<number>())
 
   useEffect(() => {
-    setVisibleCount(defaultVisibleCount)
+    setCurrentPage(1)
   }, [defaultVisibleCount])
 
   useEffect(() => {
@@ -190,14 +189,14 @@ const GitHubRepoViewer: React.FC<Props> = ({
       .map(([org, count]) => ({ org, count }))
   }, [repos])
 
-  const resetCount = () => setVisibleCount(defaultVisibleCount)
+  const resetPage = () => setCurrentPage(1)
   const hasActiveFilters = searchQuery !== '' || selectedLang !== '' || selectedOrg !== ''
 
   const clearFilters = () => {
     setSearchQuery('')
     setSelectedLang('')
     setSelectedOrg('')
-    resetCount()
+    resetPage()
   }
 
   const filtered = useMemo(() => {
@@ -213,9 +212,11 @@ const GitHubRepoViewer: React.FC<Props> = ({
     return sortRepos(result, sortBy)
   }, [repos, searchQuery, selectedLang, selectedOrg, sortBy])
 
-  const visible = filtered.slice(0, visibleCount)
+  const pageSize = defaultVisibleCount
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
+  const safePage = Math.min(Math.max(1, currentPage), totalPages)
+  const visible = filtered.slice((safePage - 1) * pageSize, safePage * pageSize)
 
-  // Stable string key so the effect only fires when the visible repo set actually changes.
   const visibleKey = visible.map((r) => r.id).join(',')
 
   useEffect(() => {
@@ -262,6 +263,47 @@ const GitHubRepoViewer: React.FC<Props> = ({
     </div>
   )
 
+  const Pagination = ({ mobileOnly = false }: { mobileOnly?: boolean }) => {
+    if (totalPages <= 1) return null
+    return (
+      <div className={`gw-pagination${mobileOnly ? ' gw-pagination--mobile-only' : ''}`}>
+        <button
+          className="gw-page-btn"
+          onClick={() => setCurrentPage(1)}
+          disabled={safePage === 1}
+          aria-label="First page"
+        >
+          <i className="fa fa-step-backward" /><span>First</span>
+        </button>
+        <button
+          className="gw-page-btn"
+          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          disabled={safePage === 1}
+          aria-label="Previous page"
+        >
+          <i className="fa fa-chevron-left" /><span>Prev</span>
+        </button>
+        <span className="gw-page-info">{safePage} / {totalPages}</span>
+        <button
+          className="gw-page-btn"
+          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+          disabled={safePage === totalPages}
+          aria-label="Next page"
+        >
+          <span>Next</span><i className="fa fa-chevron-right" />
+        </button>
+        <button
+          className="gw-page-btn"
+          onClick={() => setCurrentPage(totalPages)}
+          disabled={safePage === totalPages}
+          aria-label="Last page"
+        >
+          <span>Last</span><i className="fa fa-step-forward" />
+        </button>
+      </div>
+    )
+  }
+
   if (loading) {
     return (
       <div className="gw-grid">
@@ -294,13 +336,13 @@ const GitHubRepoViewer: React.FC<Props> = ({
               className="form-control gw-search"
               placeholder="Search repos…"
               value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); resetCount() }}
+              onChange={(e) => { setSearchQuery(e.target.value); resetPage() }}
             />
 
             <select
               className="form-control gw-select"
               value={selectedLang}
-              onChange={(e) => { setSelectedLang(e.target.value); resetCount() }}
+              onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
             >
               <option value="">All Languages</option>
               {languages.map(({ lang, count }) => (
@@ -311,7 +353,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
             <select
               className="form-control gw-select"
               value={selectedOrg}
-              onChange={(e) => { setSelectedOrg(e.target.value); resetCount() }}
+              onChange={(e) => { setSelectedOrg(e.target.value); resetPage() }}
             >
               <option value="">All Accounts</option>
               {orgs.map(({ org, count }) => (
@@ -322,7 +364,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
             <select
               className="form-control gw-select"
               value={sortBy}
-              onChange={(e) => { setSortBy(e.target.value as SortOption); resetCount() }}
+              onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
             >
               <option value="stars">Most Stars</option>
               <option value="pushed">Recently Updated</option>
@@ -347,10 +389,18 @@ const GitHubRepoViewer: React.FC<Props> = ({
             {hasActiveFilters && ' (filtered)'}
           </span>
           <div className="gw-compact-controls">
+            <input
+              type="search"
+              className="form-control gw-compact-search"
+              placeholder="Search…"
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); resetPage() }}
+            />
+
             <select
               className="form-control gw-select"
               value={selectedLang}
-              onChange={(e) => { setSelectedLang(e.target.value); resetCount() }}
+              onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
             >
               <option value="">All Languages</option>
               {languages.map(({ lang, count }) => (
@@ -361,7 +411,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
             <select
               className="form-control gw-select"
               value={sortBy}
-              onChange={(e) => { setSortBy(e.target.value as SortOption); resetCount() }}
+              onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
             >
               <option value="pushed">Recently Updated</option>
               <option value="stars">Most Stars</option>
@@ -386,6 +436,8 @@ const GitHubRepoViewer: React.FC<Props> = ({
         </div>
       )}
 
+      <Pagination mobileOnly />
+
       {viewMode === 'cards' && (
         <div className="gw-grid">
           {visible.map((repo) => (
@@ -402,10 +454,18 @@ const GitHubRepoViewer: React.FC<Props> = ({
                   }
                 </div>
 
+                {repo.topics?.length > 0 && (
+                  <div className="gw-topics">
+                    {repo.topics.map((t) => (
+                      <span key={t} className="badge">{t}</span>
+                    ))}
+                  </div>
+                )}
+
                 <div className="gw-meta">
                   {repo.language
                     ? <span className="gw-lang"><LanguageIcon language={repo.language} /> {repo.language}</span>
-                    : <span className="gw-lang gw-placeholder">Unknown</span>
+                    : <span className="gw-lang gw-placeholder"><i className="fa fa-question-circle" /> Unknown</span>
                   }
                   {repo.stargazers_count > 0 && (
                     <>
@@ -446,14 +506,6 @@ const GitHubRepoViewer: React.FC<Props> = ({
                     </>
                   )}
                 </div>
-
-                {repo.topics?.length > 0 && (
-                  <div className="gw-topics">
-                    {repo.topics.map((t) => (
-                      <span key={t} className="badge">{t}</span>
-                    ))}
-                  </div>
-                )}
               </div>
 
               <div className="gw-sparkline-wrap">
@@ -496,7 +548,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
                 <td className="gw-table-lang d-none d-sm-table-cell">
                   {repo.language
                     ? <><LanguageIcon language={repo.language} /> {repo.language}</>
-                    : <span className="gw-placeholder">—</span>
+                    : <span className="gw-placeholder"><i className="fa fa-question-circle" /> Unknown</span>
                   }
                 </td>
                 <td className="gw-table-stars d-none d-md-table-cell">
@@ -526,16 +578,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
         </table>
       )}
 
-      {visibleCount < filtered.length && (
-        <div className="gw-load-more">
-          <button
-            className="btn btn-outline-secondary"
-            onClick={() => setVisibleCount((n) => n + 12)}
-          >
-            Load more ({filtered.length - visibleCount} remaining)
-          </button>
-        </div>
-      )}
+      <Pagination />
     </div>
   )
 }

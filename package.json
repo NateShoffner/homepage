@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
-    "build": "bash scripts/unlock-resume.sh && next build",
+    "build": "bash scripts/unlock.sh && next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "git config core.hooksPath .githooks && chmod +x .githooks/pre-commit"

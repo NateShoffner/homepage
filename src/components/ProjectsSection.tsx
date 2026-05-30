@@ -45,7 +45,7 @@ export function ProjectsSection({
       )}
 
       <h3 className="mt-5" id="open-source">
-        Open Source Projects
+        Open Source <span className="text-highlight">Projects</span>
       </h3>
       <p>
         A selection of open source projects across my personal and organization
@@ -70,7 +70,7 @@ export function ProjectsSection({
         ]}
         includeForks={false}
         includePages={true}
-        defaultVisibleCount={showMore ? 6 : 9}
+        defaultVisibleCount={9}
         defaultSortBy="pushed"
         showFilters={false}
         showCompactFilters={true}

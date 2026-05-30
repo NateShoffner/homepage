@@ -46,7 +46,7 @@ export interface Resume {
   projects: ResumeProject[]
 }
 
-const resumeFile = path.resolve(process.cwd(), 'src/_data/resume.yml')
+const resumeFile = path.resolve(process.cwd(), '_data/resume.yml')
 
 export function getResume(): Resume {
   const raw = fs.readFileSync(resumeFile, 'utf-8')

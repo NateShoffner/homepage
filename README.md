@@ -58,7 +58,7 @@ Posts are served at `/blog/[year]/[month]/[slug]/`. Tags and categories link to 
 
 ## Resume
 
-The resume lives at `/resume/view` and is protected by Cloudflare Access. The underlying data is stored in `src/_data/resume.yml`, which is encrypted with [SOPS](https://github.com/getsops/sops) using an [age](https://github.com/FiloSottile/age) keypair.
+The resume lives at `/resume/view` and is protected by Cloudflare Access. The underlying data is stored in `_data/resume.yml`, which is encrypted with [SOPS](https://github.com/getsops/sops) using an [age](https://github.com/FiloSottile/age) keypair.
 
 | Variable | Description |
 |---|---|

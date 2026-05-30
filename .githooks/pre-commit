@@ -1,20 +1,26 @@
 #!/bin/bash
-# Pre-commit hook: abort if resume.yml is staged without SOPS encryption.
+# Pre-commit hook: abort if resume.yml or certs.yaml are staged without SOPS encryption.
 
-RESUME_FILE="src/_data/resume.yml"
+check_encrypted() {
+  local file="$1"
 
-if ! git diff --cached --name-only | grep -q "^${RESUME_FILE}$"; then
-  exit 0
-fi
+  if ! git diff --cached --name-only | grep -q "^${file}$"; then
+    return 0
+  fi
 
-# SOPS-encrypted YAML files contain an "sops:" key
-if ! git show ":${RESUME_FILE}" | grep -q "^sops:"; then
-  echo ""
-  echo "ERROR: ${RESUME_FILE} is staged but does not appear to be SOPS-encrypted."
-  echo "  This would commit the file in plaintext. Aborting."
-  echo "  Encrypt with: sops --encrypt --in-place ${RESUME_FILE}"
-  echo ""
-  exit 1
-fi
+  if ! git show ":${file}" | grep -q "^sops:"; then
+    echo ""
+    echo "ERROR: ${file} is staged but does not appear to be SOPS-encrypted."
+    echo "  This would commit the file in plaintext. Aborting."
+    echo "  Encrypt with: sops --encrypt --in-place ${file}"
+    echo ""
+    return 1
+  fi
+
+  return 0
+}
+
+check_encrypted "_data/resume.yml" || exit 1
+check_encrypted "_data/certs.yaml" || exit 1
 
 exit 0
