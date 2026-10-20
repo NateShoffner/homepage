@@ -5,34 +5,65 @@ a {
 }
 
 .btn-primary {
-    background: transparent;
-    border: 1px solid rgba($highlight, 0.5);
-    color: $highlight;
+    background: $highlight;
+    border: 1px solid $highlight;
+    color: #fff;
     font-weight: 400;
     letter-spacing: 0.06em;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 
     &:hover, &:focus, &.focus {
-        background: rgba($highlight, 0.08);
-        border-color: $highlight;
-        color: $highlight;
-        box-shadow: 0 0 12px rgba($highlight, 0.3), inset 0 0 8px rgba($highlight, 0.04);
+        background: lighten($highlight, 8%);
+        border-color: lighten($highlight, 8%);
+        color: #fff;
+        box-shadow: 0 0 12px rgba($highlight, 0.35);
     }
 
     &:active, &.active,
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active {
-        background: rgba($highlight, 0.14);
-        border-color: $highlight;
-        color: $highlight;
+        background: darken($highlight, 7%);
+        border-color: darken($highlight, 7%);
+        color: #fff;
         box-shadow: 0 0 8px rgba($highlight, 0.25);
     }
 
     &:disabled, &.disabled {
-        background: transparent;
-        border-color: rgba($highlight, 0.2);
-        color: rgba($highlight, 0.35);
+        background: rgba($highlight, 0.45);
+        border-color: transparent;
+        color: rgba(255, 255, 255, 0.7);
         box-shadow: none;
+        opacity: 1;
+    }
+}
+
+.btn-secondary,
+.btn-outline-secondary {
+    background-color: var(--btn-secondary-bg);
+    border: 1px solid var(--btn-secondary-border);
+    color: var(--body-color);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+    &:hover, &:focus, &.focus {
+        background-color: var(--btn-secondary-hover-bg);
+        border-color: var(--btn-secondary-hover-border);
+        color: var(--body-color);
+    }
+
+    &:active, &.active,
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active {
+        background-color: var(--btn-secondary-hover-bg);
+        border-color: var(--btn-secondary-hover-border);
+        color: var(--body-color);
+    }
+
+    &:disabled, &.disabled {
+        background-color: var(--btn-secondary-bg);
+        border-color: var(--btn-secondary-border);
+        color: var(--text-muted-color);
         opacity: 1;
     }
 }
