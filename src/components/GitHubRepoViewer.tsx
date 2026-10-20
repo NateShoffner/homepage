@@ -46,8 +46,10 @@ interface Props {
   defaultVisibleCount?: number
   defaultSortBy?: SortOption
   showFilters?: boolean
-  showCompactFilters?: boolean
 }
+
+const PAGE_SIZE_OPTIONS = [12, 24, 48, 0] as const
+const MAX_VISIBLE_TOPICS = 4
 
 function relativeTime(dateStr: string): string {
   const date = new Date(dateStr)
@@ -117,6 +119,169 @@ function Sparkline({ data, id, flatline = false }: { data: number[]; id: number;
   )
 }
 
+interface MenuOption {
+  value: string
+  label: string
+  short?: string
+  count?: number
+}
+
+function FilterMenu({
+  label,
+  value,
+  placeholder,
+  options,
+  onChange,
+}: {
+  label: string
+  value: string
+  placeholder?: string
+  options: MenuOption[]
+  onChange: (value: string) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
+  const current = options.find((o) => o.value === value)
+  const display = value === '' ? (placeholder ?? 'All') : (current?.short ?? current?.label ?? value)
+  const isFiltering = placeholder !== undefined && value !== ''
+
+  return (
+    <div className={`gw-menu${open ? ' gw-menu--open' : ''}`} ref={ref}>
+      <button
+        type="button"
+        className={`gw-menu-btn${isFiltering ? ' gw-menu-btn--active' : ''}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span className="gw-menu-btn-label">{label}</span>
+        <span className="gw-menu-btn-value">{display}</span>
+        <i className="fa fa-angle-down gw-menu-caret" aria-hidden="true" />
+      </button>
+
+      {open && (
+        <ul className="gw-menu-list" role="listbox" aria-label={label}>
+          {options.map((option) => (
+            <li key={option.value}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={option.value === value}
+                className={`gw-menu-item${option.value === value ? ' gw-menu-item--selected' : ''}`}
+                onClick={() => { onChange(option.value); setOpen(false) }}
+              >
+                <span>{option.label}</span>
+                {option.count !== undefined && <span className="gw-menu-item-count">{option.count}</span>}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function ViewToggle({ viewMode, onChange }: { viewMode: ViewMode; onChange: (mode: ViewMode) => void }) {
+  return (
+    <div className="gw-view-toggle">
+      <button
+        type="button"
+        className={`gw-view-btn${viewMode === 'cards' ? ' active' : ''}`}
+        onClick={() => onChange('cards')}
+        title="Card view"
+        aria-label="Card view"
+        aria-pressed={viewMode === 'cards'}
+      >
+        <i className="fa fa-th-large" />
+      </button>
+      <button
+        type="button"
+        className={`gw-view-btn${viewMode === 'table' ? ' active' : ''}`}
+        onClick={() => onChange('table')}
+        title="Table view"
+        aria-label="Table view"
+        aria-pressed={viewMode === 'table'}
+      >
+        <i className="fa fa-list" />
+      </button>
+    </div>
+  )
+}
+
+function Pagination({
+  page,
+  totalPages,
+  onChange,
+  mobileOnly = false,
+}: {
+  page: number
+  totalPages: number
+  onChange: (page: number) => void
+  mobileOnly?: boolean
+}) {
+  if (totalPages <= 1) return null
+  return (
+    <div className={`gw-pagination${mobileOnly ? ' gw-pagination--mobile-only' : ''}`}>
+      <button
+        type="button"
+        className="gw-page-btn"
+        onClick={() => onChange(1)}
+        disabled={page === 1}
+        aria-label="First page"
+      >
+        <i className="fa fa-step-backward" />
+      </button>
+      <button
+        type="button"
+        className="gw-page-btn"
+        onClick={() => onChange(Math.max(1, page - 1))}
+        disabled={page === 1}
+        aria-label="Previous page"
+      >
+        <i className="fa fa-chevron-left" />
+      </button>
+      <span className="gw-page-info">
+        <span className="gw-page-current">{page}</span> / {totalPages}
+      </span>
+      <button
+        type="button"
+        className="gw-page-btn"
+        onClick={() => onChange(Math.min(totalPages, page + 1))}
+        disabled={page === totalPages}
+        aria-label="Next page"
+      >
+        <i className="fa fa-chevron-right" />
+      </button>
+      <button
+        type="button"
+        className="gw-page-btn"
+        onClick={() => onChange(totalPages)}
+        disabled={page === totalPages}
+        aria-label="Last page"
+      >
+        <i className="fa fa-step-forward" />
+      </button>
+    </div>
+  )
+}
+
 const GitHubRepoViewer: React.FC<Props> = ({
   usernames,
   includeForks = true,
@@ -124,7 +289,6 @@ const GitHubRepoViewer: React.FC<Props> = ({
   defaultVisibleCount = 12,
   defaultSortBy = 'pushed',
   showFilters = true,
-  showCompactFilters = false,
 }) => {
   const [repos, setRepos] = useState<Repo[]>([])
   const [loading, setLoading] = useState(true)
@@ -134,7 +298,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
   const [selectedOrg, setSelectedOrg] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>(defaultSortBy)
   const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(defaultVisibleCount)
+  const [pageSize, setPageSize] = useState<number>(defaultVisibleCount)
   const [activityMap, setActivityMap] = useState<Record<number, number[]>>({})
   const [viewMode, setViewMode] = useState<ViewMode>('cards')
   const fetchingIds = useRef(new Set<number>())
@@ -209,10 +373,13 @@ const GitHubRepoViewer: React.FC<Props> = ({
     return sortRepos(result, sortBy)
   }, [repos, searchQuery, selectedLang, selectedOrg, sortBy])
 
-  const PAGE_SIZE_OPTIONS = [12, 24, 48, 0] as const
   const totalPages = pageSize === 0 ? 1 : Math.max(1, Math.ceil(filtered.length / pageSize))
   const safePage = Math.min(Math.max(1, currentPage), totalPages)
   const visible = pageSize === 0 ? filtered : filtered.slice((safePage - 1) * pageSize, safePage * pageSize)
+  // Pad short pages so every page is the same height and the pager never moves.
+  const fillerCount = pageSize > 0 && totalPages > 1 ? pageSize - visible.length : 0
+  const rangeStart = filtered.length === 0 ? 0 : (safePage - 1) * (pageSize || filtered.length) + 1
+  const rangeEnd = pageSize === 0 ? filtered.length : Math.min(filtered.length, safePage * pageSize)
 
   const visibleKey = visible.map((r) => r.id).join(',')
 
@@ -239,68 +406,6 @@ const GitHubRepoViewer: React.FC<Props> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visibleKey])
 
-  const ViewToggle = () => (
-    <div className="gw-view-toggle">
-      <button
-        className={`gw-view-btn${viewMode === 'cards' ? ' active' : ''}`}
-        onClick={() => setViewMode('cards')}
-        title="Card view"
-        aria-label="Card view"
-      >
-        <i className="fa fa-th-large" />
-      </button>
-      <button
-        className={`gw-view-btn${viewMode === 'table' ? ' active' : ''}`}
-        onClick={() => setViewMode('table')}
-        title="Table view"
-        aria-label="Table view"
-      >
-        <i className="fa fa-list" />
-      </button>
-    </div>
-  )
-
-  const Pagination = ({ mobileOnly = false }: { mobileOnly?: boolean }) => {
-    if (totalPages <= 1) return null
-    return (
-      <div className={`gw-pagination${mobileOnly ? ' gw-pagination--mobile-only' : ''}`}>
-        <button
-          className="gw-page-btn"
-          onClick={() => setCurrentPage(1)}
-          disabled={safePage === 1}
-          aria-label="First page"
-        >
-          <i className="fa fa-step-backward" />
-        </button>
-        <button
-          className="gw-page-btn"
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-          disabled={safePage === 1}
-          aria-label="Previous page"
-        >
-          <i className="fa fa-chevron-left" />
-        </button>
-        <span className="gw-page-info">{safePage} / {totalPages}</span>
-        <button
-          className="gw-page-btn"
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-          disabled={safePage === totalPages}
-          aria-label="Next page"
-        >
-          <i className="fa fa-chevron-right" />
-        </button>
-        <button
-          className="gw-page-btn"
-          onClick={() => setCurrentPage(totalPages)}
-          disabled={safePage === totalPages}
-          aria-label="Last page"
-        >
-          <i className="fa fa-step-forward" />
-        </button>
-      </div>
-    )
-  }
-
   if (loading) {
     return (
       <div className="gw-grid">
@@ -320,151 +425,115 @@ const GitHubRepoViewer: React.FC<Props> = ({
     )
   }
 
+  const languageOptions: MenuOption[] = [
+    { value: '', label: 'All languages' },
+    ...languages.map(({ lang, count }) => ({ value: lang, label: lang, count })),
+  ]
+
+  const orgOptions: MenuOption[] = [
+    { value: '', label: 'All accounts' },
+    ...orgs.map(({ org, count }) => ({ value: org, label: org, count })),
+  ]
+
+  const sortOptions: MenuOption[] = [
+    { value: 'pushed', label: 'Recently updated', short: 'Updated' },
+    { value: 'stars', label: 'Most stars', short: 'Stars' },
+    { value: 'name', label: 'Name (A–Z)', short: 'Name' },
+  ]
+
   return (
-    <div>
+    <div className="gw">
       {showFilters && (
-        <div className="gw-filter-bar">
-          <span className="gw-filter-label">
-            <i className="fa fa-filter" /> Filters
-          </span>
-          <div className="gw-filters">
-            <input
-              type="search"
-              className="form-control gw-search"
-              placeholder="Search repos…"
-              value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); resetPage() }}
-            />
+        <>
+          <div className="gw-toolbar">
+            <div className="gw-search">
+              <i className="fa fa-search gw-search-icon" aria-hidden="true" />
+              <input
+                type="search"
+                className="gw-search-input"
+                placeholder="Search repositories"
+                aria-label="Search repositories"
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); resetPage() }}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  className="gw-search-clear"
+                  onClick={() => { setSearchQuery(''); resetPage() }}
+                  aria-label="Clear search"
+                >
+                  <i className="fa fa-times" />
+                </button>
+              )}
+            </div>
 
-            <label className="gw-select-label">
-              Language
-              <select
-                className="form-control gw-select"
+            <div className="gw-toolbar-controls">
+              <FilterMenu
+                label="Language"
                 value={selectedLang}
-                onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
-              >
-                <option value="">All</option>
-                {languages.map(({ lang, count }) => (
-                  <option key={lang} value={lang}>{lang} ({count})</option>
-                ))}
-              </select>
-            </label>
+                placeholder="All"
+                options={languageOptions}
+                onChange={(value) => { setSelectedLang(value); resetPage() }}
+              />
 
-            <label className="gw-select-label">
-              Account
-              <select
-                className="form-control gw-select"
-                value={selectedOrg}
-                onChange={(e) => { setSelectedOrg(e.target.value); resetPage() }}
-              >
-                <option value="">All</option>
-                {orgs.map(({ org, count }) => (
-                  <option key={org} value={org}>{org} ({count})</option>
-                ))}
-              </select>
-            </label>
+              {orgs.length > 1 && (
+                <FilterMenu
+                  label="Account"
+                  value={selectedOrg}
+                  placeholder="All"
+                  options={orgOptions}
+                  onChange={(value) => { setSelectedOrg(value); resetPage() }}
+                />
+              )}
 
-            <label className="gw-select-label">
-              Sort
-              <select
-                className="form-control gw-select"
+              <FilterMenu
+                label="Sort"
                 value={sortBy}
-                onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
-              >
-                <option value="stars">Stars</option>
-                <option value="pushed">Updated</option>
-                <option value="name">A–Z</option>
-              </select>
-            </label>
+                options={sortOptions}
+                onChange={(value) => { setSortBy(value as SortOption); resetPage() }}
+              />
 
-            <label className="gw-select-label">
-              Per page
-              <select
-                className="form-control gw-select gw-select--per-page"
-                value={pageSize}
-                onChange={(e) => { setPageSize(Number(e.target.value)); resetPage() }}
-              >
-                {PAGE_SIZE_OPTIONS.map((n) => (
-                  <option key={n} value={n}>{n === 0 ? 'All' : n}</option>
-                ))}
-              </select>
-            </label>
+              <ViewToggle viewMode={viewMode} onChange={setViewMode} />
+            </div>
+          </div>
 
-            {hasActiveFilters && (
-              <button className="btn btn-sm btn-outline-secondary gw-clear" onClick={clearFilters}>
-                <i className="fa fa-times" /> Clear
+          <div className="gw-status">
+            <span className="gw-count">
+              {filtered.length} {filtered.length === 1 ? 'repository' : 'repositories'}
+            </span>
+
+            {searchQuery && (
+              <button type="button" className="gw-chip" onClick={() => { setSearchQuery(''); resetPage() }}>
+                <span className="gw-chip-label">{searchQuery}</span>
+                <i className="fa fa-times" aria-hidden="true" />
+                <span className="sr-only">Clear search filter</span>
               </button>
             )}
 
-            <ViewToggle />
-          </div>
-        </div>
-      )}
-
-      {showCompactFilters && (
-        <div className="gw-compact-toolbar">
-          <span className="gw-compact-count">
-            {filtered.length} {filtered.length === 1 ? 'repo' : 'repos'}
-            {hasActiveFilters && ' (filtered)'}
-          </span>
-          <div className="gw-compact-controls">
-            <input
-              type="search"
-              className="form-control gw-compact-search"
-              placeholder="Search…"
-              value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); resetPage() }}
-            />
-
-            <label className="gw-select-label">
-              Language
-              <select
-                className="form-control gw-select"
-                value={selectedLang}
-                onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
-              >
-                <option value="">All</option>
-                {languages.map(({ lang, count }) => (
-                  <option key={lang} value={lang}>{lang} ({count})</option>
-                ))}
-              </select>
-            </label>
-
-            <label className="gw-select-label">
-              Sort
-              <select
-                className="form-control gw-select"
-                value={sortBy}
-                onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
-              >
-                <option value="pushed">Updated</option>
-                <option value="stars">Stars</option>
-                <option value="name">A–Z</option>
-              </select>
-            </label>
-
-            <label className="gw-select-label">
-              Per page
-              <select
-                className="form-control gw-select gw-select--per-page"
-                value={pageSize}
-                onChange={(e) => { setPageSize(Number(e.target.value)); resetPage() }}
-              >
-                {PAGE_SIZE_OPTIONS.map((n) => (
-                  <option key={n} value={n}>{n === 0 ? 'All' : n}</option>
-                ))}
-              </select>
-            </label>
-
-            {hasActiveFilters && (
-              <button className="gw-compact-clear" onClick={clearFilters} title="Clear filters" aria-label="Clear filters">
-                <i className="fa fa-times" />
+            {selectedLang && (
+              <button type="button" className="gw-chip" onClick={() => { setSelectedLang(''); resetPage() }}>
+                <span className="gw-chip-label">{selectedLang}</span>
+                <i className="fa fa-times" aria-hidden="true" />
+                <span className="sr-only">Clear language filter</span>
               </button>
             )}
 
-            <ViewToggle />
+            {selectedOrg && (
+              <button type="button" className="gw-chip" onClick={() => { setSelectedOrg(''); resetPage() }}>
+                <span className="gw-chip-label">{selectedOrg}</span>
+                <i className="fa fa-times" aria-hidden="true" />
+                <span className="sr-only">Clear account filter</span>
+              </button>
+            )}
+
+            {hasActiveFilters && (
+              <button type="button" className="gw-chip-clear" onClick={clearFilters}>
+                Clear all
+              </button>
+            )}
           </div>
-        </div>
+        </>
       )}
 
       {filtered.length === 0 && (
@@ -474,14 +543,14 @@ const GitHubRepoViewer: React.FC<Props> = ({
         </div>
       )}
 
-      <Pagination mobileOnly />
+      <Pagination page={safePage} totalPages={totalPages} onChange={setCurrentPage} mobileOnly />
 
-      {viewMode === 'cards' && (
+      {filtered.length > 0 && viewMode === 'cards' && (
         <div className="gw-grid">
           {visible.map((repo) => (
             <div key={repo.id} className="gw-card">
               <div className="gw-card-body">
-                <a href={repo.html_url} className="gw-name" target="_blank" rel="noopener noreferrer">
+                <a href={repo.html_url} className="gw-name" title={repo.name} target="_blank" rel="noopener noreferrer">
                   {repo.name}
                 </a>
 
@@ -492,13 +561,16 @@ const GitHubRepoViewer: React.FC<Props> = ({
                   }
                 </div>
 
-                {repo.topics?.length > 0 && (
-                  <div className="gw-topics">
-                    {repo.topics.map((t) => (
-                      <span key={t} className="badge">{t}</span>
-                    ))}
-                  </div>
-                )}
+                <div className="gw-topics">
+                  {repo.topics?.slice(0, MAX_VISIBLE_TOPICS).map((t) => (
+                    <span key={t} className="badge">{t}</span>
+                  ))}
+                  {repo.topics?.length > MAX_VISIBLE_TOPICS && (
+                    <span className="badge gw-topics-more" title={repo.topics.slice(MAX_VISIBLE_TOPICS).join(', ')}>
+                      +{repo.topics.length - MAX_VISIBLE_TOPICS}
+                    </span>
+                  )}
+                </div>
 
                 <div className="gw-meta">
                   {repo.language
@@ -518,7 +590,9 @@ const GitHubRepoViewer: React.FC<Props> = ({
                     </>
                   )}
                   <span className="gw-meta-sep">·</span>
-                  <span className="gw-updated">Updated {relativeTime(repo.pushed_at)}</span>
+                  <span className="gw-updated" title={new Date(repo.pushed_at).toLocaleString()}>
+                    Updated {relativeTime(repo.pushed_at)}
+                  </span>
                   {repo.fork && (
                     <>
                       <span className="gw-meta-sep">·</span>
@@ -554,10 +628,14 @@ const GitHubRepoViewer: React.FC<Props> = ({
               </div>
             </div>
           ))}
+
+          {Array.from({ length: fillerCount }).map((_, i) => (
+            <div key={`filler-${i}`} className="gw-card gw-card--filler" aria-hidden="true" />
+          ))}
         </div>
       )}
 
-      {viewMode === 'table' && (
+      {filtered.length > 0 && viewMode === 'table' && (
         <table className="gw-table">
           <thead>
             <tr>
@@ -576,12 +654,10 @@ const GitHubRepoViewer: React.FC<Props> = ({
                   <a href={repo.html_url} className="gw-name" target="_blank" rel="noopener noreferrer">
                     {repo.name}
                   </a>
-                  {repo.description && (
-                    <span className="gw-table-desc">{repo.description}</span>
-                  )}
                   {repo.owner.login.toLowerCase() !== 'nateshoffner' && (
                     <span className="gw-table-org">{repo.owner.login}</span>
                   )}
+                  <span className="gw-table-desc">{repo.description}</span>
                 </td>
                 <td className="gw-table-lang d-none d-sm-table-cell">
                   {repo.language
@@ -592,13 +668,13 @@ const GitHubRepoViewer: React.FC<Props> = ({
                 <td className="gw-table-stars d-none d-md-table-cell">
                   {repo.stargazers_count > 0
                     ? <><i className="fa fa-star" /> {repo.stargazers_count}</>
-                    : <span className="gw-placeholder">—</span>
+                    : <span className="gw-placeholder">&ndash;</span>
                   }
                 </td>
                 <td className="gw-table-forks d-none d-md-table-cell">
                   {repo.forks_count > 0
                     ? <><i className="fa fa-code-fork" /> {repo.forks_count}</>
-                    : <span className="gw-placeholder">—</span>
+                    : <span className="gw-placeholder">&ndash;</span>
                   }
                 </td>
                 <td className="gw-table-date d-none d-sm-table-cell">
@@ -612,11 +688,42 @@ const GitHubRepoViewer: React.FC<Props> = ({
                 </td>
               </tr>
             ))}
+
+            {Array.from({ length: fillerCount }).map((_, i) => (
+              <tr key={`filler-${i}`} className="gw-table-filler" aria-hidden="true">
+                <td colSpan={6} />
+              </tr>
+            ))}
           </tbody>
         </table>
       )}
 
-      <Pagination />
+      {filtered.length > 0 && (
+        <div className="gw-pager">
+          <span className="gw-pager-info">
+            {pageSize === 0
+              ? `Showing all ${filtered.length}`
+              : `Showing ${rangeStart}–${rangeEnd} of ${filtered.length}`}
+          </span>
+
+          <Pagination page={safePage} totalPages={totalPages} onChange={setCurrentPage} />
+
+          <div className="gw-pager-size">
+            <span className="gw-pager-size-label">Show</span>
+            {PAGE_SIZE_OPTIONS.map((n) => (
+              <button
+                type="button"
+                key={n}
+                className={`gw-size-btn${pageSize === n ? ' active' : ''}`}
+                onClick={() => { setPageSize(n); resetPage() }}
+                aria-pressed={pageSize === n}
+              >
+                {n === 0 ? 'All' : n}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

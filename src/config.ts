@@ -14,3 +14,14 @@ export const circuitTracesEnabled =
 // Professional work section: home page section, nav item, and /work pages.
 export const workSectionEnabled =
   process.env.NEXT_PUBLIC_WORK_SECTION !== 'false'
+
+// GitHub accounts surfaced in the open source section, in display order.
+export const githubAccounts = [
+  'NateShoffner',
+  'Tabster',
+  'BuildandShoot',
+  'NubileGames',
+  'Tenji-hin',
+] as const
+
+export const primaryGithubAccount = githubAccounts[0]

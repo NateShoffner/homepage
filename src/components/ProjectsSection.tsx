@@ -4,6 +4,10 @@ import GitHubRepoViewer from "@components/GitHubRepoViewer";
 import { PublicProjects } from "@components/PublicProjects";
 import Link from "next/link";
 import type { Project } from "@/src/types/Project";
+import { githubAccounts, primaryGithubAccount } from "@/src/config";
+
+// Stable reference so the repo viewer does not refetch on every render.
+const GITHUB_USERNAMES = [...githubAccounts];
 
 interface ProjectsSectionProps {
   projects: Project[];
@@ -53,27 +57,20 @@ export function ProjectsSection({
         contributions.
       </p>
       <a
-        href="https://github.com/NateShoffner"
+        href={`https://github.com/${primaryGithubAccount}`}
         target="_blank"
         rel="noopener noreferrer"
         className="gw-github-link"
       >
-        <i className="fa fa-github" /> github.com/NateShoffner
+        <i className="fa fa-github" /> github.com/{primaryGithubAccount}
       </a>
       <GitHubRepoViewer
-        usernames={[
-          "NateShoffner",
-          "Tabster",
-          "BuildandShoot",
-          "NubileGames",
-          "Tenji-hin",
-        ]}
+        usernames={GITHUB_USERNAMES}
         includeForks={false}
         includePages={true}
         defaultVisibleCount={12}
         defaultSortBy="pushed"
-        showFilters={false}
-        showCompactFilters={true}
+        showFilters={true}
       />
       {showMore && (
         <div className="mt-4">
