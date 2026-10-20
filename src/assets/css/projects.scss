@@ -133,17 +133,24 @@
         display: flex;
         flex-direction: column;
         gap: 0.6rem;
-        max-width: 480px;
+        // Wide enough that a typical description stays on one line.
+        max-width: 680px;
     }
 
     .project-download-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
-        padding: 0.75rem 1rem;
+        gap: 2rem;
+        padding: 0.9rem 1.25rem;
         border: 1px solid var(--border-color-md);
         border-radius: 6px;
+
+        // Keep the button on one line no matter how long the description runs.
+        .btn {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
     }
 
     .project-download-name {
