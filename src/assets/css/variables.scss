@@ -61,6 +61,14 @@ $highlight: $blue;
     --form-control-color: #d4d4d4;
     --form-control-border: #3a3f4a;
     --form-control-placeholder: #6a7a8a;
+    // Primary buttons are tinted rather than filled. A solid $highlight panel
+    // is the brightest thing on a page whose accent is otherwise reserved for
+    // hover rails, badges and links, so it reads as a different design.
+    --btn-primary-bg: rgba(51, 122, 183, 0.18);
+    --btn-primary-border: rgba(51, 122, 183, 0.55);
+    --btn-primary-color: #6aaddf;
+    --btn-primary-hover-bg: rgba(51, 122, 183, 0.3);
+    --btn-primary-hover-border: #{$highlight};
     --btn-secondary-bg: #272b33;
     --btn-secondary-hover-bg: #31363f;
     --btn-secondary-border: #3a3f4a;
@@ -101,6 +109,11 @@ $highlight: $blue;
     --form-control-color: #{$gray-900};
     --form-control-border: #{$gray-400};
     --form-control-placeholder: #{$gray-500};
+    --btn-primary-bg: rgba(51, 122, 183, 0.1);
+    --btn-primary-border: rgba(51, 122, 183, 0.45);
+    --btn-primary-color: #{$highlight};
+    --btn-primary-hover-bg: rgba(51, 122, 183, 0.18);
+    --btn-primary-hover-border: #{$highlight};
     --btn-secondary-bg: #{$gray-200};
     --btn-secondary-hover-bg: #{$gray-300};
     --btn-secondary-border: #{$gray-400};
