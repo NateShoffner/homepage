@@ -29,7 +29,7 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
       <div className={compact ? styles.panelsCompact : styles.panels}>
 
         {/* ── Resume ── */}
-        <div className={styles.panel}>
+        <Link href="/work/resume" className={styles.panel}>
           <div className={styles.panelLeft}>
             <div className={styles.panelMeta}>
               <i className={`fa fa-file-text-o ${styles.panelIcon}`} />
@@ -40,9 +40,9 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
               A detailed record of professional experience, technical skills,
               and career background.
             </p>
-            <Link href="/work/resume" className={styles.panelBtn}>
+            <span className={styles.panelCta}>
               View Resume <i className="fa fa-arrow-right" />
-            </Link>
+            </span>
           </div>
 
           <div className={styles.panelRight}>
@@ -68,10 +68,10 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
               </div>
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* ── Certifications ── */}
-        <div className={styles.panel}>
+        <Link href="/work/certifications" className={styles.panel}>
           <div className={styles.panelLeft}>
             <div className={styles.panelMeta}>
               <i className={`fa fa-certificate ${styles.panelIcon}`} />
@@ -82,9 +82,9 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
               Verified certifications across various platforms, vendors,
               and technologies.
             </p>
-            <Link href="/work/certifications" className={styles.panelBtn}>
+            <span className={styles.panelCta}>
               View Certifications <i className="fa fa-arrow-right" />
-            </Link>
+            </span>
           </div>
 
           <div className={styles.panelRight}>
@@ -112,24 +112,22 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
                 </div>
                 <div className={styles.statsStrip}>
                   <div className={styles.stat}>
-                    <span className={styles.statValue}>{certs.active}</span>
                     <span className={styles.statLabel}>Active</span>
+                    <span className={styles.statValue}>{certs.active}</span>
                   </div>
-                  <div className={styles.statDivider} />
                   <div className={styles.stat}>
-                    <span className={styles.statValue}>{certs.total}</span>
                     <span className={styles.statLabel}>Total</span>
+                    <span className={styles.statValue}>{certs.total}</span>
                   </div>
-                  <div className={styles.statDivider} />
                   <div className={styles.stat}>
-                    <span className={styles.statValue}>{certs.issuers.length}</span>
                     <span className={styles.statLabel}>Issuers</span>
+                    <span className={styles.statValue}>{certs.issuers.length}</span>
                   </div>
                 </div>
               </>
             )}
           </div>
-        </div>
+        </Link>
 
       </div>
     </div>

@@ -13,34 +13,41 @@ a {
     &:hover { color: var(--link-color); }
 }
 
+// Tinted rather than filled, so a call to action sits at the same accent
+// weight as a badge or an active toolbar menu instead of outshining the page.
 .btn-primary {
-    background: $highlight;
-    border: 1px solid $highlight;
-    color: #fff;
+    background: var(--btn-primary-bg);
+    border: 1px solid var(--btn-primary-border);
+    color: var(--btn-primary-color);
     font-weight: 400;
     letter-spacing: 0.06em;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 
     &:hover, &:focus, &.focus {
-        background: lighten($highlight, 8%);
-        border-color: lighten($highlight, 8%);
-        color: #fff;
-        box-shadow: 0 0 12px rgba($highlight, 0.35);
+        background: var(--btn-primary-hover-bg);
+        border-color: var(--btn-primary-hover-border);
+        color: var(--btn-primary-color);
+        box-shadow: none;
     }
 
     &:active, &.active,
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active {
-        background: darken($highlight, 7%);
-        border-color: darken($highlight, 7%);
-        color: #fff;
-        box-shadow: 0 0 8px rgba($highlight, 0.25);
+        background: var(--btn-primary-hover-bg);
+        border-color: var(--btn-primary-hover-border);
+        color: var(--btn-primary-color);
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        outline: 1px solid $highlight;
+        outline-offset: 2px;
     }
 
     &:disabled, &.disabled {
-        background: rgba($highlight, 0.45);
-        border-color: transparent;
-        color: rgba(255, 255, 255, 0.7);
+        background: rgba($highlight, 0.07);
+        border-color: rgba($highlight, 0.2);
+        color: var(--text-muted-color);
         box-shadow: none;
         opacity: 1;
     }
@@ -287,16 +294,26 @@ ul.inlined-list {
 }
 
 .badge {
+    // Centre the label in the box rather than letting it sit wherever the line
+    // box lands, so a chip stretched by its row still reads as centred.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // Flex drops the literal space between a leading icon and its label, so
+    // the separation has to be declared.
+    gap: 0.3em;
     font-weight: 400;
     font-size: 0.8rem;
     background-color: var(--badge-bg) !important;
     color: var(--badge-color);
     border: none;
-    padding: 0.25em 0.4em;
+    // A chip is several times wider than it is tall, so near-equal padding on
+    // all four sides reads as pinched at the ends. The sides get roughly twice
+    // the vertical.
+    padding: 0.25em 0.6em;
     cursor: default;
     text-decoration: none;
     white-space: nowrap;
-
 }
 
 a.badge, button.badge {

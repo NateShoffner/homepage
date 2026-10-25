@@ -11,9 +11,13 @@ interface Props {
 export default function WorkSection({ profile, certSummary }: Props) {
   return (
     <>
-      <h2 className="mb-3">
+      <h2 className="mb-5">
         Professional <span className="text-highlight">Work</span>
       </h2>
+      <p>
+        My professional background: career history, technical skills, and the
+        credentials I&apos;ve earned along the way.
+      </p>
       <WorkContent profile={profile} certs={certSummary ?? undefined} compact />
       <div className="mt-4">
         <Link href="/work" className="btn btn-primary px-4">

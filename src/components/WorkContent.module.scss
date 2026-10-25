@@ -73,42 +73,79 @@ $highlight: #337ab7;
 }
 
 // ── panels ────────────────────────────────────────────────────────────────────
+//
+// These are gateway tiles, not list rows, so they keep the two-column layout and
+// the preview art. The surface treatment, though, is the same as .list-card
+// elsewhere on the site: no fill, a hairline rule, and an accent rail that is
+// present but transparent until hover, so only the padding animates and the
+// tile never jumps by the border width.
 
 // ── default: stacked full-width panels ───────────────────────────────────────
 
+// Opens on a rule and ends without one, the way .list-cards does, so the
+// section's button follows the content rather than sitting under a lid.
 .panels {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  border-top: 1px solid var(--border-color);
+
+  .panel:last-child { border-bottom: none; }
+}
+
+// ── compact: 2-col grid, same tile internals ─────────────────────────────────
+
+.panelsCompact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 3rem;
+  border-top: 1px solid var(--border-color);
+
+  // Side by side the pair is one band, so a per-tile bottom rule would just
+  // break in the gutter. Stacked, they are rows again and each carries one.
+  .panel { border-bottom: none; }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 0;
+
+    .panel:not(:last-child) { border-bottom: 1px solid var(--border-color); }
+  }
 }
 
 .panel {
   display: flex;
   flex-direction: row;
   gap: 2.5rem;
-  padding: 2rem 2rem 2rem 2.25rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-left: 3px solid $highlight;
-  border-radius: 0 8px 8px 0;
+  padding: 1.5rem 1rem;
+  background: transparent;
+  border-bottom: 1px solid var(--border-color);
+  border-left: 3px solid transparent;
+  text-decoration: none;
+  color: inherit;
   align-items: center;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    padding-left 0.15s ease,
+    border-radius 0.15s ease;
+
+  &:hover {
+    background-color: var(--card-hover-bg);
+    border-left-color: $highlight;
+    border-radius: 3px;
+    padding-left: 1.75rem;
+    color: inherit;
+    text-decoration: none;
+
+    .panelTitle { color: $highlight; }
+    .panelCta .fa { transform: translateX(3px); }
+  }
 
   @media (max-width: 767px) {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
-    padding: 1.5rem 1.5rem 1.5rem 1.75rem;
   }
-}
-
-// ── compact: 2-col grid, same card internals ─────────────────────────────────
-
-.panelsCompact {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-
-  @media (max-width: 767px) { grid-template-columns: 1fr; }
 }
 
 .panelLeft {
@@ -140,49 +177,40 @@ $highlight: #337ab7;
 }
 
 .panelTitle {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: var(--body-color);
+  color: var(--list-card-title-color);
   margin: 0;
   text-transform: none;
   letter-spacing: normal;
   line-height: 1.25;
+  transition: color 0.15s ease;
 }
 
 .panelDesc {
   font-size: 0.9rem;
-  color: var(--text-muted-color);
+  color: var(--list-card-excerpt-color);
   line-height: 1.65;
   margin: 0;
   max-width: 46ch;
 }
 
-.panelBtn {
+// The whole tile is the link, so this is a cue rather than a control. The
+// section keeps a single filled button, the way the blog and project sections
+// do.
+.panelCta {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding: 0.45rem 1.1rem;
+  margin-top: 0.25rem;
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.04em;
-  border: 1px solid $highlight;
-  border-radius: 4px;
-  background: $highlight;
-  color: #fff;
-  text-decoration: none;
-  align-self: flex-start;
-  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  color: var(--link-color);
 
-  .fa { font-size: 0.7rem; transition: transform 0.15s ease; }
-
-  &:hover {
-    background: lighten($highlight, 8%);
-    border-color: lighten($highlight, 8%);
-    color: #fff;
-    text-decoration: none;
-    box-shadow: 0 0 10px rgba($highlight, 0.3);
-    .fa { transform: translateX(3px); }
+  .fa {
+    font-size: 0.7rem;
+    transition: transform 0.15s ease;
   }
 }
 
@@ -191,23 +219,21 @@ $highlight: #337ab7;
   width: 220px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
 
-  @media (max-width: 767px) { width: 100%; align-items: flex-start; }
+  @media (max-width: 767px) { width: 100%; }
 }
 
 // ── doc preview ───────────────────────────────────────────────────────────────
 
+// Illustration, not a nested card: no fill and no frame, so it reads the way a
+// thumbnail does in a list row rather than a box inside a box.
 .docPreview {
   width: 100%;
-  padding: 1.1rem 1.25rem;
-  background: var(--body-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .docSection {
@@ -226,17 +252,16 @@ $highlight: #337ab7;
 }
 
 .docLine {
-  height: 7px;
-  border-radius: 4px;
+  height: 6px;
+  border-radius: 3px;
   background: var(--border-color);
-  opacity: 0.7;
 }
 
 .docDivider {
   height: 1px;
   background: var(--border-color);
-  margin: 0.35rem 0;
-  opacity: 0.5;
+  margin: 0.3rem 0;
+  opacity: 0.6;
 }
 
 // ── issuer logos ──────────────────────────────────────────────────────────────
@@ -284,43 +309,36 @@ $highlight: #337ab7;
   .issuerLogoDark  { display: none; }
 }
 
-// ── stats strip ───────────────────────────────────────────────────────────────
+// ── stats ─────────────────────────────────────────────────────────────────────
+//
+// Same figure-and-caption treatment as the date column on a blog row: a small
+// uppercase label over a large tabular number, spaced by an explicit gap so the
+// number's size does not set the rhythm.
 
 .statsStrip {
-  width: 100%;
   display: flex;
-  align-items: stretch;
-  background: var(--body-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  overflow: hidden;
+  align-items: flex-start;
+  gap: 1.5rem;
 }
 
 .stat {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0.7rem 0.4rem;
-  gap: 0.2rem;
-}
-
-.statValue {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--body-color);
+  align-items: flex-start;
+  gap: 0.45rem;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .statLabel {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted-color);
+  letter-spacing: 0.05em;
+  color: var(--list-card-meta-color);
 }
 
-.statDivider {
-  width: 1px;
-  background: var(--border-color);
-  flex-shrink: 0;
+.statValue {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--list-card-title-color);
 }
