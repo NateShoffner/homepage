@@ -1,46 +1,80 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Tracks which of the given sections the reader is currently in.
+ *
+ * Selection is by section top against an activation line `offset` px below the
+ * viewport top: the active section is the last one whose top has crossed it.
+ * Deliberately not by how much of a section is on screen — the sections differ
+ * in height by an order of magnitude (projects runs several screens, work is
+ * under one), so any measure of visible area or intersection ratio is biased
+ * toward the short ones and the tall sections never win.
+ */
 export function useScrollSpy(ids: string[], offset = 80) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
+  // Callers build this array inline, so a new identity arrives on every render.
+  // Key the effect on the contents instead of rebinding listeners each time.
+  const key = ids.join(",");
+
   useEffect(() => {
-    const elements = ids
-      .map((id) => document.getElementById(id) || document.querySelector<HTMLElement>(`[name="${id}"]`))
-      .filter(Boolean) as HTMLElement[];
+    const list = key ? key.split(",") : [];
+    if (!list.length) return;
 
-    if (!elements.length) return;
+    let frame: number | null = null;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    const update = () => {
+      frame = null;
 
-        if (visible?.target?.id) setActiveId(visible.target.id);
-      },
-      {
-        root: null,
-        rootMargin: `-${offset}px 0px -${window.innerHeight / 2}px 0px`,
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      }
-    );
+      const found = list
+        .map((id) => ({
+          id,
+          el:
+            document.getElementById(id) ??
+            document.querySelector<HTMLElement>(`[name="${id}"]`),
+        }))
+        .filter((s): s is { id: string; el: HTMLElement } => s.el !== null);
 
-    elements.forEach((el) => observer.observe(el));
+      if (!found.length) return;
 
-    // The rootMargin bottom cutoff can miss a short last section (e.g. contact)
-    // that sits entirely below the active zone. Force it when at the page bottom.
-    const handleScroll = () => {
+      // A short last section can sit entirely below the activation line and so
+      // never claim it. Once there is no more page to scroll, it wins outright.
       const atBottom =
-        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
-      if (atBottom) setActiveId(ids[ids.length - 1]);
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 4;
+      if (atBottom) {
+        setActiveId(found[found.length - 1].id);
+        return;
+      }
+
+      // Closest top at or above the line. Comparing tops rather than trusting
+      // array order keeps this right if the nav is ever reordered.
+      let current = found[0];
+      let best = -Infinity;
+      for (const section of found) {
+        const top = section.el.getBoundingClientRect().top - offset;
+        if (top <= 0 && top > best) {
+          best = top;
+          current = section;
+        }
+      }
+      setActiveId(current.id);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    const onScroll = () => {
+      if (frame == null) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
+      if (frame != null) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
-  }, [ids, offset]);
+  }, [key, offset]);
 
   return activeId;
 }
