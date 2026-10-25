@@ -35,17 +35,6 @@ section.page-section {
     &.about-cover {
         --page-max: var(--page-max-cover);
     }
-
-    // The cover lays its children out in a row (content block plus scroll
-    // button), so centring every child would split the row in half instead of
-    // centring one column. Only the content block gets the treatment.
-    &.about-cover > *:not(:first-child) {
-        width: auto;
-        max-width: none;
-        margin-left: 0;
-        margin-right: 0;
-        flex: none;
-    }
 }
 
 @keyframes dot-grid-pulse {
@@ -213,81 +202,107 @@ ul.highlighted li.about-list-json-phase::before {
     }
 }
 
-.scroll-btn {
-    @media (max-width: 767.98px) {
-        display: none !important;
+// Prev/next section pager, replacing the cover's lone scroll-down chevron and
+// the separate back-to-top button.
+
+.section-nav {
+    position: fixed;
+    right: 1.875rem;
+    bottom: 1.875rem;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+
+    &.is-revealed {
+        opacity: 1;
+        pointer-events: auto;
     }
-    a {
-        z-index: 2;
-        display: inline-block;
-        -webkit-transform: translate(0, -50%);
-        transform: translate(0, -50%);
-        color: $highlight;
-        letter-spacing: .1em;
-        text-decoration: none;
-        transition: filter .2s ease;
-        padding-top: 1.875rem;
-        &.centered {
-            position: absolute;
-            bottom: 1.25rem;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        &:hover {
-            filter: brightness(1.4) drop-shadow(0 0 8px rgba($highlight, 0.9));
-        }
-        span {
-            position: absolute;
-            top: 0;
-            width: 3rem;
-            height: 3rem;
-            margin-left: -1.4375rem;
-            border-radius: 3px;
-            box-sizing: border-box;
-            border: 1px solid $highlight;
-            box-shadow: 0 0 10px rgba($highlight, 0.6), inset 0 0 8px rgba($highlight, 0.12), 0 0 2px rgba($highlight, 1);
-            &::after {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                content: '';
-                width: 1rem;
-                height: 1rem;
-                box-sizing: border-box;
-                border-left: 0.125rem solid $highlight;
-                border-bottom: 0.125rem solid $highlight;
-                filter: drop-shadow(0 0 3px rgba($highlight, 0.8));
-            }
-            &.scroll-up::after {
-                margin: -0.3125rem 0 0 -0.5rem;
-                -webkit-transform: rotate(130deg);
-                transform: rotate(130deg);
-            }
-            &.scroll-down::after {
-                margin: -0.75rem 0 0 -0.5rem;
-                -webkit-transform: rotate(-45deg);
-                transform: rotate(-45deg);
-            }
-            &::before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                content: '';
-                width: 2.75rem;
-                height: 2.75rem;
-                box-shadow: 0 0 0 0 rgba($highlight, 0.7);
-                border-radius: 3px;
-                opacity: 0;
-                -webkit-animation: scroll-btn-animation 1.5s infinite;
-                animation: scroll-btn-animation 1.5s infinite;
-                box-sizing: border-box;
-            }
-        }
+
+    // Desktop only: on a phone the top navbar is the closer target.
+    @media (max-width: 767.98px) {
+        display: none;
     }
 }
 
-@-webkit-keyframes scroll-btn-animation {
+.section-nav-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.25rem;
+    padding: 0;
+    background: transparent;
+    border: 1px solid $highlight;
+    border-radius: 3px;
+    color: $highlight;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba($highlight, 0.6), inset 0 0 8px rgba($highlight, 0.12), 0 0 2px rgba($highlight, 1);
+    transition: filter .2s ease, opacity .2s ease;
+
+    &:hover:not(:disabled) {
+        filter: brightness(1.4) drop-shadow(0 0 8px rgba($highlight, 0.9));
+    }
+
+    &:focus-visible {
+        outline: 2px solid $highlight;
+        outline-offset: 3px;
+    }
+
+    // Dimmed in place rather than hidden, so the pair keeps its size and the
+    // live arrow keeps its position.
+    &:disabled {
+        cursor: default;
+        opacity: 0.3;
+        box-shadow: none;
+    }
+}
+
+// Two borders of an empty square turned 45°. The V's ink sits off-centre in
+// its box, so each rotation is nudged back by a quarter of it.
+.section-nav-arrow {
+    width: 0.875rem;
+    height: 0.875rem;
+    box-sizing: border-box;
+    border-left: 0.125rem solid currentColor;
+    border-bottom: 0.125rem solid currentColor;
+    filter: drop-shadow(0 0 3px rgba($highlight, 0.8));
+}
+
+.section-nav-arrow-up {
+    -webkit-transform: translateY(25%) rotate(135deg);
+    transform: translateY(25%) rotate(135deg);
+}
+
+.section-nav-arrow-down {
+    -webkit-transform: translateY(-25%) rotate(-45deg);
+    transform: translateY(-25%) rotate(-45deg);
+}
+
+.section-nav-btn.is-inviting::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 0 rgba($highlight, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    -webkit-animation: section-nav-pulse 1.5s infinite;
+    animation: section-nav-pulse 1.5s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-nav-btn.is-inviting::after {
+        -webkit-animation: none;
+        animation: none;
+    }
+}
+
+@-webkit-keyframes section-nav-pulse {
     0% {
         opacity: 0;
         box-shadow: 0 0 0 0 rgba($highlight, 0.7);
@@ -304,7 +319,7 @@ ul.highlighted li.about-list-json-phase::before {
     }
 }
 
-@keyframes scroll-btn-animation {
+@keyframes section-nav-pulse {
     0% {
         opacity: 0;
         box-shadow: 0 0 0 0 rgba($highlight, 0.7);
@@ -374,14 +389,4 @@ section.error-404 {
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 2rem;
     font-size: 0.95rem;
-}
-
-#top-btn {
-    display: none;
-    position: fixed;
-    bottom: 1.25rem;
-    right: 1.875rem;
-    z-index: 99;
-    cursor: pointer;
-    padding: 0.9375rem;
 }
