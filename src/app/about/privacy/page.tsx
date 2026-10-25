@@ -2,58 +2,59 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Privacy' }
 
+const LAST_UPDATED = 'October 25, 2026'
+
 export default function PrivacyPage() {
   return (
     <section className="page-section p-4 p-lg-5 d-flex d-column">
       <div className="my-auto">
-        <h1 className="mb-5">Privacy Policy</h1>
+        <h1 className="mb-3">Privacy Policy</h1>
+        <p className="text-muted mb-5">Last updated: {LAST_UPDATED}</p>
 
-        <h3>Cookies</h3>
+        <p>This is my personal site. It carries no ads and no analytics.</p>
+
+        <h3 className="pt-5">Contact form</h3>
         <p>
-          A cookie is a small file which asks permission to be placed on your computer&apos;s hard
-          drive. Once you agree, the file is added and the cookie helps analyze web traffic or lets
-          you know when you visit a particular site. Cookies allow web applications to respond to
-          you as an individual. The web application can tailor its operations to your needs, likes
-          and dislikes by gathering and remembering information about your preferences.
+          The form collects the name, email address, and message you type in.{' '}
+          <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+            Resend
+          </a>{' '}
+          delivers it to my inbox, where it is used to reply.
         </p>
         <p>
-          You can choose to accept or decline cookies. Most web browsers automatically accept
-          cookies, but you can usually modify your browser setting to decline cookies if you prefer.
-          This may prevent you from taking full advantage of the website.
+          The form is protected by{' '}
+          <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">
+            Cloudflare Turnstile
+          </a>
+          , which receives your IP address and some browser details to tell humans from bots.
         </p>
 
-        <h3 className="pt-5">Google Analytics</h3>
+        <h3 className="pt-5">Blog comments</h3>
         <p>
-          This site uses &ldquo;Google Analytics&rdquo; to collect information about use of this
-          site. Google Analytics collects information such as how often users visit this site, what
-          pages they visit when they do so, and what other sites they used prior to coming to this
-          site. This site uses use the information it gets from Google Analytics only to improve
-          this site. Google Analytics collects only the IP address assigned to you on the date you
-          visit this site, rather than your name or other identifying information. We do not combine
-          the information collected through the use of Google Analytics with personally identifiable
-          information. Although Google Analytics plants a permanent cookie on your web browser to
-          identify you as a unique user the next time you visit this site, the cookie cannot be used
-          by anyone but Google. Google&apos;s ability to use and share information collected by
-          Google Analytics about your visits to this site is restricted by the{' '}
-          <a href="http://www.google.com/analytics/tos.html" target="_blank" rel="noopener noreferrer">
-            Google Analytics Terms of Use
-          </a>{' '}
-          and the{' '}
-          <a href="http://www.google.com/privacypolicy.html" target="_blank" rel="noopener noreferrer">
-            Google Privacy Policy
+          Comments come from{' '}
+          <a href="https://disqus.com/data-sharing-settings/" target="_blank" rel="noopener noreferrer">
+            Disqus
           </a>
-          . You can prevent Google Analytics from recognizing you on return visits to this site by{' '}
-          <a href="http://www.usa.gov/optout_instructions.shtml" target="_blank" rel="noopener noreferrer">
-            disabling cookies
-          </a>{' '}
-          on your browser.
+          , which loads its own code and cookies on posts and tracks visitors for its own purposes.
+          That falls under its privacy policy, not this one.
         </p>
+
+        <h3 className="pt-5">Cookies</h3>
         <p>
-          If you choose, you can opt out by turning off cookies in the preferences settings in your
-          web browser. For more information on Google Analytics, please visit{' '}
-          <a href="http://www.google.com/analytics/" target="_blank" rel="noopener noreferrer">
-            Google Analytics
-          </a>
+          The site remembers your light or dark theme preference, and sets a session cookie if you
+          unlock the gated pages. Neither is used for tracking.
+        </p>
+
+        <h3 className="pt-5">Server logs</h3>
+        <p>
+          The hosting infrastructure keeps short-lived request logs with IP addresses, URLs, and
+          user agents, used to keep the site online and secure.
+        </p>
+
+        <h3 className="pt-5">Your rights</h3>
+        <p>
+          I am the data controller. You can ask what data of yours I hold, and have it corrected or
+          deleted, through the <a href="/contact">contact form</a>.
         </p>
       </div>
     </section>
