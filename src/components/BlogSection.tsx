@@ -16,7 +16,7 @@ export function BlogSection({ posts, loading }: BlogSectionProps) {
       </p>
       <div className="list-cards">
         {loading
-          ? Array.from({ length: 6 }).map((_, i) => <SkeletonListCard key={i} />)
+          ? Array.from({ length: 6 }).map((_, i) => <SkeletonListCard key={i} showDate />)
           : posts.map((post, index) => <BlogPostCard key={index} post={post} />)
         }
       </div>

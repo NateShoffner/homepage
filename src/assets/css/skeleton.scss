@@ -57,3 +57,15 @@
     width: 30%;
     margin-top: 0.25rem;
 }
+
+.skeleton-date {
+    gap: 0.3rem;
+
+    .skeleton-line {
+        width: 100%;
+    }
+}
+
+.skeleton-date-month { height: 0.7rem; }
+.skeleton-date-day   { height: 1.3rem; }
+.skeleton-date-year  { height: 0.65rem; }

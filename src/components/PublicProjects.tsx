@@ -37,7 +37,7 @@ function PublicProjects({ projects, limit, sortBy = 'updated', sortOrder = 'desc
   return (
     <div className="list-cards">
       {loading
-        ? Array.from({ length: limit ?? 6 }).map((_, i) => <SkeletonListCard key={i} />)
+        ? Array.from({ length: limit ?? 6 }).map((_, i) => <SkeletonListCard key={i} showDate />)
         : visible.map((project) => <ProjectCard key={project.slug} project={project} />)
       }
     </div>

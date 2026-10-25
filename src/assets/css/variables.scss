@@ -35,6 +35,19 @@ $highlight: $blue;
 // Theme CSS custom properties
 
 :root {
+    // Width of the centred content column inside every page section.
+    --page-max: 80rem;
+
+    // The about cover is a two-column hero rather than a stack of list rows, so
+    // the narrower list measure leaves it feeling cramped. It gets its own cap,
+    // wide enough that it only engages on an ultrawide display.
+    --page-max-cover: 100rem;
+
+    // Ceiling for the fluid root font-size (see html{} in global.scss). 24px is
+    // 1.5x the 16px the design was authored at; 32px would be a true 2x for a
+    // 4K panel running unscaled.
+    --root-scale-max: 24px;
+
     --body-bg: #181a1b;
     --body-color: #d4d4d4;
     --link-color: #5ba3d9;

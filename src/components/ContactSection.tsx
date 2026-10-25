@@ -143,7 +143,7 @@ export function ContactSection() {
       </p>
 
       <div className="row justify-content-center">
-        <div className="col-xl-6 col-lg-8 col-md-10">
+        <div className="col-xl-8 col-lg-10 col-md-12">
           {status === "success" ? (
             <div className="contact-success">
               <i className="fa fa-check-circle contact-success-icon" />

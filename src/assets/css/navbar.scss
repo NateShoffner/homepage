@@ -28,7 +28,7 @@
         position: absolute;
         inset: 0;
         background-image: radial-gradient(circle, var(--dot-grid-color) 2px, transparent 2px);
-        background-size: 24px 24px;
+        background-size: 1.5rem 1.5rem;
         background-position: 0 0;
         pointer-events: none;
         z-index: 0;
@@ -222,10 +222,10 @@
 
 .profile-circuit {
     position: absolute;
-    top: -20px;
-    left: -20px;
-    width: 200px;
-    height: 200px;
+    top: -1.25rem;
+    left: -1.25rem;
+    width: 12.5rem;
+    height: 12.5rem;
     pointer-events: none;
     overflow: visible;
 
@@ -269,8 +269,8 @@
 }
 
 .circle-border {
-    width: 160px;
-    height: 160px;
+    width: 10rem;
+    height: 10rem;
     border-radius: 100%;
     background-color: black;
     position: relative;
@@ -299,8 +299,8 @@
 }
 
 .circle {
-    width: 160px;
-    height: 160px;
+    width: 10rem;
+    height: 10rem;
     display: flex;
     justify-content: center;
     align-items: center;
