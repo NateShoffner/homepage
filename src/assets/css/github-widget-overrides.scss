@@ -537,15 +537,19 @@
   // Fixed row height so page height never changes as you paginate.
   --gw-card-height: 11.75rem;
 
+  // Narrowest a card may get before the grid drops a column. The count follows
+  // the container rather than the viewport: the section cap (--page-max) means a
+  // wide monitor no longer implies a wide grid, so a viewport breakpoint here
+  // would hand three columns to a container that only has room for two.
+  --gw-card-min: 30rem;
+
   display: grid;
-  // Two columns by default: three only once cards have room to breathe.
-  grid-template-columns: repeat(2, 1fr);
+  // min() keeps a single column from overflowing a container narrower than the
+  // card minimum.
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--gw-card-min), 100%), 1fr));
   grid-auto-rows: var(--gw-card-height);
   gap: 1.25rem;
   align-items: stretch;
-
-  @media (min-width: 1700px) { grid-template-columns: repeat(3, 1fr); }
-  @media (max-width: 767px) { grid-template-columns: 1fr; }
 }
 
 .gw-card {

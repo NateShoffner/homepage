@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ListCardDate } from '@components/ListCardDate'
 import { Project } from '@/src/types/Project'
 
 function ProjectCard({ project }: { project: Project }) {
@@ -6,13 +7,6 @@ function ProjectCard({ project }: { project: Project }) {
     ? `/assets/images/projects/${project.slug}/${project.logo}`
     : project.images?.[0]?.filename
     ? `/assets/images/projects/${project.slug}/${project.images[0].filename}`
-    : null
-
-  const dateLabel = project.updated
-    ? new Date(project.updated).toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'short',
-      })
     : null
 
   return (
@@ -35,11 +29,9 @@ function ProjectCard({ project }: { project: Project }) {
               ))}
             </div>
           )}
-          <div className="list-card-tags">
-            {dateLabel && <span className="badge">{dateLabel}</span>}
-          </div>
         </div>
       </div>
+      <ListCardDate date={project.updated} />
     </Link>
   )
 }

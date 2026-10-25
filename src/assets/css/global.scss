@@ -1,3 +1,12 @@
+// Scale the whole design above 1920px wide. Type, spacing and the rem-based
+// section caps all key off the root size, so lifting it scales the layout as a
+// unit instead of pinning 16px text and a 1280px column into the middle of a
+// 4K panel. 0.8333vw is exactly 16px at 1920, so every viewport at or below
+// that renders identically to before; --root-scale-max is what binds above it.
+html {
+    font-size: clamp(1rem, 0.8333vw, var(--root-scale-max, 24px));
+}
+
 // Restore Bootstrap primary color from our $primary (#337AB7 vs Bootstrap default #007bff)
 a {
     color: var(--link-color);
@@ -308,21 +317,34 @@ a.badge, button.badge {
     }
 }
 
+// On hover an accent rail slides in and the content indents away from it. The
+// rail is always present but transparent, so only the padding animates and the
+// row never jumps by the border width.
 .list-card {
     display: flex;
     gap: 1.25rem;
     padding: 1rem 0.75rem;
     border-bottom: 1px solid var(--border-color);
+    border-left: 3px solid transparent;
     text-decoration: none;
     color: inherit;
-    transition: background-color 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        padding-left 0.15s ease,
+        border-radius 0.15s ease;
 
     &:hover {
         background-color: var(--card-hover-bg);
+        border-left-color: $primary;
+        border-radius: 3px;
+        padding-left: 1.5rem;
         color: inherit;
         text-decoration: none;
 
-        .list-card-title {
+        .list-card-title,
+        .list-card-date,
+        .list-card-date-day {
             color: $primary;
         }
     }
@@ -381,6 +403,41 @@ a.badge, button.badge {
         white-space: nowrap;
     }
 
+    .list-card-date {
+        flex-shrink: 0;
+        align-self: flex-start;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 3.25rem;
+        padding-top: 0.05rem;
+        // Space the three lines with an explicit gap rather than leading, so
+        // the day's larger font size does not dictate the whole rhythm.
+        gap: 0.45rem;
+        line-height: 1;
+        color: var(--list-card-meta-color);
+        transition: color 0.15s ease;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .list-card-date-month {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .list-card-date-day {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--list-card-title-color);
+        transition: color 0.15s ease;
+    }
+
+    .list-card-date-year {
+        font-size: 0.7rem;
+        opacity: 0.75;
+    }
+
     .list-card-footer {
         display: flex;
         justify-content: space-between;
@@ -411,6 +468,19 @@ a.badge, button.badge {
 
         .list-card-meta {
             display: none;
+        }
+
+        .list-card-date {
+            width: 2.5rem;
+            gap: 0.3rem;
+        }
+
+        .list-card-date-day {
+            font-size: 1.25rem;
+        }
+
+        &:hover {
+            padding-left: 0.75rem;
         }
     }
 }
