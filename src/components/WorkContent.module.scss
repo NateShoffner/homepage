@@ -219,10 +219,17 @@ $highlight: #337ab7;
   width: 220px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  // The issuer row runs about half as wide as the stats strip, so left-aligning
+  // the two leaves the logos hanging off one side.
+  align-items: center;
   gap: 1rem;
 
-  @media (max-width: 767px) { width: 100%; }
+  // Stacked, the column is full width and centring would set the art adrift
+  // from the left-aligned copy above it.
+  @media (max-width: 767px) {
+    width: 100%;
+    align-items: flex-start;
+  }
 }
 
 // ── doc preview ───────────────────────────────────────────────────────────────
@@ -273,39 +280,42 @@ $highlight: #337ab7;
   flex-wrap: wrap;
 }
 
-.issuerLogoWrap {
-  display: inline-flex;
+// One cell per issuer, whatever branch renders it. Marks arrive with their own
+// artboards, so a shared cell is what keeps the row on a line.
+%issuer-cell {
   width: 44px;
   height: 44px;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.issuerLogoWrap {
+  @extend %issuer-cell;
 }
 
 .issuerLogo {
-  width: 44px;
-  height: 44px;
+  @extend %issuer-cell;
   object-fit: contain;
   border-radius: 8px;
 }
 
 .issuerLogoPlaceholder {
-  width: 44px;
-  height: 44px;
+  @extend %issuer-cell;
   border-radius: 8px;
   background: var(--badge-bg);
   color: var(--badge-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 700;
   font-size: 1rem;
 }
 
 // dark is :root default — show white variant, hide black
 .issuerLogoLight { display: none; }
-.issuerLogoDark  { display: block; }
+.issuerLogoDark  { display: inline-flex; }
 
 :global([data-theme="light"]) {
-  .issuerLogoLight { display: block; }
+  .issuerLogoLight { display: inline-flex; }
   .issuerLogoDark  { display: none; }
 }
 

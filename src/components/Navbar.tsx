@@ -8,18 +8,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXTwitter, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import NavCircuitTraces from '@components/NavCircuitTraces'
-import { circuitTracesEnabled, workSectionEnabled } from '@/src/config'
+import { circuitTracesEnabled } from '@/src/config'
+import { siteSections, scrollToSection, type SiteSection } from '@/src/lib/sections'
 
-type NavItem = { id: string; label: string; route: string; hash: string }
 type SocialItem = { id: string; icon: IconDefinition; url: string }
-
-const NavItems: NavItem[] = [
-  { id: 'about', label: 'About', route: '/about', hash: '/#about' },
-  { id: 'blog', label: 'Blog', route: '/blog', hash: '/#blog' },
-  { id: 'projects', label: 'Projects', route: '/projects', hash: '/#projects' },
-  { id: 'work', label: 'Work', route: '/work', hash: '/#work' },
-  { id: 'contact', label: 'Contact', route: '/contact', hash: '/#contact' },
-].filter((item) => item.id !== 'work' || workSectionEnabled)
 
 const SocialItems: SocialItem[] = [
   { id: 'x', icon: faXTwitter, url: 'https://x.com/NateShoffner' },
@@ -68,18 +60,6 @@ const DEFAULT_TRACES: TraceData[] = [
   { points: '31,140 -8,140 -8,165',     nodeX: -8,  nodeY: 165, length: 64 },
   { points: '169,140 208,140 208,165',  nodeX: 208, nodeY: 165, length: 64 },
 ];
-
-function scrollToId(id: string, smooth = true) {
-  const el =
-    document.getElementById(id) ||
-    document.querySelector<HTMLElement>(`[name="${id}"]`)
-  if (!el) return
-  // Desktop has a fixed left sidebar (no top bar), so only a small offset is needed.
-  // Mobile has a fixed top navbar (~56px), so clear it with a bit of breathing room.
-  const offset = window.innerWidth >= 992 ? 0 : 60
-  const y = el.getBoundingClientRect().top + window.pageYOffset - offset
-  window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' })
-}
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -141,7 +121,7 @@ export default function Navbar() {
   useLayoutEffect(() => {
     if (!onHome || !window.location.hash) return
     const id = decodeURIComponent(window.location.hash.slice(1))
-    scrollToId(id)
+    scrollToSection(id)
   }, [onHome])
 
   useEffect(() => {
@@ -167,13 +147,13 @@ export default function Navbar() {
   }, [navOpen])
 
   const activeSectionId = useScrollSpy(
-    NavItems.map((n) => n.id),
+    siteSections.map((n) => n.id),
     100
   )
 
-  const isActive = (item: NavItem) => {
+  const isActive = (item: SiteSection) => {
     if (onHome) {
-      return (activeSectionId ?? NavItems[0].id) === item.id
+      return (activeSectionId ?? siteSections[0].id) === item.id
     }
     return pathname === item.route || pathname.startsWith(`${item.route}/`)
   }
@@ -182,7 +162,7 @@ export default function Navbar() {
     (id: string) => (e: MouseEvent<HTMLAnchorElement>) => {
       if (!onHome) return
       e.preventDefault()
-      scrollToId(id)
+      scrollToSection(id)
       setNavOpen(false)
     }
 
@@ -235,7 +215,7 @@ export default function Navbar() {
 
       <div className={`collapse navbar-collapse${navOpen ? ' show' : ''}`} id="navbarSupportedContent">
         <ul className="navbar-nav">
-          {NavItems.map((item) => {
+          {siteSections.map((item) => {
             const active = isActive(item)
             const classes = `nav-link${active ? ' active' : ''}`
             return (

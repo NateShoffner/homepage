@@ -6,8 +6,7 @@ import BlogSection from '@components/BlogSection'
 import { ProjectsSection } from '@components/ProjectsSection'
 import WorkSection from '@components/WorkSection'
 import ContactSection from '@components/ContactSection'
-import ScrollButton from '@components/ScrollButton'
-import TopButton from '@components/TopButton'
+import SectionNav from '@components/SectionNav'
 import { Element } from 'react-scroll'
 import type { PostMeta } from '@/lib/blog'
 import type { Project } from '@/src/types/Project'
@@ -23,13 +22,6 @@ export default function HomePage() {
   const [postsLoading, setPostsLoading] = useState(true)
   const [projectsLoading, setProjectsLoading] = useState(true)
   const [aboutRevealed, setAboutRevealed] = useState(false)
-  const [hasScrolled, setHasScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setHasScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     fetch('/api/blog/posts')
@@ -63,9 +55,6 @@ export default function HomePage() {
         <section className="page-section about-cover p-4 p-lg-5 d-flex d-column" id="about">
           <div className="my-auto">
             <AboutSection profile={profile} onRevealed={() => setAboutRevealed(true)} />
-          </div>
-          <div style={{ opacity: aboutRevealed && !hasScrolled ? 1 : 0, transition: 'opacity 0.5s ease' }}>
-            <ScrollButton target="blog" />
           </div>
         </section>
       </Element>
@@ -115,7 +104,7 @@ export default function HomePage() {
         </section>
       </Element>
 
-      <TopButton target="about" />
+      <SectionNav revealed={aboutRevealed} />
     </div>
   )
 }
