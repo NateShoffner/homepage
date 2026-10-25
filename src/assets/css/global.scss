@@ -1,10 +1,10 @@
-// Scale the whole design above 1920px wide. Type, spacing and the rem-based
+// Scale the whole design above 2560px wide. Type, spacing and the rem-based
 // section caps all key off the root size, so lifting it scales the layout as a
 // unit instead of pinning 16px text and a 1280px column into the middle of a
-// 4K panel. 0.8333vw is exactly 16px at 1920, so every viewport at or below
-// that renders identically to before; --root-scale-max is what binds above it.
+// 4K panel. 0.625vw is exactly 16px at 2560, so 1440p and everything below it
+// renders at the size the design was authored at; --root-scale-max binds above.
 html {
-    font-size: clamp(1rem, 0.8333vw, var(--root-scale-max, 24px));
+    font-size: clamp(1rem, 0.625vw, var(--root-scale-max, 24px));
 }
 
 // Restore Bootstrap primary color from our $primary (#337AB7 vs Bootstrap default #007bff)
