@@ -11,6 +11,12 @@ html {
 a {
     color: var(--link-color);
     &:hover { color: var(--link-color); }
+
+    // Inline code inside a link should read as part of the link, not as a separate chip.
+    code {
+        color: var(--link-color);
+        border-color: var(--link-color);
+    }
 }
 
 // Tinted rather than filled, so a call to action sits at the same accent

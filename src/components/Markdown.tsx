@@ -2,6 +2,9 @@
 
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
+import rehypeRaw from 'rehype-raw'
+import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
 import useFancybox from '@hooks/useFancybox'
 
 type Props = {
@@ -52,7 +55,9 @@ export default function Markdown({ children, imageBasePath, fileBasePath }: Prop
   return (
     <div ref={fancyboxRef}>
       <ReactMarkdown
-        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
+        remarkPlugins={[remarkGfm]}
+        // Order matters: parse raw HTML first, then add heading ids, then highlight code.
+        rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeHighlight, { ignoreMissing: true }]]}
         components={{
           img: ({ src, alt, title }) => (
             <BlogImage
@@ -73,6 +78,11 @@ export default function Markdown({ children, imageBasePath, fileBasePath }: Prop
             if (onlyImage) return <>{children}</>
             return <p>{children}</p>
           },
+          table: ({ children }) => (
+            <div className="table-responsive">
+              <table className="table table-sm post-table">{children}</table>
+            </div>
+          ),
         }}
       >
         {children}

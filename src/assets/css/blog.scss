@@ -38,6 +38,79 @@
         margin: 1.5rem 0;
     }
 
+    // Transparent diagrams: no frame around an invisible background
+    .plain-image .post-image {
+        border: none;
+        border-radius: 0;
+    }
+
+    // Markdown tables (remark-gfm). Bootstrap's .table bakes in light-theme
+    // colours, so follow the theme variables instead.
+    .post-table {
+        color: var(--body-color);
+        margin: 1.5rem 0;
+
+        th,
+        td {
+            border-color: var(--border-color-md);
+        }
+
+        thead th {
+            border-bottom-width: 2px;
+        }
+    }
+
+    // GFM task lists: drop the bullet, the checkbox is the marker.
+    .contains-task-list {
+        list-style: none;
+        padding-left: 0.5rem;
+
+        .task-list-item input[type="checkbox"] {
+            margin-right: 0.5em;
+            vertical-align: middle;
+        }
+    }
+
+    // GFM footnotes section.
+    .footnotes {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color-md);
+        font-size: 0.875em;
+        color: var(--text-muted-color);
+
+        ol {
+            padding-left: 1.5rem;
+        }
+    }
+
+    sup a[data-footnote-ref] {
+        text-decoration: none;
+        padding: 0 0.15em;
+    }
+
+    // Inline HTML that posts may use.
+    kbd {
+        background-color: var(--code-bg);
+        color: var(--code-color);
+        border: 1px solid var(--code-border);
+        border-radius: 4px;
+        padding: 0.15em 0.35em;
+        font-size: 0.875em;
+    }
+
+    details {
+        margin: 1rem 0;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color-md);
+        border-radius: 4px;
+
+        summary {
+            cursor: pointer;
+            font-weight: 500;
+        }
+    }
+
     // Paragraphs containing multiple side-by-side images
     p:has(> a > img) {
         display: flex;
