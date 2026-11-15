@@ -124,3 +124,6 @@ typings/
 public/feed.xml
 /.claude
 .vercel
+
+# private planning notes (may reference private repos)
+_notes
