@@ -18,11 +18,17 @@ export async function POST(request: Request) {
     .replace(/^-|-$/g, '') || 'untitled'
   const now = new Date()
   const datePrefix = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}-${String(now.getUTCDate()).padStart(2, '0')}`
-  const slug = `${datePrefix}-${titleSlug}`
+  const baseSlug = `${datePrefix}-${titleSlug}`
   const draftsDir = getDraftsDir()
   if (!fs.existsSync(draftsDir)) fs.mkdirSync(draftsDir, { recursive: true })
-  const filename = `${slug}.md`
-  const filePath = path.join(draftsDir, filename)
+  // Never clobber an existing draft: two untitled drafts started on the same
+  // day produce the same slug, and a plain write would destroy the first one.
+  let slug = baseSlug
+  let filePath = path.join(draftsDir, `${slug}.md`)
+  for (let n = 2; fs.existsSync(filePath); n++) {
+    slug = `${baseSlug}-${n}`
+    filePath = path.join(draftsDir, `${slug}.md`)
+  }
   const content = serializeFrontmatter({
     title: title ?? '',
     date: datePrefix,
