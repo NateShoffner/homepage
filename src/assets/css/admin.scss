@@ -1,3 +1,11 @@
+// Markdown editor line-number gutter. $editor-text-padding matches the 10px
+// the library puts on .w-md-editor-text; the offset is the number column plus
+// the gap between it and the text.
+$editor-text-padding: 10px;
+$editor-gutter-width: 34px;
+$editor-gutter-gap: 12px;
+$editor-gutter-offset: $editor-gutter-width + $editor-gutter-gap;
+
 .admin-layout {
   min-height: 100vh;
   font-family: var(--font-open-sans, sans-serif);
@@ -82,6 +90,51 @@
     font-size: 14px !important;
     line-height: 1.6 !important;
   }
+
+  // Line-number gutter.
+  //
+  // rehype-prism-plus already wraps every source line in a .code-line span, so
+  // a CSS counter numbers them without touching the markup. The gutter is left
+  // padding on .w-md-editor-text, which the overlaid textarea picks up through
+  // its own `padding: inherit`, so both layers shift together and the caret stays
+  // on the character it points at. Numbers are drawn back into that padding by
+  // the highlight layer, which sits under the (transparent) textarea.
+  //
+  // .code-line is display:inline by default; making it a block is what lets
+  // each number position against its own line. Each span already ends in a
+  // newline that pre-wrap absorbs, so this does not change the rendered height.
+  .w-md-editor-text {
+    padding-left: $editor-gutter-offset + $editor-text-padding !important;
+  }
+
+  // The prism theme puts overflow:auto on the highlight layer, which would clip
+  // numbers drawn to the left of it. The real scroll container is
+  // .w-md-editor-area, so releasing this costs nothing.
+  .w-md-editor-text-pre {
+    overflow: visible !important;
+  }
+
+  .w-md-editor-text-pre > code {
+    counter-reset: md-editor-line;
+  }
+
+  .w-md-editor-text-pre > code > .code-line {
+    display: block;
+    position: relative;
+    counter-increment: md-editor-line;
+
+    &::before {
+      content: counter(md-editor-line);
+      position: absolute;
+      left: -$editor-gutter-offset;
+      width: $editor-gutter-width;
+      text-align: right;
+      color: var(--text-muted);
+      opacity: 0.65;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
 }
 
 // Light mode: make editor blend with page background
@@ -98,10 +151,22 @@
     background-color: var(--body-bg);
   }
 
+  // Only the wrapper gets a background. The textarea is positioned on top of
+  // the syntax-highlight layer and renders its own text transparently, so an
+  // opaque background on it hides the text entirely.
+  .w-md-editor-text {
+    background-color: var(--body-bg) !important;
+  }
+
+  .w-md-editor-text-pre,
+  .w-md-editor-text-pre > code,
+  .w-md-editor-text-input {
+    background-color: transparent !important;
+  }
+
   .w-md-editor-text-pre > code,
   .w-md-editor-text-input,
   .w-md-editor-text {
-    background-color: var(--body-bg) !important;
     color: var(--body-color) !important;
   }
 }
@@ -133,10 +198,21 @@
     background-color: var(--form-control-bg);
   }
 
+  // See the light-mode block above: the textarea must stay transparent or it
+  // paints over the highlight layer that actually renders the text.
+  .w-md-editor-text {
+    background-color: var(--form-control-bg) !important;
+  }
+
+  .w-md-editor-text-pre,
+  .w-md-editor-text-pre > code,
+  .w-md-editor-text-input {
+    background-color: transparent !important;
+  }
+
   .w-md-editor-text-pre > code,
   .w-md-editor-text-input,
   .w-md-editor-text {
-    background-color: var(--form-control-bg) !important;
     color: var(--form-control-color) !important;
   }
 }
